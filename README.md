@@ -107,8 +107,8 @@ Assigned Channels:
 
 Attaching to a job:
 ```
-> kronos attach my-job
-Attach to my-job (Press CTRL+C to exit)
+> kronos attach myjob
+Attached to myjob (Press CTRL+C to exit)
 
 $ Doing the thing...
 $ Job finished
@@ -135,7 +135,7 @@ myjob           2021-01-03 00:00:00        Succeeded
 
 Deleting a job:
 ```
-> kronos delete job my-job
-my-job deleted.
+> kronos delete job myjob
+myjob deleted.
 ```
 
