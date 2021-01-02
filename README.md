@@ -9,10 +9,14 @@ Kronos is a cross-platform job scheduler that helps you manage, monitor and insp
   - [Linux](#Linux)
   - [macOS](#macOS)
   - [Windows](#Windows)
-- [Usage](#Usage)
+- [Commands](#Commands)
+- [Examples](#Examples)
   - [Jobs](#Jobs)
-  - [Alerting](#Alerting)
-  - [Inspection](#Inspection)
+    - [Managing](#Managing)
+    - [Inspecting](#Inspecting)
+  - [Channels](#Channels)
+    - [Slack](#Slack)
+    - [E-mail](#Email)
 
 
 ## Installation
@@ -38,3 +42,26 @@ $ brew install kronos
 ```
 choco install kronos
 ```
+
+## Commands
+```
+> kronos
+kronos is a cross-platform job scheduler that helps you manage, monitor and inspect jobs.
+
+Commands:
+  create         Creates a new job/channel
+  delete         Deletes a job/channel
+  list           Lists all jobs/channels
+  describe       Shows detailed information about a job/channel
+  history        Shows execution history of a job
+  attach         Attachs local stdin, stdout, stderr to a job
+  logs           Prints logs for a specific job execution
+  enable         Enables a job execution
+  disable        Disables a job execution
+  assign         Assigns a channel to a job
+
+Use "kronos <command> --help" to know more about a specific command.
+```
+
+
+
