@@ -1,8 +1,9 @@
-![kronos](docs/kronos.png)
+<p align="center">
+  <img src="./docs/kronos.png">
+  <br><br>
+  Kronos is a cross-platform job scheduler that helps you manage, monitor and inspect jobs.
+</p>
 
-Kronos is a cross-platform job scheduler that helps you manage, monitor and inspect jobs.
-
-[_add Gif showing usage_]
 
 ## Table of Contents
 - [Installation](#Installation)
