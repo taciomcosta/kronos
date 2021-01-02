@@ -59,18 +59,18 @@ Commands:
   disable        Disables a job execution
   assign         Assigns a channel to a job
 
-Use "kronos <command> --help" to know more about a specific command.
+Use "kronos <command> --help" to learn more about a specific command.
 ```
 
 ## Examples
 
-Creating a new job with sugar syntax for tick: 
+Creating a new job with sugar syntax for interval: 
 ```
 > kronos create job --name myjob --command ./my-job.sh --every-day
 ```
 Alternatively, we can do:
 ```
-> kronos create job --name myjob --command ./my-job.sh --tick "0 0 */1 * *"
+> kronos create job --name myjob --command ./my-job.sh --interval "0 0 */1 * *"
 ```
 
 Listing jobs:
@@ -93,7 +93,7 @@ Status: Enabled
 
 Executions: 4 
  - 3 Succeeded
- - 1 Failed)
+ - 1 Failed
 
 Resources:
  - Average CPU: 50%
@@ -113,6 +113,25 @@ Attach to my-job (Press CTRL+C to exit)
 $ Doing the thing...
 $ Job finished
 ```
+
+Showing execution history for all jobs:
+```
+> kronos history
+NAME            EXECUTION                  STATUS
+myjob           2021-01-01 00:00:00        Succeeded
+myfiles         2021-01-02 00:00:00        Failed
+backup-db       2021-01-03 00:00:00        Succeeded
+```
+
+Last 3 executions for a specific job:
+```
+> kronos history myjob --last 3
+NAME            EXECUTION                  STATUS
+myjob           2021-01-01 00:00:00        Failed
+myjob           2021-01-02 00:00:00        Succeeded
+myjob           2021-01-03 00:00:00        Succeeded
+```
+
 
 Deleting a job:
 ```
