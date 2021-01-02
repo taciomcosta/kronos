@@ -12,8 +12,6 @@ Kronos is a cross-platform job scheduler that helps you manage, monitor and insp
 - [Commands](#Commands)
 - [Examples](#Examples)
   - [Jobs](#Jobs)
-    - [Managing](#Managing)
-    - [Inspecting](#Inspecting)
   - [Channels](#Channels)
     - [Slack](#Slack)
     - [E-mail](#Email)
@@ -34,8 +32,8 @@ sudo pacman -S kronos
 
 ### macOs
 ```
-$ brew tap taciomcosta/kronos
-$ brew install kronos
+brew tap taciomcosta/kronos
+brew install kronos
 ```
 
 ### Windows
@@ -63,5 +61,61 @@ Commands:
 Use "kronos <command> --help" to know more about a specific command.
 ```
 
+## Examples
 
+Creating a new job with sugar syntax for tick: 
+```
+> kronos create job --name myjob --command ./my-job.sh --every-day
+```
+Alternatively, we can do:
+```
+> kronos create job --name myjob --command ./my-job.sh --tick "0 0 */1 * *"
+```
+
+Listing jobs:
+```
+> kronos list
+NAME            COMMAND             TICK               LAST EXECUTION             STATUS
+myjob           ./my-job.sh         Every day          2021-01-01 00:00:00        Enabled 
+myfiles         ls                  0 0 */1 * *        2021-01-01 00:00:00        Disabled
+backup-db       ./backup            Every day          2021-01-01 00:00:00        Enabled
+```
+
+Describing a job:
+```
+> kronos describe job myjob
+Name: myjob
+Command: ./my-job.sh
+Tick: Every day
+Last Execution: 2021-01-01 00:00:00
+Status: Enabled
+
+Executions: 4 
+ - 3 Succeeded
+ - 1 Failed)
+
+Resources:
+ - Average CPU: 50%
+ - Average Memory: 300MB
+ - Average Networking: 100MB (IN) / 50KB (OUT)
+ 
+Assigned Channels:
+  - my-slack
+  - my-email
+```
+
+Attaching to a job:
+```
+> kronos attach my-job
+Attach to my-job (Press CTRL+C to exit)
+
+$ Doing the thing...
+$ Job finished
+```
+
+Deleting a job:
+```
+> kronos delete job my-job
+my-job deleted.
+```
 
