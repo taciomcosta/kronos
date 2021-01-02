@@ -53,7 +53,7 @@ Commands:
   list           Lists all jobs/channels
   describe       Shows detailed information about a job/channel
   history        Shows execution history of a job
-  attach         Attachs local stdin, stdout, stderr to a job
+  attach         Attaches local stdin, stdout, stderr to a job
   logs           Prints logs for a specific job execution
   enable         Enables a job execution
   disable        Disables a job execution
@@ -112,6 +112,14 @@ Attached to myjob (Press CTRL+C to exit)
 
 $ Doing the thing...
 $ Job finished
+```
+
+Alternatively, we can just log the last execution instead of attaching to the job:
+```
+> kronos logs  myjob
+$ Doing the thing...
+$ Job finished
+> 
 ```
 
 Showing execution history for all jobs:
