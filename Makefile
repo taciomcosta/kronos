@@ -1,5 +1,5 @@
 all:
-	@go run ./...
+	@go run ./cmd/kronosd/main.go
 test:
 	@go test ./...
 
