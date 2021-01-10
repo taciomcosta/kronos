@@ -12,6 +12,7 @@ func TestNewTicker(t *testing.T) {
 		err        error
 	}{
 		{expression: "* * * * *", err: nil},
+		{expression: "*  *  *  *  *", err: nil},
 		{expression: "n * * * *", err: errors.New("can't parse n")},
 		{expression: "* n * * *", err: errors.New("can't parse n")},
 		{expression: "* * n * *", err: errors.New("can't parse n")},
@@ -22,6 +23,9 @@ func TestNewTicker(t *testing.T) {
 	for _, tt := range tests {
 		_, err := NewTicker(tt.expression)
 		if tt.err != nil && tt.err.Error() != err.Error() {
+			t.Errorf("got %v, expected %v", err, tt.err)
+		}
+		if err != nil && tt.err == nil {
 			t.Errorf("got %v, expected %v", err, tt.err)
 		}
 	}
