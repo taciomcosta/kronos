@@ -17,11 +17,9 @@ func NewJobRunner() JobsRunner {
 
 func (jr *JobsRunner) Start() {
 	ticker := time.NewTicker(1 * time.Second)
-	last := time.Now().UTC()
 	for range ticker.C {
 		now := time.Now().UTC()
-		if now.Minute() != last.Minute() {
-			last = now
+		if now.Second() == 0 {
 			jr.runAllJobs(now)
 		}
 	}
