@@ -5,17 +5,19 @@ import (
 	"os"
 	"os/exec"
 	"time"
+
+	"github.com/taciomcosta/kronos/internal/domain/ticker"
 )
 
 type Job struct {
-	Name    string
-	Command string
-	Tick    string
-	ticker  Ticker
+	Name    string `json:"name"`
+	Command string `json:"command"`
+	Tick    string `json:"tick"`
+	ticker  ticker.Ticker
 }
 
 func NewJob(name string, command string, tick string) (Job, error) {
-	ticker, err := NewTicker(tick)
+	ticker, err := ticker.NewTicker(tick)
 	if err != nil {
 		return Job{}, err
 	}
