@@ -1,30 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
+	"net/http"
 
-	"github.com/taciomcosta/kronos/internal/domain"
+	"github.com/julienschmidt/httprouter"
+	"github.com/taciomcosta/kronos/cmd/kronosd/handlers"
 )
 
 func main() {
-	if len(os.Args) != 4 {
-		fmt.Fprintf(os.Stderr, "Usage: %s name executable-path tick", os.Args[0])
-		return
-	}
+	router := httprouter.New()
+	router.POST("/jobs", handlers.CreateJob)
 
-	name := os.Args[1]
-	command := os.Args[2]
-	tick := os.Args[3]
-
-	job, err := domain.NewJob(name, command, tick)
-	if err != nil {
-		log.Fatalf("Error on creating job: %v", err)
-	}
-
-	runner := domain.NewJobRunner()
-	runner.AddJob(job)
-
-	runner.Start()
+	service := ":8080"
+	log.Fatal(http.ListenAndServe(service, router))
 }
