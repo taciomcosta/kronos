@@ -16,26 +16,45 @@ type Job struct {
 	ticker  ticker.Ticker
 }
 
-func NewJob(name string, command string, tick string) (Job, error) {
-	ticker, err := ticker.NewTicker(tick)
+func NewJob(request CreateJobRequest) (Job, error) {
+	ticker, err := ticker.NewTicker(request.Tick)
 	if err != nil {
 		return Job{}, err
 	}
-	return Job{name, command, tick, ticker}, nil
+	return Job{request.Name, request.Command, request.Tick, ticker}, nil
 }
 
 func (j *Job) Run(t time.Time) {
 	if !j.ticker.IsTimeSet(t) {
 		return
 	}
-	fmt.Printf("Executing %s\n", j.Name)
-	j.ExecCommand()
+	j.execCommand()
 }
 
-func (j *Job) ExecCommand() error {
+func (j *Job) execCommand() error {
 	cmd := exec.Command(j.Command)
 	cmd.Stdin = os.Stdin
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	return cmd.Run()
+}
+
+type CreateJobRequest struct {
+	Name    string `json:"name"`
+	Command string `json:"command"`
+	Tick    string `json:"tick"`
+}
+
+func CreateJob(request CreateJobRequest) error {
+	fmt.Printf("Creating job %s\n", request.Name)
+	job, err := NewJob(request)
+	if err != nil {
+		return err
+	}
+	err = repository.CreateJob(&job)
+	if err != nil {
+		return err
+	}
+	runner.AddJob(job)
+	return nil
 }

@@ -10,12 +10,13 @@ import (
 )
 
 func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var job domain.Job
-	err := readJsonFromRequestBody(r, &job)
+	var jobRequest domain.CreateJobRequest
+	err := readJsonFromRequestBody(r, &jobRequest)
+	err = domain.CreateJob(jobRequest)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(job)
+	fmt.Println(jobRequest)
 }
 
 func readJsonFromRequestBody(r *http.Request, v interface{}) error {

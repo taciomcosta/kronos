@@ -6,9 +6,13 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/taciomcosta/kronos/cmd/kronosd/handlers"
+	"github.com/taciomcosta/kronos/internal/data"
+	"github.com/taciomcosta/kronos/internal/domain"
 )
 
 func main() {
+	domain.Init(data.NewRepository())
+
 	router := httprouter.New()
 	router.POST("/jobs", handlers.CreateJob)
 
