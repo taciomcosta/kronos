@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -13,7 +12,7 @@ func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var jobRequest domain.CreateJobRequest
 	err := readJsonFromRequestBody(r, &jobRequest)
 	if err != nil {
-		fmt.Println(err)
+		respondError(w, err.Error())
 	}
 	response := domain.CreateJob(jobRequest)
 	if response.Success {
