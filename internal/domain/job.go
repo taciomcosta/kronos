@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"time"
@@ -23,22 +22,22 @@ type CreateJobRequest struct {
 	Tick    string `json:"tick"`
 }
 
-// Tests:
-// - parsing cron expression error
-// - persistance error
-// - happy path
-func CreateJob(request CreateJobRequest) error {
-	fmt.Printf("Creating job %s\n", request.Name)
+type CreateJobResponse struct {
+	Msg     string `json:"msg"`
+	Success bool
+}
+
+func CreateJob(request CreateJobRequest) CreateJobResponse {
 	job, err := NewJob(request)
 	if err != nil {
-		return err
+		return CreateJobResponse{Msg: err.Error(), Success: false}
 	}
 	err = repository.CreateJob(&job)
 	if err != nil {
-		return err
+		return CreateJobResponse{}
 	}
 	runner.AddJob(job)
-	return nil
+	return CreateJobResponse{Msg: job.Name + " created.", Success: true}
 }
 
 type Job struct {

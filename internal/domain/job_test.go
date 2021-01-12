@@ -6,8 +6,8 @@ import (
 
 func TestCreateJob(t *testing.T) {
 	tests := []struct {
-		request   CreateJobRequest
-		expectErr bool
+		request  CreateJobRequest
+		response CreateJobResponse
 	}{
 		{
 			request: CreateJobRequest{
@@ -15,7 +15,10 @@ func TestCreateJob(t *testing.T) {
 				Command: "ls",
 				Tick:    "* * * * *",
 			},
-			expectErr: false,
+			response: CreateJobResponse{
+				Msg:     "list created.",
+				Success: true,
+			},
 		},
 		{
 			request: CreateJobRequest{
@@ -23,16 +26,19 @@ func TestCreateJob(t *testing.T) {
 				Command: "ls",
 				Tick:    "1/2 * * * *",
 			},
-			expectErr: true,
+			response: CreateJobResponse{
+				Msg:     "can't parse 1/2",
+				Success: false,
+			},
 		},
 	}
 
 	Init(NewMockRepository())
 
 	for _, tt := range tests {
-		err := CreateJob(tt.request)
-		if (tt.expectErr && err == nil) || (!tt.expectErr && err != nil) {
-			t.Errorf("got %v", err)
+		response := CreateJob(tt.request)
+		if tt.response != response {
+			t.Errorf("got %v, expected %v", response, tt.response)
 		}
 	}
 }

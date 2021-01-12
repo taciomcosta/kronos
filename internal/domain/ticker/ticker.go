@@ -17,7 +17,6 @@ type Ticker struct {
 func NewTicker(expression string) (Ticker, error) {
 	parts := strings.Fields(expression)
 	minute, err := parseToken(parts[0], 0, 59)
-	fmt.Println("got here")
 	if err != nil {
 		return Ticker{}, err
 	}
