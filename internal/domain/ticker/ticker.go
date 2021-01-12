@@ -1,7 +1,6 @@
 package ticker
 
 import (
-	"fmt"
 	"strings"
 	"time"
 )
