@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	domain.Init(data.NewRepository())
+	data.New()
+	domain.New(data.NewRepository())
 
 	router := httprouter.New()
 	router.POST("/jobs", handlers.CreateJob)
