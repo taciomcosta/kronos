@@ -5,9 +5,10 @@ var runner JobsRunner
 
 type Repository interface {
 	CreateJob(job *Job) error
+	FindJobs() []Job
 }
 
-func Init(r Repository) {
+func New(r Repository) {
 	repository = r
 	go runner.Start()
 }

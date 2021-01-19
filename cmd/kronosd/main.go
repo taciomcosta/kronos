@@ -16,6 +16,7 @@ func main() {
 
 	router := httprouter.New()
 	router.POST("/jobs", handlers.CreateJob)
+	router.GET("/jobs", handlers.FindJobs)
 
 	service := ":8080"
 	log.Fatal(http.ListenAndServe(service, router))
