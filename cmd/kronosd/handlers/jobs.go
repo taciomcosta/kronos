@@ -23,6 +23,17 @@ func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	}
 }
 
+func FindJobs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	jobs := domain.FindJobs()
+	jobsJson, err := json.Marshal(jobs)
+	if err != nil {
+		respondError(w, "Error marshaling jobs to JSON")
+		return
+	}
+	w.Header().Set("Content-type", "application/json")
+	w.Write(jobsJson)
+}
+
 func readJsonFromRequestBody(r *http.Request, v interface{}) error {
 	decoder := json.NewDecoder(r.Body)
 	return decoder.Decode(v)

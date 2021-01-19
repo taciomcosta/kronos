@@ -40,6 +40,10 @@ func CreateJob(request CreateJobRequest) CreateJobResponse {
 	return CreateJobResponse{Msg: job.Name + " created.", Success: true}
 }
 
+func FindJobs() []Job {
+	return repository.FindJobs()
+}
+
 type Job struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`

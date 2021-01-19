@@ -33,7 +33,7 @@ func TestCreateJob(t *testing.T) {
 		},
 	}
 
-	Init(NewMockRepository())
+	New(NewMockRepository())
 
 	for _, tt := range tests {
 		response := CreateJob(tt.request)

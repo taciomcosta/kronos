@@ -13,7 +13,22 @@ func NewJobRunner() JobsRunner {
 	return JobsRunner{}
 }
 
+func (jr *JobsRunner) AddJob(job Job) {
+	jr.jobs = append(jr.jobs, job)
+}
+
 func (jr *JobsRunner) Start() {
+	jr.loadJobs()
+	jr.tickForever()
+}
+
+func (jr *JobsRunner) loadJobs() {
+	for _, job := range repository.FindJobs() {
+		jr.AddJob(job)
+	}
+}
+
+func (jr *JobsRunner) tickForever() {
 	ticker := time.NewTicker(1 * time.Second)
 	for range ticker.C {
 		now := time.Now().UTC()
@@ -28,8 +43,4 @@ func (jr *JobsRunner) runAllJobs(t time.Time) {
 	for _, job := range jr.jobs {
 		go job.Run(t)
 	}
-}
-
-func (jr *JobsRunner) AddJob(job Job) {
-	jr.jobs = append(jr.jobs, job)
 }
