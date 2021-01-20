@@ -24,7 +24,7 @@ type CreateJobRequest struct {
 
 type CreateJobResponse struct {
 	Msg     string `json:"msg"`
-	Success bool
+	Success bool   `json:"-"`
 }
 
 func CreateJob(request CreateJobRequest) CreateJobResponse {
@@ -34,7 +34,7 @@ func CreateJob(request CreateJobRequest) CreateJobResponse {
 	}
 	err = repository.CreateJob(&job)
 	if err != nil {
-		return CreateJobResponse{}
+		return CreateJobResponse{Msg: err.Error(), Success: false}
 	}
 	runner.AddJob(job)
 	return CreateJobResponse{Msg: job.Name + " created.", Success: true}
