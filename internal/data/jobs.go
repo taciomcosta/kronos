@@ -27,10 +27,10 @@ func (r *sqliteRepository) FindJobs() []domain.Job {
 		return []domain.Job{}
 	}
 	defer stmt.Close()
-	return r.scanAllJobs(stmt)
+	return r.readAllJobs(stmt)
 }
 
-func (r *sqliteRepository) scanAllJobs(stmt *sqlite3.Stmt) []domain.Job {
+func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []domain.Job {
 	jobs := make([]domain.Job, 0)
 	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
 		job := r.readOneJob(stmt)
