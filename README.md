@@ -1,7 +1,7 @@
 <p align="center">
   <img src="./docs/kronos.png">
   <br><br>
-  Kronos is a cross-platform job scheduler that helps you manage, monitor and inspect jobs.
+  Kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs.
 </p>
 
 
