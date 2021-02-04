@@ -12,7 +12,7 @@ import (
 
 func main() {
 	data.New()
-	domain.New(data.NewRepository())
+	domain.New(data.NewSqliteRepository())
 	log.Printf("%d jobs loaded", domain.CountJobs())
 
 	router := httprouter.New()

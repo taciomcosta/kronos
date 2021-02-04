@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+// Ticker represents a job tick
+// Example: "* * * * *", "*/1 1-4 * * *"
 type Ticker struct {
 	minute     token
 	hour       token
@@ -13,6 +15,8 @@ type Ticker struct {
 	dayOfWeek  token
 }
 
+// NewTicker creates a new Ticker from a string
+// like "* * * * *"
 func NewTicker(expression string) (Ticker, error) {
 	parts := strings.Fields(expression)
 	minute, err := parseToken(parts[0], 0, 59)
@@ -38,6 +42,7 @@ func NewTicker(expression string) (Ticker, error) {
 	return Ticker{minute, hour, dayOfMonth, month, dayOfWeek}, nil
 }
 
+// IsTimeSet tells if t is a time included in Ticker
 func (ticker *Ticker) IsTimeSet(t time.Time) bool {
 	return ticker.isMinuteSet(t) &&
 		ticker.isHourSet(t) &&

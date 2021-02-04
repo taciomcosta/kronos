@@ -9,6 +9,7 @@ import (
 	"github.com/taciomcosta/kronos/internal/domain/ticker"
 )
 
+// NewJob creates a new Job from a request.
 func NewJob(request CreateJobRequest) (Job, error) {
 	ticker, err := ticker.NewTicker(request.Tick)
 	if err != nil {
@@ -17,16 +18,19 @@ func NewJob(request CreateJobRequest) (Job, error) {
 	return Job{request.Name, request.Command, request.Tick, ticker}, nil
 }
 
+// CreateJobRequest represents the needed properties to create a Job
 type CreateJobRequest struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
 	Tick    string `json:"tick"`
 }
 
+// CreateJobResponse represents the response message of CreateJob
 type CreateJobResponse struct {
 	Msg string `json:"msg"`
 }
 
+// CreateJob creates a job and schedules it right away.
 func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	fmt.Printf("Count job is %v\n", CountJobs())
 	job, err := NewJob(request)
@@ -41,21 +45,25 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	return CreateJobResponse{Msg: job.Name + " created."}, nil
 }
 
+// FindJobs returns a list of all jobs.
 func FindJobs() []Job {
 	return repository.FindJobs()
 }
 
+// CountJobs counts the total of jobs.
 func CountJobs() int {
 	return repository.CountJobs()
 }
 
+// Job represents a job
 type Job struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
-	Tick    string `json:"tick"`
+	Tick    string `json:"'btick"`
 	ticker  ticker.Ticker
 }
 
+// Run runs a job if it is the appropriate time.
 func (j *Job) Run(t time.Time) {
 	if !j.ticker.IsTimeSet(t) {
 		return

@@ -5,12 +5,14 @@ import (
 	"github.com/taciomcosta/kronos/internal/domain"
 )
 
-func NewRepository() domain.Repository {
+// NewSqliteRepository returns a Sqlite repository implementation
+func NewSqliteRepository() domain.Repository {
 	return &sqliteRepository{}
 }
 
 type sqliteRepository struct{}
 
+// CreateJob creates a job.
 func (r *sqliteRepository) CreateJob(job *domain.Job) error {
 	stmt, err := db.Prepare("INSERT INTO job VALUES(?, ?, ?)")
 	if err != nil {
@@ -21,6 +23,7 @@ func (r *sqliteRepository) CreateJob(job *domain.Job) error {
 	return err
 }
 
+// CountJobs counts the total of jobs.
 func (r *sqliteRepository) CountJobs() int {
 	var count int
 	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
@@ -30,6 +33,7 @@ func (r *sqliteRepository) CountJobs() int {
 	return count
 }
 
+// FindJobs finds all jobs.
 func (r *sqliteRepository) FindJobs() []domain.Job {
 	stmt, err := db.Prepare("SELECT * FROM job")
 	if err != nil {

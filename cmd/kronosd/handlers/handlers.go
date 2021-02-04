@@ -5,35 +5,36 @@ import (
 	"net/http"
 )
 
-func readJsonFromRequestBody(r *http.Request, v interface{}) error {
+func readJSONFromRequestBody(r *http.Request, v interface{}) error {
 	decoder := json.NewDecoder(r.Body)
 	return decoder.Decode(v)
 }
 
 func respond(w http.ResponseWriter, v interface{}, err error) {
 	if err != nil {
-		respondJsonBadRequest(w, err)
+		respondJSONBadRequest(w, err)
 	} else {
-		respondJson(w, v)
+		respondJSON(w, v)
 	}
 }
 
-func respondJson(w http.ResponseWriter, v interface{}) {
+func respondJSON(w http.ResponseWriter, v interface{}) {
 	w.Header().Set("Content-type", "application/json")
 	bytes, err := json.Marshal(v)
 	if err != nil {
-		respondJsonBadRequest(w, err)
+		respondJSONBadRequest(w, err)
 	} else {
 		w.Write(bytes)
 	}
 }
 
+// ErrorMessage represents a generic error message for http responses.
 type ErrorMessage struct {
 	Msg string `json:"msg"`
 }
 
-func respondJsonBadRequest(w http.ResponseWriter, err error) {
+func respondJSONBadRequest(w http.ResponseWriter, err error) {
 	errorMessage := ErrorMessage{Msg: err.Error()}
 	w.WriteHeader(http.StatusBadRequest)
-	respondJson(w, errorMessage)
+	respondJSON(w, errorMessage)
 }

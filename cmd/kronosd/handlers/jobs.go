@@ -7,16 +7,18 @@ import (
 	"github.com/taciomcosta/kronos/internal/domain"
 )
 
+// CreateJob handles jobs creation request.
 func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var jobRequest domain.CreateJobRequest
-	err := readJsonFromRequestBody(r, &jobRequest)
+	err := readJSONFromRequestBody(r, &jobRequest)
 	if err != nil {
-		respondJsonBadRequest(w, err)
+		respondJSONBadRequest(w, err)
 	}
 	response, err := domain.CreateJob(jobRequest)
 	respond(w, response, err)
 }
 
+// FindJobs handles finding all jobs request.
 func FindJobs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	jobs := domain.FindJobs()
 	respond(w, jobs, nil)

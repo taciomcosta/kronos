@@ -5,18 +5,22 @@ import (
 	"time"
 )
 
+// JobsRunner acts as a container for managing many jobs at once.
 type JobsRunner struct {
 	jobs []Job
 }
 
+// NewJobRunner creates a new JobRunner.
 func NewJobRunner() JobsRunner {
 	return JobsRunner{}
 }
 
+// AddJob adds a Job to JobRunner, making it scheduled.
 func (jr *JobsRunner) AddJob(job Job) {
 	jr.jobs = append(jr.jobs, job)
 }
 
+// Start starts runner on system startup.
 func (jr *JobsRunner) Start() {
 	jr.loadJobs()
 	jr.tickForever()
