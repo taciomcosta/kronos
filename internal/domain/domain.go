@@ -6,6 +6,7 @@ var runner JobsRunner
 type Repository interface {
 	CreateJob(job *Job) error
 	FindJobs() []Job
+	CountJobs() int
 }
 
 func New(r Repository) {

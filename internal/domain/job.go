@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"time"
@@ -23,25 +24,29 @@ type CreateJobRequest struct {
 }
 
 type CreateJobResponse struct {
-	Msg     string `json:"msg"`
-	Success bool   `json:"-"`
+	Msg string `json:"msg"`
 }
 
-func CreateJob(request CreateJobRequest) CreateJobResponse {
+func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
+	fmt.Printf("Count job is %v\n", CountJobs())
 	job, err := NewJob(request)
 	if err != nil {
-		return CreateJobResponse{Msg: err.Error(), Success: false}
+		return CreateJobResponse{Msg: err.Error()}, err
 	}
 	err = repository.CreateJob(&job)
 	if err != nil {
-		return CreateJobResponse{Msg: err.Error(), Success: false}
+		return CreateJobResponse{Msg: err.Error()}, err
 	}
 	runner.AddJob(job)
-	return CreateJobResponse{Msg: job.Name + " created.", Success: true}
+	return CreateJobResponse{Msg: job.Name + " created."}, nil
 }
 
 func FindJobs() []Job {
 	return repository.FindJobs()
+}
+
+func CountJobs() int {
+	return repository.CountJobs()
 }
 
 type Job struct {

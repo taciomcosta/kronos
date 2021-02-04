@@ -10,6 +10,10 @@ func (mr *mockRepository) CreateJob(job *Job) error {
 	return nil
 }
 
+func (mr *mockRepository) CountJobs() int {
+	return 1
+}
+
 func (mr *mockRepository) FindJobs() []Job {
 	return []Job{
 		{
