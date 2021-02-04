@@ -13,6 +13,7 @@ import (
 func main() {
 	data.New()
 	domain.New(data.NewRepository())
+	log.Printf("%d jobs loaded", domain.CountJobs())
 
 	router := httprouter.New()
 	router.POST("/jobs", handlers.CreateJob)
