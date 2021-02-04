@@ -21,6 +21,15 @@ func (r *sqliteRepository) CreateJob(job *domain.Job) error {
 	return err
 }
 
+func (r *sqliteRepository) CountJobs() int {
+	var count int
+	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
+	defer stmt.Close()
+	stmt.Step()
+	stmt.Scan(&count)
+	return count
+}
+
 func (r *sqliteRepository) FindJobs() []domain.Job {
 	stmt, err := db.Prepare("SELECT * FROM job")
 	if err != nil {
