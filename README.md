@@ -45,7 +45,7 @@ choco install kronos
 ## Commands
 ```
 > kronos
-kronos is a cross-platform job scheduler that helps you manage, monitor and inspect jobs.
+kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs.
 
 Commands:
   create         Creates a new job/channel
