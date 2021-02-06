@@ -26,7 +26,6 @@ type Job struct {
 
 // Run runs a job if it is the appropriate time.
 func (j *Job) Run(t time.Time) {
-	fmt.Printf("> Running %s\n", j.Name)
 	if !j.ticker.IsTimeSet(t) {
 		return
 	}

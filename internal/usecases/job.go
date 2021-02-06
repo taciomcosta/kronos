@@ -20,11 +20,11 @@ type CreateJobResponse struct {
 func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	job, err := entities.NewJob(request.Name, request.Command, request.Tick)
 	if err != nil {
-		return CreateJobResponse{Msg: err.Error()}, err
+		return CreateJobResponse{}, err
 	}
 	err = repository.CreateJob(&job)
 	if err != nil {
-		return CreateJobResponse{Msg: err.Error()}, err
+		return CreateJobResponse{}, err
 	}
 	runner.AddJob(job)
 	return CreateJobResponse{Msg: job.Name + " created."}, nil
