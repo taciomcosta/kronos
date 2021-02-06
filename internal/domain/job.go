@@ -5,13 +5,11 @@ import (
 	"os"
 	"os/exec"
 	"time"
-
-	"github.com/taciomcosta/kronos/internal/domain/ticker"
 )
 
 // NewJob creates a new Job from a request.
 func NewJob(request CreateJobRequest) (Job, error) {
-	ticker, err := ticker.NewTicker(request.Tick)
+	ticker, err := NewTicker(request.Tick)
 	if err != nil {
 		return Job{}, err
 	}
@@ -60,7 +58,7 @@ type Job struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
 	Tick    string `json:"'btick"`
-	ticker  ticker.Ticker
+	ticker  Ticker
 }
 
 // Run runs a job if it is the appropriate time.

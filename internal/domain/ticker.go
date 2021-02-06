@@ -1,4 +1,4 @@
-package ticker
+package domain
 
 import (
 	"strings"
