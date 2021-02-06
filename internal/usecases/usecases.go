@@ -1,12 +1,12 @@
 package usecases
 
-import "github.com/taciomcosta/kronos/internal/domain"
+import "github.com/taciomcosta/kronos/internal/entities"
 
-var repository domain.Repository
-var runner domain.JobsRunner
+var repository entities.Repository
+var runner entities.JobsRunner
 
 // New is used for dependency injection on set up.
-func New(r domain.Repository) {
+func New(r entities.Repository) {
 	repository = r
 	go runner.Start()
 }

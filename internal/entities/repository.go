@@ -1,4 +1,4 @@
-package domain
+package entities
 
 // Repository represents a Layer Supertype for Repository Pattern.
 // https://martinfowler.com/eaaCatalog/layerSupertype.html

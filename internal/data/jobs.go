@@ -2,19 +2,19 @@ package data
 
 import (
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
-	"github.com/taciomcosta/kronos/internal/domain"
+	"github.com/taciomcosta/kronos/internal/entities"
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
 // NewSqliteRepository returns a Sqlite repository implementation
-func NewSqliteRepository() domain.Repository {
+func NewSqliteRepository() entities.Repository {
 	return &sqliteRepository{}
 }
 
 type sqliteRepository struct{}
 
 // CreateJob creates a job.
-func (r *sqliteRepository) CreateJob(job *domain.Job) error {
+func (r *sqliteRepository) CreateJob(job *entities.Job) error {
 	stmt, err := db.Prepare("INSERT INTO job VALUES(?, ?, ?)")
 	if err != nil {
 		return err
@@ -35,17 +35,17 @@ func (r *sqliteRepository) CountJobs() int {
 }
 
 // FindJobs finds all jobs.
-func (r *sqliteRepository) FindJobs() []domain.Job {
+func (r *sqliteRepository) FindJobs() []entities.Job {
 	stmt, err := db.Prepare("SELECT * FROM job")
 	if err != nil {
-		return []domain.Job{}
+		return []entities.Job{}
 	}
 	defer stmt.Close()
 	return r.readAllJobs(stmt)
 }
 
-func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []domain.Job {
-	jobs := make([]domain.Job, 0)
+func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
+	jobs := make([]entities.Job, 0)
 	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
 		job := r.readOneJob(stmt)
 		jobs = append(jobs, job)
@@ -53,9 +53,9 @@ func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []domain.Job {
 	return jobs
 }
 
-func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) domain.Job {
+func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) entities.Job {
 	request := usecases.CreateJobRequest{}
 	stmt.Scan(&request.Name, &request.Command, &request.Tick)
-	job, _ := domain.NewJob(request.Name, request.Command, request.Tick)
+	job, _ := entities.NewJob(request.Name, request.Command, request.Tick)
 	return job
 }

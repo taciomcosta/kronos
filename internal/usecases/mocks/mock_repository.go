@@ -1,16 +1,16 @@
 package mocks
 
-import "github.com/taciomcosta/kronos/internal/domain"
+import "github.com/taciomcosta/kronos/internal/entities"
 
 // NewMockRepository returns a mock implementation of repository.
-func NewMockRepository() domain.Repository {
+func NewMockRepository() entities.Repository {
 	return &mockRepository{}
 }
 
 type mockRepository struct{}
 
 // CreateJob creates a job.
-func (mr *mockRepository) CreateJob(job *domain.Job) error {
+func (mr *mockRepository) CreateJob(job *entities.Job) error {
 	return nil
 }
 
@@ -20,8 +20,8 @@ func (mr *mockRepository) CountJobs() int {
 }
 
 // FindJobs finds all jobs.
-func (mr *mockRepository) FindJobs() []domain.Job {
-	return []domain.Job{
+func (mr *mockRepository) FindJobs() []entities.Job {
+	return []entities.Job{
 		{
 			Name:    "list",
 			Command: "ls",

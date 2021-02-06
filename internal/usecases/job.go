@@ -1,7 +1,7 @@
 package usecases
 
 import (
-	"github.com/taciomcosta/kronos/internal/domain"
+	"github.com/taciomcosta/kronos/internal/entities"
 )
 
 // CreateJobRequest represents the needed properties to create a Job
@@ -18,7 +18,7 @@ type CreateJobResponse struct {
 
 // CreateJob creates a job and schedules it right away.
 func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
-	job, err := domain.NewJob(request.Name, request.Command, request.Tick)
+	job, err := entities.NewJob(request.Name, request.Command, request.Tick)
 	if err != nil {
 		return CreateJobResponse{Msg: err.Error()}, err
 	}
@@ -31,7 +31,7 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 }
 
 // FindJobs returns a list of all jobs.
-func FindJobs() []domain.Job {
+func FindJobs() []entities.Job {
 	return repository.FindJobs()
 }
 
