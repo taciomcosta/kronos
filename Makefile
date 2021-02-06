@@ -1,8 +1,12 @@
 all:
 	@go run ./cmd/kronosd/main.go
-test:
+test-all:
 	@go test ./...
-lint:
-	golint ./...
+test-unit:
+	@go test --tags=unit -v ./...
+test-integration:
+	@go test --tags=integration -v ./...
 cover:
-	@go test ./... -cover
+	@go test ./... -v -cover
+lint:
+	@golint ./...

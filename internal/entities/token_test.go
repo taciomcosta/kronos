@@ -1,3 +1,5 @@
+// +build unit !integration
+
 package entities
 
 import (

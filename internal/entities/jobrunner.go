@@ -17,7 +17,6 @@ func NewJobRunner(jobs []Job) JobsRunner {
 
 // AddJob adds a Job to JobRunner, making it scheduled.
 func (jr *JobsRunner) AddJob(job Job) {
-	fmt.Println("new job added")
 	jr.jobs = append(jr.jobs, job)
 }
 

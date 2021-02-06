@@ -1,35 +1,11 @@
+// +build unit !integration
+
 package entities
 
 import (
-	"errors"
 	"testing"
 	"time"
 )
-
-func TestNewTicker(t *testing.T) {
-	tests := []struct {
-		expression string
-		err        error
-	}{
-		{expression: "* * * * *", err: nil},
-		{expression: "*  *  *  *  *", err: nil},
-		{expression: "n * * * *", err: errors.New("can't parse n")},
-		{expression: "* n * * *", err: errors.New("can't parse n")},
-		{expression: "* * n * *", err: errors.New("can't parse n")},
-		{expression: "* * * n *", err: errors.New("can't parse n")},
-		{expression: "* * * * n", err: errors.New("can't parse n")},
-	}
-
-	for _, tt := range tests {
-		_, err := NewTicker(tt.expression)
-		if tt.err != nil && tt.err.Error() != err.Error() {
-			t.Errorf("got %v, expected %v", err, tt.err)
-		}
-		if err != nil && tt.err == nil {
-			t.Errorf("got %v, expected %v", err, tt.err)
-		}
-	}
-}
 
 func TestIsTimeSet(t *testing.T) {
 	tests := []struct {

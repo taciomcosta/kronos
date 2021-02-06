@@ -1,50 +1,109 @@
+// +build unit !integration
+
 package usecases
 
 import (
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
+	"errors"
 	"testing"
+
+	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
+var testsCreateJob = []struct {
+	request  CreateJobRequest
+	response CreateJobResponse
+	err      error
+}{
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "* * * * *",
+		},
+		response: CreateJobResponse{
+			Msg: "list created.",
+		},
+		err: nil,
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "n * * * *",
+		},
+		response: CreateJobResponse{
+			Msg: "can't parse n",
+		},
+		err: errors.New("can't parse n"),
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "* n * * *",
+		},
+		response: CreateJobResponse{
+			Msg: "can't parse n",
+		},
+		err: errors.New("can't parse n"),
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "* * n * *",
+		},
+		response: CreateJobResponse{
+			Msg: "can't parse n",
+		},
+		err: errors.New("can't parse n"),
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "* * * n *",
+		},
+		response: CreateJobResponse{
+			Msg: "can't parse n",
+		},
+		err: errors.New("can't parse n"),
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "* * * * n",
+		},
+		response: CreateJobResponse{
+			Msg: "can't parse n",
+		},
+		err: errors.New("can't parse n"),
+	},
+}
+
 func TestCreateJob(t *testing.T) {
-	tests := []struct {
-		request     CreateJobRequest
-		response    CreateJobResponse
-		expectedErr bool
-	}{
-		{
-			request: CreateJobRequest{
-				Name:    "list",
-				Command: "ls",
-				Tick:    "* * * * *",
-			},
-			response: CreateJobResponse{
-				Msg: "list created.",
-			},
-			expectedErr: false,
-		},
-		{
-			request: CreateJobRequest{
-				Name:    "list",
-				Command: "ls",
-				Tick:    "1/2 * * * *",
-			},
-			response: CreateJobResponse{
-				Msg: "can't parse 1/2",
-			},
-			expectedErr: true,
-		},
-	}
-
 	New(mocks.NewMockRepository())
-
-	for _, tt := range tests {
+	for _, tt := range testsCreateJob {
 		response, err := CreateJob(tt.request)
 		if tt.response != response {
 			t.Errorf("got %v, expected %v", response, tt.response)
 		}
+		assertError(t, err, tt.err)
+	}
+}
 
-		if tt.expectedErr && err == nil {
-			t.Errorf("expected error, got nil")
-		}
+func assertError(t *testing.T, got error, want error) {
+	if got == nil && want == nil {
+		return
+	}
+	if got == nil && want != nil {
+		t.Errorf("expected error %v, got %v", want, got)
+	}
+	if got != nil && want == nil {
+		t.Errorf("expected error %v, got %v", want, got)
+	}
+	if got.Error() != want.Error() {
+		t.Errorf("expected error %v, got %v", want, got)
 	}
 }
