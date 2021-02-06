@@ -6,13 +6,12 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	"github.com/taciomcosta/kronos/cmd/kronosd/handlers"
-	"github.com/taciomcosta/kronos/internal/data"
+	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
 func main() {
-	data.New()
-	usecases.New(data.NewSqliteRepository())
+	usecases.New(sqlite.NewRepository())
 	log.Printf("%d job(s) loaded", usecases.CountJobs())
 
 	router := httprouter.New()

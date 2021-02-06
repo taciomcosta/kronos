@@ -1,4 +1,4 @@
-package data
+package sqlite
 
 import (
 	"fmt"
@@ -13,8 +13,7 @@ var tablesStmts []string = []string{
 	`CREATE TABLE IF NOT EXISTS job(name TEXT PK, command TEXT, tick TEXT)`,
 }
 
-// New connects to database and creates needed tables.
-func New() {
+func new() {
 	connectDB()
 	createTables()
 }

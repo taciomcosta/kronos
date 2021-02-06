@@ -1,4 +1,4 @@
-package data
+package sqlite
 
 import (
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
@@ -6,8 +6,9 @@ import (
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewSqliteRepository returns a Sqlite repository implementation
-func NewSqliteRepository() entities.Repository {
+// NewRepository returns a Sqlite repository implementation
+func NewRepository() entities.Repository {
+	new()
 	return &sqliteRepository{}
 }
 
