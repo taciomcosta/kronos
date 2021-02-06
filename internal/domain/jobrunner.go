@@ -11,25 +11,19 @@ type JobsRunner struct {
 }
 
 // NewJobRunner creates a new JobRunner.
-func NewJobRunner() JobsRunner {
-	return JobsRunner{}
+func NewJobRunner(jobs []Job) JobsRunner {
+	return JobsRunner{jobs}
 }
 
 // AddJob adds a Job to JobRunner, making it scheduled.
 func (jr *JobsRunner) AddJob(job Job) {
+	fmt.Println("new job added")
 	jr.jobs = append(jr.jobs, job)
 }
 
 // Start starts runner on system startup.
 func (jr *JobsRunner) Start() {
-	jr.loadJobs()
 	jr.tickForever()
-}
-
-func (jr *JobsRunner) loadJobs() {
-	for _, job := range repository.FindJobs() {
-		jr.AddJob(job)
-	}
 }
 
 func (jr *JobsRunner) tickForever() {

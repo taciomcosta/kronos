@@ -4,22 +4,22 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/taciomcosta/kronos/internal/domain"
+	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
 // CreateJob handles jobs creation request.
 func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var jobRequest domain.CreateJobRequest
+	var jobRequest usecases.CreateJobRequest
 	err := readJSONFromRequestBody(r, &jobRequest)
 	if err != nil {
 		respondJSONBadRequest(w, err)
 	}
-	response, err := domain.CreateJob(jobRequest)
+	response, err := usecases.CreateJob(jobRequest)
 	respond(w, response, err)
 }
 
 // FindJobs handles finding all jobs request.
 func FindJobs(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	jobs := domain.FindJobs()
+	jobs := usecases.FindJobs()
 	respond(w, jobs, nil)
 }

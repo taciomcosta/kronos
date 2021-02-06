@@ -3,6 +3,7 @@ package data
 import (
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
 	"github.com/taciomcosta/kronos/internal/domain"
+	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
 // NewSqliteRepository returns a Sqlite repository implementation
@@ -53,8 +54,8 @@ func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []domain.Job {
 }
 
 func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) domain.Job {
-	request := domain.CreateJobRequest{}
+	request := usecases.CreateJobRequest{}
 	stmt.Scan(&request.Name, &request.Command, &request.Tick)
-	job, _ := domain.NewJob(request)
+	job, _ := domain.NewJob(request.Name, request.Command, request.Tick)
 	return job
 }

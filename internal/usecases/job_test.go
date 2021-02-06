@@ -1,6 +1,7 @@
-package domain
+package usecases
 
 import (
+	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"testing"
 )
 
@@ -34,7 +35,7 @@ func TestCreateJob(t *testing.T) {
 		},
 	}
 
-	New(NewMockRepository())
+	New(mocks.NewMockRepository())
 
 	for _, tt := range tests {
 		response, err := CreateJob(tt.request)

@@ -1,14 +1,16 @@
-package domain
+package mocks
+
+import "github.com/taciomcosta/kronos/internal/domain"
 
 // NewMockRepository returns a mock implementation of repository.
-func NewMockRepository() Repository {
+func NewMockRepository() domain.Repository {
 	return &mockRepository{}
 }
 
 type mockRepository struct{}
 
 // CreateJob creates a job.
-func (mr *mockRepository) CreateJob(job *Job) error {
+func (mr *mockRepository) CreateJob(job *domain.Job) error {
 	return nil
 }
 
@@ -18,8 +20,8 @@ func (mr *mockRepository) CountJobs() int {
 }
 
 // FindJobs finds all jobs.
-func (mr *mockRepository) FindJobs() []Job {
-	return []Job{
+func (mr *mockRepository) FindJobs() []domain.Job {
+	return []domain.Job{
 		{
 			Name:    "list",
 			Command: "ls",
