@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/taciomcosta/kronos/cmd/kronosd/handlers"
+	"github.com/taciomcosta/kronos/internal/interfaces/rest"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
@@ -15,8 +15,8 @@ func main() {
 	log.Printf("%d job(s) loaded", usecases.CountJobs())
 
 	router := httprouter.New()
-	router.POST("/jobs", handlers.CreateJob)
-	router.GET("/jobs", handlers.FindJobs)
+	router.POST("/jobs", rest.CreateJob)
+	router.GET("/jobs", rest.FindJobs)
 
 	service := ":8080"
 	log.Fatal(http.ListenAndServe(service, router))
