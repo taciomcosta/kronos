@@ -31,10 +31,8 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "n * * * *",
 		},
-		response: CreateJobResponse{
-			Msg: "can't parse n",
-		},
-		err: errors.New("can't parse n"),
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
 	},
 	{
 		request: CreateJobRequest{
@@ -42,10 +40,8 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* n * * *",
 		},
-		response: CreateJobResponse{
-			Msg: "can't parse n",
-		},
-		err: errors.New("can't parse n"),
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
 	},
 	{
 		request: CreateJobRequest{
@@ -53,10 +49,8 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* * n * *",
 		},
-		response: CreateJobResponse{
-			Msg: "can't parse n",
-		},
-		err: errors.New("can't parse n"),
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
 	},
 	{
 		request: CreateJobRequest{
@@ -64,10 +58,8 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* * * n *",
 		},
-		response: CreateJobResponse{
-			Msg: "can't parse n",
-		},
-		err: errors.New("can't parse n"),
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
 	},
 	{
 		request: CreateJobRequest{
@@ -75,10 +67,8 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* * * * n",
 		},
-		response: CreateJobResponse{
-			Msg: "can't parse n",
-		},
-		err: errors.New("can't parse n"),
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
 	},
 }
 
