@@ -1,11 +1,14 @@
 all:
 	@go run ./cmd/kronosd/main.go
-test-all:
-	@go test ./...
 test-unit:
-	@go test --tags=unit -v ./...
-test-integration:
-	@go test --tags=integration -v ./...
+	@go test --tags=unit ./...
+test-acceptance:
+	@godog test/features
+test-all: 
+	@echo "======================== UNIT TESTS ======================== "
+	@go test --tags=unit ./...
+	@echo "======================== ACCEPTANCE TESTS ======================== "
+	@godog test/features
 cover:
 	@go test ./... -v -cover
 lint:

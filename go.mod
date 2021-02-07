@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/DataDog/datadog-go v4.2.0+incompatible // indirect
 	github.com/bvinc/go-sqlite-lite v0.6.1
+	github.com/cucumber/godog v0.11.0
 	github.com/google/uuid v1.1.4 // indirect
 	github.com/infobloxopen/go-trees v0.0.0-20200715205103-96a057b8dfb9 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
