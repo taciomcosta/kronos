@@ -2,11 +2,12 @@ package rest
 
 import (
 	"encoding/json"
+	"io"
 	"net/http"
 )
 
-func readJSONFromRequestBody(r *http.Request, v interface{}) error {
-	decoder := json.NewDecoder(r.Body)
+func ReadJSON(r io.Reader, v interface{}) error {
+	decoder := json.NewDecoder(r)
 	return decoder.Decode(v)
 }
 

@@ -10,7 +10,7 @@ import (
 // CreateJob handles jobs creation request.
 func CreateJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var jobRequest usecases.CreateJobRequest
-	err := readJSONFromRequestBody(r, &jobRequest)
+	err := ReadJSON(r.Body, &jobRequest)
 	if err != nil {
 		respondJSONBadRequest(w, err)
 	}
