@@ -13,13 +13,13 @@ var tablesStmts []string = []string{
 	`CREATE TABLE IF NOT EXISTS job(name TEXT PK, command TEXT, tick TEXT)`,
 }
 
-func new() {
-	connectDB()
+func newDB(name string) {
+	connectDB(name)
 	createTables()
 }
 
-func connectDB() {
-	conn, err := sqlite3.Open("kronos.db")
+func connectDB(name string) {
+	conn, err := sqlite3.Open(name)
 	if err != nil {
 		log.Fatal("Cannot establish connection with sqlite db")
 	}

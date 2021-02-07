@@ -11,7 +11,8 @@ import (
 )
 
 func main() {
-	usecases.New(sqlite.NewRepository())
+	repository := sqlite.NewRepository("kronos.db")
+	usecases.New(repository)
 	log.Printf("%d job(s) loaded", usecases.CountJobs())
 
 	router := httprouter.New()

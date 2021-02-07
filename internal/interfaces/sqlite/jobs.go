@@ -7,8 +7,8 @@ import (
 )
 
 // NewRepository returns a Sqlite repository implementation
-func NewRepository() entities.Repository {
-	new()
+func NewRepository(name string) entities.Repository {
+	newDB(name)
 	return &sqliteRepository{}
 }
 
