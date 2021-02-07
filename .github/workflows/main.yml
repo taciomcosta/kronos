@@ -1,0 +1,20 @@
+name: main
+on: [push]
+jobs:
+    test:
+        name: Building with Go version 1.13.7
+        steps:
+        - name: Setup Go
+          uses: actions/setup-go@v2
+          with:
+            go-version: '1.13.7'
+
+        - name: Check out code into the Go module directory
+          uses: actions/checkout@v2
+
+        - name: Test
+          run: make test-all
+
+
+
+
