@@ -3,6 +3,7 @@ on: [push]
 jobs:
     test:
         name: Building with Go version 1.13.7
+        runs-on: ubuntu-latest
         steps:
         - name: Setup Go
           uses: actions/setup-go@v2
