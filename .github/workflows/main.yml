@@ -28,7 +28,8 @@ jobs:
           uses: actions/cache@v1
           with:
             path: ~/go/pkg/mod
-            key: go-${{ hashFiles('**/go.sum') }}
+            key: ${{ runner.OS }}-go-${{ hashFiles('**/go.sum') }}
+
 
 
 
