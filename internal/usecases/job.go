@@ -1,7 +1,6 @@
 package usecases
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/taciomcosta/kronos/internal/entities"
@@ -64,10 +63,8 @@ func tickForever() {
 }
 
 func runAllJobs(t time.Time) {
-	fmt.Printf("Starting execution at %v\n", t)
 	for _, job := range jobs {
 		if job.IsTimeSet(t) {
-			fmt.Printf("> Running %s\n", job.Name)
 			go host.RunJob(&job)
 		}
 	}
