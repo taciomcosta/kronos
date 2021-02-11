@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// ReadJSON reads entire JSON from reader and decodes it
 func ReadJSON(r io.Reader, v interface{}) error {
 	decoder := json.NewDecoder(r)
 	return decoder.Decode(v)

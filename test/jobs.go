@@ -13,11 +13,13 @@ import (
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
+// JobsFeature contains BDD steps related to jobs feature
 type JobsFeature struct {
 	response *httptest.ResponseRecorder
 	inputJob usecases.CreateJobRequest
 }
 
+// IProvideValidDataForJobCreation represents a BDD step
 func (j *JobsFeature) IProvideValidDataForJobCreation() error {
 	j.inputJob = usecases.CreateJobRequest{
 		Name:    "list",
@@ -27,6 +29,7 @@ func (j *JobsFeature) IProvideValidDataForJobCreation() error {
 	return nil
 }
 
+// IProvideInvalidDataForJobCreation represents a BDD step
 func (j *JobsFeature) IProvideInvalidDataForJobCreation() error {
 	j.inputJob = usecases.CreateJobRequest{
 		Name:    "list",
@@ -36,6 +39,7 @@ func (j *JobsFeature) IProvideInvalidDataForJobCreation() error {
 	return nil
 }
 
+// ICreateANewJob represents a BDD step
 func (j *JobsFeature) ICreateANewJob() error {
 	request, err := newRequest(j.inputJob)
 	j.response = httptest.NewRecorder()
@@ -53,6 +57,7 @@ func newRequest(v interface{}) (*http.Request, error) {
 	return http.NewRequest("POST", "", payload)
 }
 
+// IListTheExistingJobs represents a BDD step
 func (j *JobsFeature) IListTheExistingJobs() error {
 	request, err := http.NewRequest("POST", "", nil)
 	j.response = httptest.NewRecorder()
@@ -61,6 +66,7 @@ func (j *JobsFeature) IListTheExistingJobs() error {
 	return err
 }
 
+// AnErrorMessageIsShown represents a BDD step
 func (j *JobsFeature) AnErrorMessageIsShown() error {
 	var errorMsg rest.ErrorMessage
 	err := rest.ReadJSON(j.response.Body, &errorMsg)
@@ -70,6 +76,7 @@ func (j *JobsFeature) AnErrorMessageIsShown() error {
 	return err
 }
 
+// TheNewJobShouldBeListed represents a BDD step
 func (j *JobsFeature) TheNewJobShouldBeListed() error {
 	var jobs []entities.Job
 	err := rest.ReadJSON(j.response.Body, &jobs)

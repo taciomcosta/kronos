@@ -37,13 +37,6 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	return CreateJobResponse{Msg: job.Name + " created."}, nil
 }
 
-// FindJobsResponse
-type FindJobsResponse struct {
-	Name    string `json:"name"`
-	Command string `json:"command"`
-	Tick    string `json:"tick"`
-}
-
 // FindJobs returns a list of all jobs.
 func FindJobs() []entities.Job {
 	return repository.FindJobs()
