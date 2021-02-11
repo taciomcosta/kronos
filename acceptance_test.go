@@ -8,6 +8,7 @@ import (
 
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	"github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"github.com/taciomcosta/kronos/test"
 )
 
@@ -23,7 +24,8 @@ func TestMain(m *testing.M) {
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
 		repository := sqlite.NewRepository(":memory:")
-		usecases.New(repository)
+		host := &mocks.SpyHost{} // TODO: use real host (?)
+		usecases.New(repository, host)
 	})
 }
 

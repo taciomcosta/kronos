@@ -73,7 +73,7 @@ var testsCreateJob = []struct {
 }
 
 func TestCreateJob(t *testing.T) {
-	New(mocks.NewMockRepository())
+	New(mocks.NewMockRepository(), &mocks.SpyHost{})
 	for _, tt := range testsCreateJob {
 		response, err := CreateJob(tt.request)
 		if tt.response != response {

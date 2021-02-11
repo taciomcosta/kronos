@@ -1,18 +1,21 @@
 package usecases
 
-import "github.com/taciomcosta/kronos/internal/entities"
+import (
+	"github.com/taciomcosta/kronos/internal/entities"
+)
 
 var repository entities.Repository
-var runner entities.JobsRunner
+var host entities.Host
+var jobs []entities.Job
 
 // New is used for dependency injection on set up.
-func New(r entities.Repository) {
+func New(r entities.Repository, h entities.Host) {
 	repository = r
-	startJobsRunner()
+	host = h
+	ScheduleExistingJobs()
 }
 
-func startJobsRunner() {
-	jobs := repository.FindJobs()
-	runner = entities.NewJobRunner(jobs)
-	go runner.Start()
+// GetHost returns host being used
+func GetHost() entities.Host {
+	return host
 }

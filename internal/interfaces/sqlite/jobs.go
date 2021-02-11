@@ -57,6 +57,11 @@ func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) entities.Job {
 	request := usecases.CreateJobRequest{}
 	stmt.Scan(&request.Name, &request.Command, &request.Tick)
-	job, _ := entities.NewJob(request.Name, request.Command, request.Tick)
+	// TODO: add usecases.NewJob() so sqlite doesn't have to know about usecase.Host
+	job, _ := entities.NewJob(
+		request.Name,
+		request.Command,
+		request.Tick,
+		usecases.GetHost().GetDettachedStream())
 	return job
 }

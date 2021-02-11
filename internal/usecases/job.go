@@ -1,6 +1,9 @@
 package usecases
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/taciomcosta/kronos/internal/entities"
 )
 
@@ -18,7 +21,11 @@ type CreateJobResponse struct {
 
 // CreateJob creates a job and schedules it right away.
 func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
-	job, err := entities.NewJob(request.Name, request.Command, request.Tick)
+	job, err := entities.NewJob(
+		request.Name,
+		request.Command,
+		request.Tick,
+		host.GetDettachedStream())
 	if err != nil {
 		return CreateJobResponse{}, err
 	}
@@ -26,7 +33,7 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	if err != nil {
 		return CreateJobResponse{}, err
 	}
-	runner.AddJob(job)
+	jobs = append(jobs, job)
 	return CreateJobResponse{Msg: job.Name + " created."}, nil
 }
 
@@ -45,4 +52,30 @@ func FindJobs() []entities.Job {
 // CountJobs counts the total of jobs.
 func CountJobs() int {
 	return repository.CountJobs()
+}
+
+// ScheduleExistingJobs schedules jobs on startup
+func ScheduleExistingJobs() {
+	jobs = repository.FindJobs()
+	go tickForever()
+}
+
+func tickForever() {
+	ticker := time.NewTicker(1 * time.Second)
+	for range ticker.C {
+		now := time.Now().UTC()
+		if now.Second() == 0 {
+			runAllJobs(now)
+		}
+	}
+}
+
+func runAllJobs(t time.Time) {
+	fmt.Printf("Starting execution at %v\n", t)
+	for _, job := range jobs {
+		if job.IsTimeSet(t) {
+			fmt.Printf("> Running %s\n", job.Name)
+			go host.RunJob(&job)
+		}
+	}
 }

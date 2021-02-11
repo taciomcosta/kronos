@@ -1,19 +1,20 @@
 package entities
 
 import (
-	"fmt"
-	"os"
-	"os/exec"
 	"time"
 )
 
-// NewJob creates a new Job from a request.
-func NewJob(name, command, tick string) (Job, error) {
+// NewJob creates a new Job using options
+func NewJob(name string, command string, tick string, stream Stream) (Job, error) {
 	ticker, err := NewTicker(tick)
-	if err != nil {
-		return Job{}, err
+	job := Job{
+		Name:    name,
+		Command: command,
+		Tick:    tick,
+		ticker:  ticker,
+		stream:  stream,
 	}
-	return Job{name, command, tick, ticker}, nil
+	return job, err
 }
 
 // Job represents a job
@@ -22,21 +23,10 @@ type Job struct {
 	Command string
 	Tick    string
 	ticker  Ticker
+	stream  Stream
 }
 
-// Run runs a job if it is the appropriate time.
-func (j *Job) Run(t time.Time) {
-	if !j.ticker.IsTimeSet(t) {
-		return
-	}
-	fmt.Printf("> Running %s\n", j.Name)
-	j.execCommand()
-}
-
-func (j *Job) execCommand() error {
-	cmd := exec.Command(j.Command)
-	cmd.Stdin = os.Stdin
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
-	return cmd.Run()
+// IsTimeSet tells if job should run in time t
+func (j *Job) IsTimeSet(t time.Time) bool {
+	return j.ticker.IsTimeSet(t)
 }
