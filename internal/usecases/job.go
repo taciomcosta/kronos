@@ -53,9 +53,7 @@ func ScheduleExistingJobs() {
 }
 
 func tickForever() {
-	ticker := time.NewTicker(1 * time.Second)
-	for range ticker.C {
-		now := time.Now().UTC()
+	for now := range host.TickEverySecond() {
 		if now.Second() == 0 {
 			runAllJobs(now)
 		}
@@ -65,7 +63,7 @@ func tickForever() {
 func runAllJobs(t time.Time) {
 	for _, job := range jobs {
 		if job.IsTimeSet(t) {
-			go host.RunJob(&job)
+			host.RunJob(&job)
 		}
 	}
 }
