@@ -130,17 +130,17 @@ var testScheduleExistingJobs = []struct {
 func TestScheduleExistingJobs(t *testing.T) {
 	for _, tt := range testScheduleExistingJobs {
 		for _, now := range tt.times {
-			givenExpressionAssertJobIsCalledOnGivenTime(t, tt.expression, now)
+			givenExpressionAssertJobIsCalledOnTime(t, tt.expression, now)
 		}
 	}
 }
 
-func givenExpressionAssertJobIsCalledOnGivenTime(t *testing.T, expr string, now time.Time) {
+func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
 	repository := mocks.NewMockRepository()
 	repository.CreateJobWithExpression(expr)
 	New(repository, spyHost)
-	go spyHost.NotifyCurrentTimeIs(now)
+	spyHost.NotifyCurrentTimeIs(now)
 	ScheduleExistingJobs()
 	if !spyHost.WasRunJobCalled() {
 		t.Fatalf("job was not called in time %v", now)

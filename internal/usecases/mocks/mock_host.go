@@ -22,7 +22,6 @@ type SpyHost struct {
 // RunJob runs a job on spy host
 func (s *SpyHost) RunJob(job *entities.Job) {
 	s.called = true
-	close(s.channel)
 }
 
 // WasRunJobCalled tells if RunJob was called
@@ -37,15 +36,21 @@ func (s *SpyHost) GetDettachedStream() entities.Stream {
 
 // TickEverySecond stubs channel so that we can emit desired time on tests
 func (s *SpyHost) TickEverySecond() <-chan time.Time {
+	// In production, we want tick channel to be open forever
+	// but we don't this bevahior when testing.
+	// Thus we set an expiration time.
+	s.expireChannelAfter(1000 * time.Nanosecond)
 	return s.channel
+}
+
+func (s *SpyHost) expireChannelAfter(duration time.Duration) {
+	go func() {
+		<-time.After(duration)
+		close(s.channel)
+	}()
 }
 
 // NotifyCurrentTimeIs trigger channel returned by TickEverySecond
 func (s *SpyHost) NotifyCurrentTimeIs(now time.Time) {
-	select {
-	case s.channel <- now:
-	case <-time.After(time.Second):
-		close(s.channel)
-		return
-	}
+	s.channel <- now
 }
