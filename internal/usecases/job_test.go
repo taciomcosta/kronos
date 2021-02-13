@@ -99,24 +99,21 @@ func assertError(t *testing.T, got error, want error) {
 var testScheduleExistingJobs = []struct {
 	expression string
 	times      []time.Time
-	isSet      bool
 }{
 	{
 		expression: "* * * * *",
 		times: []time.Time{
-			time.Date(2021, 1, 1, 1, 1, 1, 0, time.UTC),
-			time.Date(2021, 1, 1, 2, 1, 1, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 1, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 2, 1, 0, 0, time.UTC),
 		},
-		isSet: true,
 	},
 	{
 		expression: "*/2 * * * *",
 		times: []time.Time{
-			time.Date(2021, 1, 1, 1, 1, 1, 0, time.UTC),
-			time.Date(2021, 1, 1, 1, 3, 1, 0, time.UTC),
-			time.Date(2021, 1, 1, 1, 7, 1, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 1, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 3, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 7, 0, 0, time.UTC),
 		},
-		isSet: false,
 	},
 	{
 		expression: "0 0 4 * 3",
@@ -127,16 +124,23 @@ var testScheduleExistingJobs = []struct {
 			time.Date(2021, 2, 3, 0, 0, 0, 0, time.UTC),
 			time.Date(2021, 2, 4, 0, 0, 0, 0, time.UTC),
 		},
-		isSet: true,
 	},
 }
 
 func TestScheduleExistingJobs(t *testing.T) {
+	for _, tt := range testScheduleExistingJobs {
+		for _, now := range tt.times {
+			givenExpressionAssertJobIsCalledOnGivenTime(t, tt.expression, now)
+		}
+	}
+}
+
+func givenExpressionAssertJobIsCalledOnGivenTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
 	repository := mocks.NewMockRepository()
+	repository.CreateJobWithExpression(expr)
 	New(repository, spyHost)
-	now := time.Date(2021, 2, 4, 0, 0, 0, 0, time.UTC)
-	go spyHost.TriggerTickWithTime(now)
+	go spyHost.NotifyCurrentTimeIs(now)
 	ScheduleExistingJobs()
 	if !spyHost.WasRunJobCalled() {
 		t.Fatalf("job was not called in time %v", now)

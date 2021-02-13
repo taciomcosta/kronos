@@ -40,11 +40,12 @@ func (s *SpyHost) TickEverySecond() <-chan time.Time {
 	return s.channel
 }
 
-// TriggerTickWithTime trigger channel returned by TickEverySecond
-func (s *SpyHost) TriggerTickWithTime(now time.Time) {
+// NotifyCurrentTimeIs trigger channel returned by TickEverySecond
+func (s *SpyHost) NotifyCurrentTimeIs(now time.Time) {
 	select {
 	case s.channel <- now:
 	case <-time.After(time.Second):
 		close(s.channel)
+		return
 	}
 }
