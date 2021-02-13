@@ -19,11 +19,6 @@ jobs:
             path: ~/go/pkg/mod
             key: ${{ runner.OS }}-go-${{ hashFiles('**/go.sum') }}
 
-        - name: Get dependencies
-          run:
-            go get github.com/cucumber/godog/cmd/godog@v0.11.0 &&
-            go get golang.org/x/lint/golint
-
         - name: Test
           run: make test-all
 
