@@ -2,35 +2,35 @@ package mocks
 
 import "github.com/taciomcosta/kronos/internal/entities"
 
-// NewMockRepository returns a mock implementation of repository.
-func NewMockRepository() *MockRepository {
-	return &MockRepository{}
+// NewStubRepository subts repository implementation
+func NewStubRepository() *StubRepository {
+	return &StubRepository{}
 }
 
-// MockRepository implements entities.Repository for tests purposes
-type MockRepository struct {
+// StubRepository implements entities.Repository for tests purposes
+type StubRepository struct {
 	jobs []entities.Job
 }
 
 // CreateJob creates a job.
-func (mr *MockRepository) CreateJob(job *entities.Job) error {
+func (mr *StubRepository) CreateJob(job *entities.Job) error {
 	return nil
 }
 
 // CountJobs counts the total of jobs.
-func (mr *MockRepository) CountJobs() int {
+func (mr *StubRepository) CountJobs() int {
 	return 1
 }
 
 // FindJobs finds all jobs.
-func (mr *MockRepository) FindJobs() []entities.Job {
+func (mr *StubRepository) FindJobs() []entities.Job {
 	job, _ := entities.NewJob("list", "ls", "* * * * *", entities.Stream{})
 	mr.jobs = []entities.Job{job}
 	return mr.jobs
 }
 
 // CreateJobWithExpression is a shortcut to add a job with provided expression
-func (mr *MockRepository) CreateJobWithExpression(expression string) {
+func (mr *StubRepository) CreateJobWithExpression(expression string) {
 	job, _ := entities.NewJob("name", "cmd", expression, entities.Stream{})
 	mr.jobs = append(mr.jobs, job)
 }
