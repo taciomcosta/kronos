@@ -17,55 +17,131 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* * * * *",
 		},
-		response: CreateJobResponse{
-			Msg: "list created.",
-		},
-		err: nil,
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
 	},
 	{
 		request: CreateJobRequest{
 			Name:    "list",
 			Command: "ls",
-			Tick:    "n * * * *",
+			Tick:    "1 1 1 1 1",
 		},
-		response: CreateJobResponse{},
-		err:      errors.New("can't parse n"),
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
 	},
 	{
 		request: CreateJobRequest{
 			Name:    "list",
 			Command: "ls",
-			Tick:    "* n * * *",
+			Tick:    "1,2,3 1,2,3 1,2,3 1,2,3 1,2,3",
 		},
-		response: CreateJobResponse{},
-		err:      errors.New("can't parse n"),
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
 	},
 	{
 		request: CreateJobRequest{
 			Name:    "list",
 			Command: "ls",
-			Tick:    "* * n * *",
+			Tick:    "1,*,3 1,*,3 1,*,3 1,*,3 1,*,3",
 		},
-		response: CreateJobResponse{},
-		err:      errors.New("can't parse n"),
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
 	},
 	{
 		request: CreateJobRequest{
 			Name:    "list",
 			Command: "ls",
-			Tick:    "* * * n *",
+			Tick:    "1-4 1-4 1-4 1-4 1-4",
 		},
-		response: CreateJobResponse{},
-		err:      errors.New("can't parse n"),
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
 	},
 	{
 		request: CreateJobRequest{
 			Name:    "list",
 			Command: "ls",
-			Tick:    "* * * * n",
+			Tick:    "*/2 */2 */2 */2 */2",
 		},
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "1-5/2 1-5/2 1-5/2 1-5/2 1-5/2",
+		},
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
+	},
+	{
+		request: CreateJobRequest{
+			Name:    "list",
+			Command: "ls",
+			Tick:    "1-5/2,6 1-5/2,6 1-5/2,6 1-5/2,6 1-5/2,6",
+		},
+		response: CreateJobResponse{Msg: "list created."},
+		err:      nil,
+	},
+	{
+		request:  CreateJobRequest{Tick: "n * * * *"},
 		response: CreateJobResponse{},
 		err:      errors.New("can't parse n"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* n * * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * n * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * * n *"},
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * * * n"},
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse n"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "60 * * * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("60 out of range 0-59"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "1- * * * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("missing value in range 1-"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "0-60 * * * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("0-60 out of range 0-59"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * 0-23 * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("0-23 out of range 1-31"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * * 1-13/2,7 *"},
+		response: CreateJobResponse{},
+		err:      errors.New("1-13 out of range 1-12"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "* * * 1-5/2,13 *"},
+		response: CreateJobResponse{},
+		err:      errors.New("13 out of range 1-12"),
+	},
+	{
+		request:  CreateJobRequest{Tick: "10/2 * * * *"},
+		response: CreateJobResponse{},
+		err:      errors.New("can't parse 10/2"),
 	},
 }
 
@@ -73,10 +149,14 @@ func TestCreateJob(t *testing.T) {
 	New(mocks.NewMockRepository(), mocks.NewSpyHost())
 	for _, tt := range testsCreateJob {
 		response, err := CreateJob(tt.request)
-		if tt.response != response {
-			t.Errorf("got %v, expected %v", response, tt.response)
-		}
+		assertResponse(t, response, tt.response)
 		assertError(t, err, tt.err)
+	}
+}
+
+func assertResponse(t *testing.T, got CreateJobResponse, want CreateJobResponse) {
+	if got != want {
+		t.Errorf("got %v, expected %v", got, want)
 	}
 }
 
@@ -85,12 +165,12 @@ func assertError(t *testing.T, got error, want error) {
 		return
 	}
 	if got == nil && want != nil {
-		t.Errorf("expected error %v, got %v", want, got)
+		t.Fatalf("expected error %v, got %v", want, got)
 	}
 	if got != nil && want == nil {
-		t.Errorf("expected error %v, got %v", want, got)
+		t.Fatalf("expected error %v, got %v", want, got)
 	}
 	if got.Error() != want.Error() {
-		t.Errorf("expected error %v, got %v", want, got)
+		t.Fatalf("expected error %v, got %v", want, got)
 	}
 }
