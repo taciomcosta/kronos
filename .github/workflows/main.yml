@@ -28,7 +28,9 @@ jobs:
           run: make test-all
 
         - name: Lint
-          run: make lint
+          uses: golangci/golangci-lint-action@v2
+          with:
+              version: v1.29
 
 
 
