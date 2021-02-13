@@ -6,18 +6,27 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 )
 
+// NewSpyHost creates a new SpyHost
+func NewSpyHost() *SpyHost {
+	spy := SpyHost{}
+	spy.channel = make(chan time.Time, 1)
+	return &spy
+}
+
 // SpyHost is a test double used to spy on host calls
 type SpyHost struct {
-	called bool
+	called  bool
+	channel chan time.Time
 }
 
 // RunJob runs a job on spy host
 func (s *SpyHost) RunJob(job *entities.Job) {
 	s.called = true
+	close(s.channel)
 }
 
-// WasCalled tells if RunJob was called
-func (s *SpyHost) WasCalled() bool {
+// WasRunJobCalled tells if RunJob was called
+func (s *SpyHost) WasRunJobCalled() bool {
 	return s.called
 }
 
@@ -28,7 +37,14 @@ func (s *SpyHost) GetDettachedStream() entities.Stream {
 
 // TickEverySecond stubs channel so that we can emit desired time on tests
 func (s *SpyHost) TickEverySecond() <-chan time.Time {
-	// TODO: stub current time
-	ticker := time.NewTicker(1 * time.Second)
-	return ticker.C
+	return s.channel
+}
+
+// TriggerTickWithTime trigger channel returned by TickEverySecond
+func (s *SpyHost) TriggerTickWithTime(now time.Time) {
+	select {
+	case s.channel <- now:
+	case <-time.After(time.Second):
+		close(s.channel)
+	}
 }

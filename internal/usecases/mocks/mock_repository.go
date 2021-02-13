@@ -21,12 +21,6 @@ func (mr *mockRepository) CountJobs() int {
 
 // FindJobs finds all jobs.
 func (mr *mockRepository) FindJobs() []entities.Job {
-	return []entities.Job{
-		{
-			Name:    "list",
-			Command: "ls",
-			Tick:    "* * * * *",
-		},
-	}
-
+	job, _ := entities.NewJob("list", "ls", "* * * * *", entities.Stream{})
+	return []entities.Job{job}
 }
