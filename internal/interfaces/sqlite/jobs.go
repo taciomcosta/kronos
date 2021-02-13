@@ -20,18 +20,17 @@ func (r *sqliteRepository) CreateJob(job *entities.Job) error {
 	if err != nil {
 		return err
 	}
-	defer stmt.Close()
 	err = stmt.Exec(job.Name, job.Command, job.Tick)
+	_ = stmt.Close()
 	return err
 }
 
-// CountJobs counts the total of jobs.
 func (r *sqliteRepository) CountJobs() int {
 	var count int
 	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
-	defer stmt.Close()
-	stmt.Step()
-	stmt.Scan(&count)
+	_, _ = stmt.Step()
+	_ = stmt.Scan(&count)
+	_ = stmt.Close()
 	return count
 }
 
@@ -41,7 +40,7 @@ func (r *sqliteRepository) FindJobs() []entities.Job {
 	if err != nil {
 		return []entities.Job{}
 	}
-	defer stmt.Close()
+	_ = stmt.Close()
 	return r.readAllJobs(stmt)
 }
 
@@ -56,7 +55,7 @@ func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 
 func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) entities.Job {
 	request := usecases.CreateJobRequest{}
-	stmt.Scan(&request.Name, &request.Command, &request.Tick)
+	_ = stmt.Scan(&request.Name, &request.Command, &request.Tick)
 	// TODO: add usecases.NewJob() so sqlite doesn't have to know about usecase.Host
 	job, _ := entities.NewJob(
 		request.Name,

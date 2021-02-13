@@ -117,13 +117,3 @@ func (t *token) setNumericValue(s string) error {
 	t.values[number] = true
 	return nil
 }
-
-func (t *token) filterSetValues() []int {
-	var result []int
-	for i, isSet := range t.values {
-		if isSet {
-			result = append(result, i)
-		}
-	}
-	return result
-}

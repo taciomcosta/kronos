@@ -12,4 +12,4 @@ test-all:
 cover:
 	@go test ./... -v -cover
 lint:
-	@golint ./...
+	@golangci-lint run

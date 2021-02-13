@@ -26,7 +26,7 @@ func respondJSON(w http.ResponseWriter, v interface{}) {
 	if err != nil {
 		respondJSONBadRequest(w, err)
 	} else {
-		w.Write(bytes)
+		_, _ = w.Write(bytes)
 	}
 }
 
