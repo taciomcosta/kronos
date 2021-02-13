@@ -59,7 +59,7 @@ func newRequest(v interface{}) (*http.Request, error) {
 
 // IListTheExistingJobs represents a BDD step
 func (j *JobsFeature) IListTheExistingJobs() error {
-	request, err := http.NewRequest("POST", "", nil)
+	request, err := http.NewRequest("GET", "", nil)
 	j.response = httptest.NewRecorder()
 	ps := httprouter.Params{}
 	rest.FindJobs(j.response, request, ps)

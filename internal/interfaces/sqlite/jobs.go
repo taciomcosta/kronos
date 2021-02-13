@@ -40,8 +40,9 @@ func (r *sqliteRepository) FindJobs() []entities.Job {
 	if err != nil {
 		return []entities.Job{}
 	}
+	jobs := r.readAllJobs(stmt)
 	_ = stmt.Close()
-	return r.readAllJobs(stmt)
+	return jobs
 }
 
 func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
