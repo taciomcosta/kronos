@@ -12,7 +12,6 @@ var jobs []entities.Job
 func New(r entities.Repository, h entities.Host) {
 	repository = r
 	host = h
-	ScheduleExistingJobs()
 }
 
 // GetHost returns host being used

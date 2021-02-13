@@ -49,7 +49,7 @@ func CountJobs() int {
 // ScheduleExistingJobs schedules jobs on startup
 func ScheduleExistingJobs() {
 	jobs = repository.FindJobs()
-	go tickForever()
+	tickForever()
 }
 
 func tickForever() {
