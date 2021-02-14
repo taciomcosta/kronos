@@ -1,9 +1,11 @@
-package usecases
+package usecases_test
 
 import (
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"testing"
 	"time"
+
+	"github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testScheduleExistingJobs = []struct {
@@ -49,9 +51,9 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 	spyHost := mocks.NewSpyHost()
 	writerReader := mocks.NewStubWriterReader()
 	writerReader.CreateJobWithExpression(expr)
-	New(writerReader, writerReader, spyHost)
+	usecases.New(writerReader, writerReader, spyHost)
 	spyHost.NotifyCurrentTimeIs(now)
-	ScheduleExistingJobs()
+	usecases.ScheduleExistingJobs()
 	if !spyHost.WasRunJobCalled() {
 		t.Fatalf("job was not called in time %v", now)
 	}
