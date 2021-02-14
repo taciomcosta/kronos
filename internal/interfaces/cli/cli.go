@@ -19,9 +19,9 @@ func setup() {
 	createJobCmd.Flags().StringVarP(&flags.Name, "name", "n", "", "Unique job name")
 	createJobCmd.Flags().StringVarP(&flags.Command, "cmd", "c", "", "Job entrypoint")
 	createJobCmd.Flags().StringVarP(&flags.Tick, "tick", "t", "", `Cron expression. Ex: "* * * * *"`)
-	createJobCmd.MarkFlagRequired("name")
-	createJobCmd.MarkFlagRequired("cmd")
-	createJobCmd.MarkFlagRequired("tick")
+	_ = createJobCmd.MarkFlagRequired("name")
+	_ = createJobCmd.MarkFlagRequired("cmd")
+	_ = createJobCmd.MarkFlagRequired("tick")
 }
 
 // NewClient creates a new CLI client
