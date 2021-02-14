@@ -20,7 +20,7 @@ type SpyHost struct {
 }
 
 // RunJob runs a job on spy host
-func (s *SpyHost) RunJob(job *entities.Job) {
+func (s *SpyHost) RunJob(job entities.Job) {
 	s.called = true
 }
 

@@ -21,7 +21,7 @@ func tickForever() {
 func runAllJobs(t time.Time) {
 	for _, job := range jobs {
 		if job.IsTimeSet(t) {
-			host.RunJob(&job)
+			host.RunJob(job)
 		}
 	}
 }

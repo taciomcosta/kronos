@@ -27,11 +27,11 @@ func (o *defaultOS) TickEverySecond() <-chan time.Time {
 }
 
 // RunJob runs a job hosted by default OS lib
-func (o *defaultOS) RunJob(job *entities.Job) {
+func (o *defaultOS) RunJob(job entities.Job) {
 	go o.runInBackground(job)
 }
 
-func (o *defaultOS) runInBackground(job *entities.Job) {
+func (o *defaultOS) runInBackground(job entities.Job) {
 	log.Printf("Running job %s\n", job.Name)
 	cmd := o.newCommandFromJob(job)
 	err := cmd.Run()
@@ -40,7 +40,7 @@ func (o *defaultOS) runInBackground(job *entities.Job) {
 	}
 }
 
-func (o *defaultOS) newCommandFromJob(job *entities.Job) *exec.Cmd {
+func (o *defaultOS) newCommandFromJob(job entities.Job) *exec.Cmd {
 	cmd := exec.Command(job.Command)
 	// TODO: implement attach/detach
 	//cmd.Stdin = os.Stdin
