@@ -2,7 +2,6 @@ package os
 
 import (
 	"log"
-	"os"
 	"os/exec"
 	"time"
 
@@ -22,7 +21,7 @@ func (o *defaultOS) GetDettachedStream() entities.Stream {
 }
 
 // TickEverySecond creates a channel that emits current time on every second
-func (d *defaultOS) TickEverySecond() <-chan time.Time {
+func (o *defaultOS) TickEverySecond() <-chan time.Time {
 	ticker := time.NewTicker(1 * time.Second)
 	return ticker.C
 }
@@ -43,8 +42,9 @@ func (o *defaultOS) runInBackground(job *entities.Job) {
 
 func (o *defaultOS) newCommandFromJob(job *entities.Job) *exec.Cmd {
 	cmd := exec.Command(job.Command)
-	cmd.Stdin = os.Stdin
-	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
+	// TODO: implement attach/detach
+	//cmd.Stdin = os.Stdin
+	//cmd.Stderr = os.Stderr
+	//cmd.Stdout = os.Stdout
 	return cmd
 }

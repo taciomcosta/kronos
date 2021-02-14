@@ -9,3 +9,4 @@ Feature: Create a job
         Given I provide invalid data for job creation
         When I create a new job
         Then an error message is shown
+
