@@ -8,20 +8,19 @@ import (
 	"net/http/httptest"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/taciomcosta/kronos/internal/entities"
 	"github.com/taciomcosta/kronos/internal/interfaces/rest"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
 // JobsFeature contains BDD steps related to jobs feature
 type JobsFeature struct {
 	response *httptest.ResponseRecorder
-	inputJob usecases.CreateJobRequest
+	inputJob uc.CreateJobRequest
 }
 
 // IProvideValidDataForJobCreation represents a BDD step
 func (j *JobsFeature) IProvideValidDataForJobCreation() error {
-	j.inputJob = usecases.CreateJobRequest{
+	j.inputJob = uc.CreateJobRequest{
 		Name:    "list",
 		Command: "ls",
 		Tick:    "* * * * *",
@@ -31,7 +30,7 @@ func (j *JobsFeature) IProvideValidDataForJobCreation() error {
 
 // IProvideInvalidDataForJobCreation represents a BDD step
 func (j *JobsFeature) IProvideInvalidDataForJobCreation() error {
-	j.inputJob = usecases.CreateJobRequest{
+	j.inputJob = uc.CreateJobRequest{
 		Name:    "list",
 		Command: "ls",
 		Tick:    "n * * * *",
@@ -78,17 +77,17 @@ func (j *JobsFeature) AnErrorMessageIsShown() error {
 
 // TheNewJobShouldBeListed represents a BDD step
 func (j *JobsFeature) TheNewJobShouldBeListed() error {
-	var jobs []entities.Job
-	err := rest.ReadJSON(j.response.Body, &jobs)
+	var findJobsResponse uc.FindJobsResponse
+	err := rest.ReadJSON(j.response.Body, &findJobsResponse)
 	if err != nil {
 		return err
 	}
-	_, err = findJobByName(jobs, "list")
+	_, err = findJobByName(findJobsResponse, "list")
 	return err
 }
 
-func findJobByName(jobs []entities.Job, name string) (*entities.Job, error) {
-	for _, j := range jobs {
+func findJobByName(response uc.FindJobsResponse, name string) (*uc.JobDTO, error) {
+	for _, j := range response.Jobs {
 		if j.Name == "list" {
 			return &j, nil
 		}

@@ -16,7 +16,7 @@ func main() {
 	usecases.New(writerReader, writerReader, host)
 	go usecases.ScheduleExistingJobs()
 
-	log.Printf("%d job(s) loaded", usecases.CountJobs())
+	log.Printf("%d job(s) loaded", usecases.FindJobs().Count)
 
 	router := rest.NewRouter()
 

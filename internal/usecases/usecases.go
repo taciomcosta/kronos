@@ -38,5 +38,5 @@ type Writer interface {
 // Reader represents a Layer Supertype similar to Repository pattern
 type Reader interface {
 	FindJobs() []entities.Job
-	CountJobs() int
+	FindJobsResponse() FindJobsResponse
 }

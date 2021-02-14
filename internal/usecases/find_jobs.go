@@ -1,15 +1,20 @@
 package usecases
 
-import (
-	"github.com/taciomcosta/kronos/internal/entities"
-)
+import ()
 
-// FindJobs returns a list of all jobs.
-func FindJobs() []entities.Job {
-	return reader.FindJobs()
+// FindJobsResponse represents response of FindJob usecase
+type FindJobsResponse struct {
+	Jobs  []JobDTO
+	Count int `json:"count"`
 }
 
-// CountJobs counts the total of jobs.
-func CountJobs() int {
-	return reader.CountJobs()
+type JobDTO struct {
+	Name    string `json:"name"`
+	Command string `json:"command"`
+	Tick    string `json:"tick"`
+}
+
+// FindJobs returns a list of all jobs.
+func FindJobs() FindJobsResponse {
+	return reader.FindJobsResponse()
 }

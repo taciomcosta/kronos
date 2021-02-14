@@ -3,7 +3,7 @@ package sqlite
 import (
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
 	"github.com/taciomcosta/kronos/internal/entities"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
 // NewWriterReader returns a Sqlite writer implementation
@@ -26,14 +26,26 @@ func (r *WriterReader) CreateJob(job *entities.Job) error {
 	return err
 }
 
-// CountJobs counts total of jobs
-func (r *WriterReader) CountJobs() int {
-	var count int
-	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
-	_, _ = stmt.Step()
-	_ = stmt.Scan(&count)
+// FindJobsResponse returns all jobs in FindJobsResponse format
+func (r *WriterReader) FindJobsResponse() uc.FindJobsResponse {
+	stmt, err := db.Prepare("SELECT * FROM job")
+	if err != nil {
+		return uc.FindJobsResponse{}
+	}
+	response := r.readAllJobsResponse(stmt)
 	_ = stmt.Close()
-	return count
+	return response
+}
+
+func (r *WriterReader) readAllJobsResponse(stmt *sqlite3.Stmt) uc.FindJobsResponse {
+	var response uc.FindJobsResponse
+	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
+		job := uc.JobDTO{}
+		_ = stmt.Scan(&job.Name, &job.Command, &job.Tick)
+		response.Jobs = append(response.Jobs, job)
+	}
+	response.Count = len(response.Jobs)
+	return response
 }
 
 // FindJobs finds all jobs.
@@ -57,13 +69,13 @@ func (r *WriterReader) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 }
 
 func (r *WriterReader) readOneJob(stmt *sqlite3.Stmt) entities.Job {
-	request := usecases.CreateJobRequest{}
+	request := uc.CreateJobRequest{}
 	_ = stmt.Scan(&request.Name, &request.Command, &request.Tick)
 	// TODO: add usecases.NewJob() so sqlite doesn't have to know about usecase.Host
 	job, _ := entities.NewJob(
 		request.Name,
 		request.Command,
 		request.Tick,
-		usecases.GetHost().GetDettachedStream())
+		uc.GetHost().GetDettachedStream())
 	return job
 }
