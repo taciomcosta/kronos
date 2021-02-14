@@ -47,7 +47,10 @@ choco install kronos
 > kronos
 kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs.
 
-Commands:
+Usage:
+    kronos [command]
+
+Available Commands:
   create         Creates a new job/channel
   delete         Deletes a job/channel
   list           Lists all jobs/channels
@@ -58,6 +61,9 @@ Commands:
   enable         Enables a job execution
   disable        Disables a job execution
   assign         Assigns a channel to a job
+
+Flags:
+    -h, --help   help for kronos
 
 Use "kronos <command> --help" to learn more about a specific command.
 ```
@@ -75,7 +81,7 @@ Alternatively, we can do:
 
 Listing jobs:
 ```
-> kronos list
+> kronos list jobs
 NAME            COMMAND             TICK               LAST EXECUTION             STATUS
 myjob           ./my-job.sh         Every day          2021-01-01 00:00:00        Enabled 
 myfiles         ls                  0 0 */1 * *        2021-01-01 00:00:00        Disabled
