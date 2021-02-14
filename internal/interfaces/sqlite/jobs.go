@@ -6,16 +6,16 @@ import (
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewRepository returns a Sqlite repository implementation
-func NewRepository(name string) usecases.Repository {
+// NewWriter returns a Sqlite writer implementation
+func NewWriter(name string) usecases.Writer {
 	newDB(name)
-	return &sqliteRepository{}
+	return &sqliteWriter{}
 }
 
-type sqliteRepository struct{}
+type sqliteWriter struct{}
 
 // CreateJob creates a job.
-func (r *sqliteRepository) CreateJob(job *entities.Job) error {
+func (r *sqliteWriter) CreateJob(job *entities.Job) error {
 	stmt, err := db.Prepare("INSERT INTO job VALUES(?, ?, ?)")
 	if err != nil {
 		return err
@@ -25,7 +25,7 @@ func (r *sqliteRepository) CreateJob(job *entities.Job) error {
 	return err
 }
 
-func (r *sqliteRepository) CountJobs() int {
+func (r *sqliteWriter) CountJobs() int {
 	var count int
 	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
 	_, _ = stmt.Step()
@@ -35,7 +35,7 @@ func (r *sqliteRepository) CountJobs() int {
 }
 
 // FindJobs finds all jobs.
-func (r *sqliteRepository) FindJobs() []entities.Job {
+func (r *sqliteWriter) FindJobs() []entities.Job {
 	stmt, err := db.Prepare("SELECT * FROM job")
 	if err != nil {
 		return []entities.Job{}
@@ -45,7 +45,7 @@ func (r *sqliteRepository) FindJobs() []entities.Job {
 	return jobs
 }
 
-func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
+func (r *sqliteWriter) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 	jobs := make([]entities.Job, 0)
 	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
 		job := r.readOneJob(stmt)
@@ -54,7 +54,7 @@ func (r *sqliteRepository) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 	return jobs
 }
 
-func (r *sqliteRepository) readOneJob(stmt *sqlite3.Stmt) entities.Job {
+func (r *sqliteWriter) readOneJob(stmt *sqlite3.Stmt) entities.Job {
 	request := usecases.CreateJobRequest{}
 	_ = stmt.Scan(&request.Name, &request.Command, &request.Tick)
 	// TODO: add usecases.NewJob() so sqlite doesn't have to know about usecase.Host

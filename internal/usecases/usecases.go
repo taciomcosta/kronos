@@ -6,13 +6,13 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 )
 
-var repository Repository
+var writer Writer
 var host entities.Host
 var jobs []entities.Job
 
 // New is used for dependency injection on set up.
-func New(r Repository, h Host) {
-	repository = r
+func New(r Writer, h Host) {
+	writer = r
 	host = h
 }
 
@@ -28,9 +28,9 @@ type Host interface {
 	TickEverySecond() <-chan time.Time
 }
 
-// Repository represents a Layer Supertype similar to Repository pattern
+// Writer represents a Layer Supertype similar to Writer pattern
 // https://martinfowler.com/eaaCatalog/layerSupertype.html
-type Repository interface {
+type Writer interface {
 	CreateJob(job *entities.Job) error
 	FindJobs() []entities.Job
 	CountJobs() int

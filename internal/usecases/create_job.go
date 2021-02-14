@@ -26,7 +26,7 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	if err != nil {
 		return CreateJobResponse{}, err
 	}
-	err = repository.CreateJob(&job)
+	err = writer.CreateJob(&job)
 	if err != nil {
 		return CreateJobResponse{}, err
 	}

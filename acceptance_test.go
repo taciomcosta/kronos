@@ -23,9 +23,9 @@ func TestMain(m *testing.M) {
 
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
-		repository := sqlite.NewRepository(":memory:")
+		writer := sqlite.NewWriter(":memory:")
 		host := &mocks.SpyHost{} // TODO: use real host (?)
-		usecases.New(repository, host)
+		usecases.New(writer, host)
 	})
 }
 

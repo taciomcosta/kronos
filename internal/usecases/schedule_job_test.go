@@ -47,9 +47,9 @@ func TestScheduleExistingJobs(t *testing.T) {
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
-	repository := mocks.NewStubRepository()
-	repository.CreateJobWithExpression(expr)
-	New(repository, spyHost)
+	writer := mocks.NewStubWriter()
+	writer.CreateJobWithExpression(expr)
+	New(writer, spyHost)
 	spyHost.NotifyCurrentTimeIs(now)
 	ScheduleExistingJobs()
 	if !spyHost.WasRunJobCalled() {

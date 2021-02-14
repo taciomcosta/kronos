@@ -6,10 +6,10 @@ import (
 
 // FindJobs returns a list of all jobs.
 func FindJobs() []entities.Job {
-	return repository.FindJobs()
+	return writer.FindJobs()
 }
 
 // CountJobs counts the total of jobs.
 func CountJobs() int {
-	return repository.CountJobs()
+	return writer.CountJobs()
 }
