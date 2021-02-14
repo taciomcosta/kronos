@@ -6,16 +6,17 @@ import (
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewWriter returns a Sqlite writer implementation
-func NewWriter(name string) usecases.Writer {
+// NewWriterReader returns a Sqlite writer implementation
+func NewWriterReader(name string) *WriterReader {
 	newDB(name)
-	return &sqliteWriter{}
+	return &WriterReader{}
 }
 
-type sqliteWriter struct{}
+// WriterReader implements usecase.Writer and usecase.Reader
+type WriterReader struct{}
 
 // CreateJob creates a job.
-func (r *sqliteWriter) CreateJob(job *entities.Job) error {
+func (r *WriterReader) CreateJob(job *entities.Job) error {
 	stmt, err := db.Prepare("INSERT INTO job VALUES(?, ?, ?)")
 	if err != nil {
 		return err
@@ -25,7 +26,8 @@ func (r *sqliteWriter) CreateJob(job *entities.Job) error {
 	return err
 }
 
-func (r *sqliteWriter) CountJobs() int {
+// CountJobs counts total of jobs
+func (r *WriterReader) CountJobs() int {
 	var count int
 	stmt, _ := db.Prepare("SELECT COUNT(*) FROM job")
 	_, _ = stmt.Step()
@@ -35,7 +37,7 @@ func (r *sqliteWriter) CountJobs() int {
 }
 
 // FindJobs finds all jobs.
-func (r *sqliteWriter) FindJobs() []entities.Job {
+func (r *WriterReader) FindJobs() []entities.Job {
 	stmt, err := db.Prepare("SELECT * FROM job")
 	if err != nil {
 		return []entities.Job{}
@@ -45,7 +47,7 @@ func (r *sqliteWriter) FindJobs() []entities.Job {
 	return jobs
 }
 
-func (r *sqliteWriter) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
+func (r *WriterReader) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 	jobs := make([]entities.Job, 0)
 	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
 		job := r.readOneJob(stmt)
@@ -54,7 +56,7 @@ func (r *sqliteWriter) readAllJobs(stmt *sqlite3.Stmt) []entities.Job {
 	return jobs
 }
 
-func (r *sqliteWriter) readOneJob(stmt *sqlite3.Stmt) entities.Job {
+func (r *WriterReader) readOneJob(stmt *sqlite3.Stmt) entities.Job {
 	request := usecases.CreateJobRequest{}
 	_ = stmt.Scan(&request.Name, &request.Command, &request.Tick)
 	// TODO: add usecases.NewJob() so sqlite doesn't have to know about usecase.Host

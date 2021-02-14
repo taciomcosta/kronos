@@ -11,9 +11,9 @@ import (
 )
 
 func main() {
-	writer := sqlite.NewWriter("kronos.db")
+	writerReader := sqlite.NewWriterReader("kronos.db")
 	host := os.NewHost()
-	usecases.New(writer, host)
+	usecases.New(writerReader, writerReader, host)
 	go usecases.ScheduleExistingJobs()
 
 	log.Printf("%d job(s) loaded", usecases.CountJobs())

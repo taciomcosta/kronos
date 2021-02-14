@@ -146,7 +146,8 @@ var testsCreateJob = []struct {
 }
 
 func TestCreateJob(t *testing.T) {
-	New(mocks.NewStubWriter(), mocks.NewSpyHost())
+	writerReader := mocks.NewStubWriterReader()
+	New(writerReader, writerReader, mocks.NewSpyHost())
 	for _, tt := range testsCreateJob {
 		response, err := CreateJob(tt.request)
 		assertResponse(t, response, tt.response)

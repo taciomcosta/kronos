@@ -7,12 +7,14 @@ import (
 )
 
 var writer Writer
+var reader Reader
 var host entities.Host
 var jobs []entities.Job
 
 // New is used for dependency injection on set up.
-func New(r Writer, h Host) {
-	writer = r
+func New(w Writer, r Reader, h Host) {
+	writer = w
+	reader = r
 	host = h
 }
 
@@ -28,10 +30,13 @@ type Host interface {
 	TickEverySecond() <-chan time.Time
 }
 
-// Writer represents a Layer Supertype similar to Writer pattern
-// https://martinfowler.com/eaaCatalog/layerSupertype.html
+// Writer represents a Layer Supertype similar to Repository pattern
 type Writer interface {
 	CreateJob(job *entities.Job) error
+}
+
+// Reader represents a Layer Supertype similar to Repository pattern
+type Reader interface {
 	FindJobs() []entities.Job
 	CountJobs() int
 }

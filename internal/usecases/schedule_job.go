@@ -6,7 +6,7 @@ import (
 
 // ScheduleExistingJobs schedules jobs on startup
 func ScheduleExistingJobs() {
-	jobs = writer.FindJobs()
+	jobs = reader.FindJobs()
 	tickForever()
 }
 
