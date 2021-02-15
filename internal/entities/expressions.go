@@ -34,7 +34,7 @@ func GetSugarExpressions() []string {
 	return expressions
 }
 
-// ToString formats expression to: <cron> (<expr>)
+// FormatExpression formats expression to: <cron> (<expr>)
 func FormatExpression(key string) string {
 	value, ok := ExpressionMap[key]
 	if ok {

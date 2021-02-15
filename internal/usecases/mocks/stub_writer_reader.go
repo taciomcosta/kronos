@@ -19,9 +19,22 @@ func NewStubWriterReaderNJobs(numJobs int) *StubWriter {
 	return writer
 }
 
+// NewStubJobResponseWithExpression stubs FindJobsResponse
+func NewStubJobResponseWithExpression(expr string) *StubWriter {
+	writer := &StubWriter{}
+	writer.jobsResponse = uc.FindJobsResponse{
+		Jobs: []uc.JobDTO{
+			{Name: "list", Command: "ls", Tick: expr},
+		},
+		Count: 1,
+	}
+	return writer
+}
+
 // StubWriter implements entities.Writer for tests purposes
 type StubWriter struct {
-	jobs []entities.Job
+	jobs         []entities.Job
+	jobsResponse uc.FindJobsResponse
 }
 
 // CreateJob creates a job.
@@ -36,13 +49,7 @@ func (mr *StubWriter) FindJobs() []entities.Job {
 
 // FindJobsResponse finds all jobs in FindJobsResponse format
 func (mr *StubWriter) FindJobsResponse() uc.FindJobsResponse {
-	response := uc.FindJobsResponse{
-		Jobs: []uc.JobDTO{
-			{Name: "list", Command: "ls", Tick: "* * * * *"},
-		},
-		Count: 1,
-	}
-	return response
+	return mr.jobsResponse
 }
 
 // CreateJobWithExpression is a shortcut to add a job with provided expression

@@ -7,18 +7,38 @@ import (
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
-func TestFindJobs(t *testing.T) {
-	writeReader := mocks.NewStubWriterReader()
-	host := mocks.NewSpyHost()
-	uc.New(writeReader, writeReader, host)
-	want := uc.FindJobsResponse{
-		Jobs: []uc.JobDTO{
-			{Name: "list", Command: "ls", Tick: "* * * * *"},
+var testsFindJobsResponse = []struct {
+	given  string
+	expect uc.FindJobsResponse
+}{
+	{
+		given: "every minute",
+		expect: uc.FindJobsResponse{
+			Jobs: []uc.JobDTO{
+				{Name: "list", Command: "ls", Tick: "* * * * * (every minute)"},
+			},
+			Count: 1,
 		},
-		Count: 1,
+	},
+	{
+		given: "* * * * *",
+		expect: uc.FindJobsResponse{
+			Jobs: []uc.JobDTO{
+				{Name: "list", Command: "ls", Tick: "* * * * *"},
+			},
+			Count: 1,
+		},
+	},
+}
+
+func TestFindJobs(t *testing.T) {
+	for _, tt := range testsFindJobsResponse {
+		writeReader := mocks.NewStubJobResponseWithExpression(tt.given)
+		host := mocks.NewSpyHost()
+		uc.New(writeReader, writeReader, host)
+		got := uc.FindJobs()
+		assertFindJobsResponse(t, got, tt.expect)
 	}
-	got := uc.FindJobs()
-	assertFindJobsResponse(t, got, want)
 }
 
 func assertFindJobsResponse(t *testing.T, got, want uc.FindJobsResponse) {

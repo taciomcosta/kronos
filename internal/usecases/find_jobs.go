@@ -1,6 +1,8 @@
 package usecases
 
-import ()
+import (
+	"github.com/taciomcosta/kronos/internal/entities"
+)
 
 // FindJobsResponse represents response of FindJob usecase
 type FindJobsResponse struct {
@@ -8,6 +10,7 @@ type FindJobsResponse struct {
 	Count int `json:"count"`
 }
 
+// JobDTO represents a Job returnede by FindJobsResponse
 type JobDTO struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
@@ -16,5 +19,9 @@ type JobDTO struct {
 
 // FindJobs returns a list of all jobs.
 func FindJobs() FindJobsResponse {
-	return reader.FindJobsResponse()
+	response := reader.FindJobsResponse()
+	for i := range response.Jobs {
+		response.Jobs[i].Tick = entities.FormatExpression(response.Jobs[i].Tick)
+	}
+	return response
 }
