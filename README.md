@@ -70,13 +70,13 @@ Use "kronos <command> --help" to learn more about a specific command.
 
 ## Examples
 
-Creating a new job with sugar syntax for interval: 
+Creating a new job with sugar expressions: 
 ```
-> kronos create job --name myjob --command ./my-job.sh --every-day
+> kronos create job --name myjob --cmd ./my-job.sh --tick "every day"
 ```
-Alternatively, we can do:
+Alternatively, we can use regular cron expressions:
 ```
-> kronos create job --name myjob --command ./my-job.sh --interval "0 0 */1 * *"
+> kronos create job --name myjob --cmd ./my-job.sh --tick "0 0 */1 * *"
 ```
 
 Listing jobs:
