@@ -40,5 +40,5 @@ func FormatExpression(key string) string {
 	if ok {
 		return fmt.Sprintf("%s (%s)", value, key)
 	}
-	return fmt.Sprintf("%s", key)
+	return key
 }
