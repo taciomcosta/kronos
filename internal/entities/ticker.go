@@ -15,9 +15,17 @@ type Ticker struct {
 	dayOfWeek  token
 }
 
-// NewTicker creates a new Ticker from a string
-// like "* * * * *"
+// NewTicker creates a new Ticker from a expression
+// Expressions examples: "* * * * *", "Every day", "*/2 1-12 * * *"
 func NewTicker(expression string) (Ticker, error) {
+	value, ok := ExpressionMap[expression]
+	if ok {
+		return newCustomTicker(value)
+	}
+	return newCustomTicker(expression)
+}
+
+func newCustomTicker(expression string) (Ticker, error) {
 	parts := strings.Fields(expression)
 	minute, err := parseToken(parts[0], 0, 59)
 	if err != nil {

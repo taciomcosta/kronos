@@ -4,6 +4,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
@@ -175,5 +176,17 @@ func assertError(t *testing.T, got error, want error) {
 	}
 	if got.Error() != want.Error() {
 		t.Fatalf("expected error %v, got %v", want, got)
+	}
+}
+
+func TestCreateJobExpressionMap(t *testing.T) {
+	writerReader := mocks.NewStubWriterReader()
+	uc.New(writerReader, writerReader, mocks.NewSpyHost())
+	for expr := range entities.ExpressionMap {
+		request := uc.CreateJobRequest{Name: "ls", Tick: expr}
+		response, err := uc.CreateJob(request)
+		expectedResponse := uc.CreateJobResponse{Msg: "ls created."}
+		assertEqual(t, response, expectedResponse)
+		assertError(t, err, nil)
 	}
 }
