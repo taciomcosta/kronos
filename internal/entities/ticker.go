@@ -18,7 +18,7 @@ type Ticker struct {
 // NewTicker creates a new Ticker from a expression
 // Expressions examples: "* * * * *", "Every day", "*/2 1-12 * * *"
 func NewTicker(expression string) (Ticker, error) {
-	value, ok := ExpressionMap[expression]
+	value, ok := SugarExpressionMap[expression]
 	if ok {
 		return newCustomTicker(value)
 	}

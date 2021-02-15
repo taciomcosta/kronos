@@ -5,8 +5,8 @@ import (
 	"sort"
 )
 
-// ExpressionMap maps sugar expressions to cron expressions
-var ExpressionMap map[string]string = map[string]string{
+// SugarExpressionMap maps sugar expressions to cron expressions
+var SugarExpressionMap map[string]string = map[string]string{
 	"every minute":           "* * * * *",
 	"every 5 minutes":        "*/5 * * * *",
 	"every 10 minutes":       "*/10 * * * *",
@@ -27,7 +27,7 @@ var ExpressionMap map[string]string = map[string]string{
 // GetSugarExpressions lists expressions from ExpressionMap
 func GetSugarExpressions() []string {
 	expressions := make([]string, 0)
-	for key := range ExpressionMap {
+	for key := range SugarExpressionMap {
 		expressions = append(expressions, key)
 	}
 	sort.Strings(expressions)
@@ -36,7 +36,7 @@ func GetSugarExpressions() []string {
 
 // FormatExpression formats expression to: <cron> (<expr>)
 func FormatExpression(key string) string {
-	value, ok := ExpressionMap[key]
+	value, ok := SugarExpressionMap[key]
 	if ok {
 		return fmt.Sprintf("%s (%s)", value, key)
 	}

@@ -182,7 +182,7 @@ func assertError(t *testing.T, got error, want error) {
 func TestCreateJobExpressionMap(t *testing.T) {
 	writerReader := mocks.NewStubWriterReader()
 	uc.New(writerReader, writerReader, mocks.NewSpyHost())
-	for expr := range entities.ExpressionMap {
+	for expr := range entities.SugarExpressionMap {
 		request := uc.CreateJobRequest{Name: "ls", Tick: expr}
 		response, err := uc.CreateJob(request)
 		expectedResponse := uc.CreateJobResponse{Msg: "ls created."}
