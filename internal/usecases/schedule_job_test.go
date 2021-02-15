@@ -22,9 +22,9 @@ var testScheduleExistingJobs = []struct {
 	{
 		expression: "*/2 * * * *",
 		times: []time.Time{
-			time.Date(2021, 1, 1, 1, 1, 0, 0, time.UTC),
-			time.Date(2021, 1, 1, 1, 3, 0, 0, time.UTC),
-			time.Date(2021, 1, 1, 1, 7, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 2, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 4, 0, 0, time.UTC),
+			time.Date(2021, 1, 1, 1, 6, 0, 0, time.UTC),
 		},
 	},
 	{
@@ -35,6 +35,16 @@ var testScheduleExistingJobs = []struct {
 			time.Date(2021, 1, 27, 0, 0, 0, 0, time.UTC),
 			time.Date(2021, 2, 3, 0, 0, 0, 0, time.UTC),
 			time.Date(2021, 2, 4, 0, 0, 0, 0, time.UTC),
+		},
+	},
+	{
+		expression: "Every 5 minutes",
+		times: []time.Time{
+			time.Date(2021, 1, 13, 0, 0, 0, 0, time.UTC),
+			time.Date(2021, 1, 13, 0, 5, 0, 0, time.UTC),
+			time.Date(2021, 1, 13, 0, 10, 0, 0, time.UTC),
+			time.Date(2021, 2, 13, 0, 15, 0, 0, time.UTC),
+			time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC),
 		},
 	},
 }
@@ -49,7 +59,7 @@ func TestScheduleExistingJobs(t *testing.T) {
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
-	writerReader := mocks.NewStubWriterReader()
+	writerReader := mocks.NewStubWriterReaderNJobs(0)
 	writerReader.CreateJobWithExpression(expr)
 	usecases.New(writerReader, writerReader, spyHost)
 	spyHost.NotifyCurrentTimeIs(now)

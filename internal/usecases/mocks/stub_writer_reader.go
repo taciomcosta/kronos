@@ -7,7 +7,16 @@ import (
 
 // NewStubWriterReader stubs writer implementation
 func NewStubWriterReader() *StubWriter {
-	return &StubWriter{}
+	return NewStubWriterReaderNJobs(0)
+}
+
+// NewStubWriterReaderNJobs stubs writer implementation by creating N jobs
+func NewStubWriterReaderNJobs(numJobs int) *StubWriter {
+	writer := &StubWriter{}
+	for i := 0; i < numJobs; i++ {
+		writer.CreateJobWithExpression("* * * * *")
+	}
+	return writer
 }
 
 // StubWriter implements entities.Writer for tests purposes
@@ -22,8 +31,6 @@ func (mr *StubWriter) CreateJob(job *entities.Job) error {
 
 // FindJobs finds all jobs.
 func (mr *StubWriter) FindJobs() []entities.Job {
-	job, _ := entities.NewJob("list", "ls", "* * * * *", entities.Stream{})
-	mr.jobs = []entities.Job{job}
 	return mr.jobs
 }
 
