@@ -38,7 +38,7 @@ var testScheduleExistingJobs = []struct {
 		},
 	},
 	{
-		expression: "Every 5 minutes",
+		expression: "every 5 minutes",
 		times: []time.Time{
 			time.Date(2021, 1, 13, 0, 0, 0, 0, time.UTC),
 			time.Date(2021, 1, 13, 0, 5, 0, 0, time.UTC),

@@ -1,10 +1,12 @@
 package cli
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 
 	"github.com/olekukonko/tablewriter"
+	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
@@ -53,4 +55,24 @@ func (o output) printTable(header []string, rows [][]string) {
 	table.SetNoWhiteSpace(true)
 	table.AppendBulk(rows)
 	table.Render()
+}
+
+func getTickExamplesTables() string {
+	writer := bytes.NewBufferString("")
+	table := tablewriter.NewWriter(writer)
+	table.SetHeader([]string{"", "Examples", ""})
+	table.SetAutoWrapText(false)
+	table.AppendBulk(getExamples())
+	table.Render()
+	return writer.String()
+}
+
+func getExamples() [][]string {
+	examples := [][]string{{"* * * * *", "*/2 1-12 * * *", "1,3 * * * *"}}
+	expressions := entities.GetSugarExpressions()
+	for i := 0; i < len(expressions); i += 3 {
+		row := []string{expressions[i], expressions[i+1], expressions[i+2]}
+		examples = append(examples, row)
+	}
+	return examples
 }

@@ -1,77 +1,44 @@
 package entities
 
+import (
+	"fmt"
+	"sort"
+)
+
 // ExpressionMap maps sugar expressions to cron expressions
 var ExpressionMap map[string]string = map[string]string{
-	"Every minute":           "* * * * *",
-	"Every 5 minutes":        "*/5 * * * *",
-	"Every 10 minutes":       "*/10 * * * *",
-	"Every 30 minutes":       "*/30 * * * *",
-	"Every hour":             "0 * * * *",
-	"Every 2 hours":          "0 0-23/2 * * *",
-	"Every 3 hours":          "0 0-23/3 * * *",
-	"Every 4 hours":          "0 0-23/4 * * *",
-	"Every 5 hours":          "0 0-23/5 * * *",
-	"Every 6 hours":          "0 0-23/6 * * *",
-	"Every 7 hours":          "0 0-23/7 * * *",
-	"Every 8 hours":          "0 0-23/8 * * *",
-	"Every 9 hours":          "0 0-23/9 * * *",
-	"Every 10 hours":         "0 0-23/10 * * *",
-	"Every 11 hours":         "0 0-23/11 * * *",
-	"Every 12 hours":         "0 0-23/12 * * *",
-	"Every day at 1AM":       "1 * * * *",
-	"Every day at 2AM":       "2 * * * *",
-	"Every day at 3AM":       "3 * * * *",
-	"Every day at 4AM":       "4 * * * *",
-	"Every day at 5AM":       "5 * * * *",
-	"Every day at 6AM":       "6 * * * *",
-	"Every day at 7AM":       "7 * * * *",
-	"Every day at 8AM":       "8 * * * *",
-	"Every day at 9AM":       "9 * * * *",
-	"Every day at 10AM":      "10 * * * *",
-	"Every day at 11AM":      "11 * * * *",
-	"Every noon":             "12 * * * *",
-	"Every day at 1PM":       "13 * * * *",
-	"Every day at 2PM":       "14 * * * *",
-	"Every day at 3PM":       "15 * * * *",
-	"Every day at 4PM":       "16 * * * *",
-	"Every day at 5PM":       "17 * * * *",
-	"Every day at 6PM":       "18 * * * *",
-	"Every day at 7PM":       "19 * * * *",
-	"Every day at 8PM":       "20 * * * *",
-	"Every day at 9PM":       "21 * * * *",
-	"Every day at 10PM":      "22 * * * *",
-	"Every day at 11PM":      "23 * * * *",
-	"Every midnight":         "0 0 * * *",
-	"Every week":             "0 * * * 0",
-	"Every weekend":          "0 0 * * 6,0",
-	"Every 1st day of month": "0 1 * * *",
-	"Every odd month":        "0 0 1 1-11/2 *",
-	"Every even month":       "0 0 1 2-12/2 *",
-	"Every quarter":          "0 0 1 1,4,7,10 *",
-	"Every 6 months":         "0 0 1 */6 *",
-	"Every year":             "0 0 1 1 *",
-	"Every weekday":          "0 0 * * 1-5",
-	"Every weekday at 1AM":   "0 1 * * 1-5",
-	"Every weekday at 2AM":   "0 2 * * 1-5",
-	"Every weekday at 3AM":   "0 3 * * 1-5",
-	"Every weekday at 4AM":   "0 4 * * 1-5",
-	"Every weekday at 5AM":   "0 5 * * 1-5",
-	"Every weekday at 6AM":   "0 6 * * 1-5",
-	"Every weekday at 7AM":   "0 7 * * 1-5",
-	"Every weekday at 8AM":   "0 8 * * 1-5",
-	"Every weekday at 9AM":   "0 9 * * 1-5",
-	"Every weekday at 10AM":  "0 10 * * 1-5",
-	"Every weekday at 11AM":  "0 11 * * 1-5",
-	"Every weekday at 12PM":  "0 12 * * 1-5",
-	"Every weekday at 1PM":   "0 13 * * 1-5",
-	"Every weekday at 2PM":   "0 14 * * 1-5",
-	"Every weekday at 3PM":   "0 15 * * 1-5",
-	"Every weekday at 4PM":   "0 16 * * 1-5",
-	"Every weekday at 5PM":   "0 17 * * 1-5",
-	"Every weekday at 6PM":   "0 18 * * 1-5",
-	"Every weekday at 7PM":   "0 19 * * 1-5",
-	"Every weekday at 8PM":   "0 20 * * 1-5",
-	"Every weekday at 9PM":   "0 21 * * 1-5",
-	"Every weekday at 10PM":  "0 22 * * 1-5",
-	"Every weekday at 11PM":  "0 23 * * 1-5",
+	"every minute":           "* * * * *",
+	"every 5 minutes":        "*/5 * * * *",
+	"every 10 minutes":       "*/10 * * * *",
+	"every 30 minutes":       "*/30 * * * *",
+	"every hour":             "0 * * * *",
+	"every noon":             "12 * * * *",
+	"every midnight":         "0 0 * * *",
+	"every 1st day of month": "0 1 * * *",
+	"every 2 months":         "0 0 1 1-12/2 *",
+	"every 3 months":         "0 0 1 1,4,7,10 *",
+	"every 6 months":         "0 0 1 */6 *",
+	"every year":             "0 0 1 1 *",
+	"every weekday":          "0 0 * * 1-5",
+	"every week":             "0 * * * 0",
+	"every weekend":          "0 0 * * 6,0",
+}
+
+// GetSugarExpressions lists expressions from ExpressionMap
+func GetSugarExpressions() []string {
+	expressions := make([]string, 0)
+	for key := range ExpressionMap {
+		expressions = append(expressions, key)
+	}
+	sort.Strings(expressions)
+	return expressions
+}
+
+// ToString formats expression to: <cron> (<expr>)
+func FormatExpression(key string) string {
+	value, ok := ExpressionMap[key]
+	if ok {
+		return fmt.Sprintf("%s (%s)", value, key)
+	}
+	return fmt.Sprintf("%s", key)
 }
