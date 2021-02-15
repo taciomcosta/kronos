@@ -40,6 +40,9 @@ func (mr *StubWriter) FindJobsResponse() uc.FindJobsResponse {
 
 // CreateJobWithExpression is a shortcut to add a job with provided expression
 func (mr *StubWriter) CreateJobWithExpression(expression string) {
-	job, _ := entities.NewJob("name", "cmd", expression, entities.Stream{})
+	job, err := entities.NewJob("name", "cmd", expression, entities.Stream{})
+	if err != nil {
+		panic(err)
+	}
 	mr.jobs = append(mr.jobs, job)
 }
