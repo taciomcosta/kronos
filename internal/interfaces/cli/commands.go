@@ -1,8 +1,6 @@
 package cli
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"github.com/taciomcosta/kronos/internal/usecases"
 )
@@ -29,9 +27,24 @@ var createJobCmd = &cobra.Command{
 		}
 		createJobResponse := &usecases.CreateJobResponse{}
 		err := post("/jobs", createJobRequest, createJobResponse)
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println(createJobResponse.Msg)
+		out.error(err)
+		out.println(createJobResponse.Msg)
+	},
+}
+
+var listCmd = &cobra.Command{
+	Use:   "list [jobs | channels]",
+	Short: "List jobs/channels",
+}
+
+var listJobsCmd = &cobra.Command{
+	Use:   "jobs",
+	Short: "List jobs",
+	Run: func(cmd *cobra.Command, args []string) {
+		findJobsResponse := usecases.FindJobsResponse{}
+		err := get("/jobs", &findJobsResponse)
+		out.error(err)
+		out.printf("Showing all %d jobs\n", findJobsResponse.Count)
+		out.printFindJobResponse(findJobsResponse)
 	},
 }

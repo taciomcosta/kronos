@@ -14,6 +14,8 @@ var flags = struct {
 
 func setup() {
 	rootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(listCmd)
+
 	createCmd.AddCommand(createJobCmd)
 
 	createJobCmd.Flags().StringVarP(&flags.Name, "name", "n", "", "Unique job name")
@@ -22,6 +24,8 @@ func setup() {
 	_ = createJobCmd.MarkFlagRequired("name")
 	_ = createJobCmd.MarkFlagRequired("cmd")
 	_ = createJobCmd.MarkFlagRequired("tick")
+
+	listCmd.AddCommand(listJobsCmd)
 }
 
 // NewClient creates a new CLI client

@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.1.4 // indirect
 	github.com/infobloxopen/go-trees v0.0.0-20200715205103-96a057b8dfb9 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
+	github.com/olekukonko/tablewriter v0.0.5
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/spf13/cobra v1.1.1
 	golang.org/x/time v0.0.0-20201208040808-7e3f01d25324 // indirect
