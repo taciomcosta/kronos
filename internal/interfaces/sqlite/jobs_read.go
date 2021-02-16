@@ -56,23 +56,13 @@ func (wr *WriterReader) readJobDTO(stmt *sqlite3.Stmt) uc.JobDTO {
 
 // FindOneJob finds all jobs.
 func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
-	var job entities.Job
-	err := wr.readOneQuery(
-		"SELECT * FROM job WHERE name=?",
-		&job.Name, &job.Command, &job.Tick,
-	)
-	return job, err
-}
-
-func (wr *WriterReader) readOneQuery(sql string, args ...interface{}) error {
-	stmt, err := db.Prepare(sql)
-	if err != nil {
-		return err
-	}
+	var dto entities.Job
+	stmt, _ := db.Prepare("SELECT * FROM job WHERE name=?")
+	_ = stmt.Exec(name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
-		return errors.New("resource not found")
+		return dto, errors.New("resource not found")
 	}
-	_ = stmt.Scan()
-	return nil
+	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick)
+	return entities.NewJob(dto.Name, dto.Command, dto.Tick, entities.Stream{})
 }
