@@ -1,6 +1,8 @@
 package sqlite
 
 import (
+	"errors"
+
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
@@ -50,4 +52,27 @@ func (wr *WriterReader) readJobDTO(stmt *sqlite3.Stmt) uc.JobDTO {
 	job := uc.JobDTO{}
 	_ = stmt.Scan(&job.Name, &job.Command, &job.Tick)
 	return job
+}
+
+// FindOneJob finds all jobs.
+func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
+	var job entities.Job
+	err := wr.readOneQuery(
+		"SELECT * FROM job WHERE name=?",
+		&job.Name, &job.Command, &job.Tick,
+	)
+	return job, err
+}
+
+func (wr *WriterReader) readOneQuery(sql string, args ...interface{}) error {
+	stmt, err := db.Prepare(sql)
+	if err != nil {
+		return err
+	}
+	hasRow, _ := stmt.Step()
+	if !hasRow {
+		return errors.New("resource not found")
+	}
+	_ = stmt.Scan()
+	return nil
 }
