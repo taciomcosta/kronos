@@ -22,18 +22,15 @@ func respond(w http.ResponseWriter, v interface{}, err error) {
 
 func respondError(w http.ResponseWriter, err error) {
 	errorMessage := ErrorMessage{Msg: err.Error()}
+	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusBadRequest)
 	respondSuccess(w, errorMessage)
 }
 
 func respondSuccess(w http.ResponseWriter, v interface{}) {
 	w.Header().Set("Content-type", "application/json")
-	bytes, err := json.Marshal(v)
-	if err != nil {
-		respondError(w, err)
-	} else {
-		_, _ = w.Write(bytes)
-	}
+	bytes, _ := json.Marshal(v)
+	_, _ = w.Write(bytes)
 }
 
 // ErrorMessage represents a generic error message for http responses.
