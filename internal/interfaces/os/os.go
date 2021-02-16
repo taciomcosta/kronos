@@ -42,9 +42,5 @@ func (o *defaultOS) runInBackground(job entities.Job) {
 
 func (o *defaultOS) newCommandFromJob(job entities.Job) *exec.Cmd {
 	cmd := exec.Command(job.Command)
-	// TODO: implement attach/detach
-	//cmd.Stdin = os.Stdin
-	//cmd.Stderr = os.Stderr
-	//cmd.Stdout = os.Stdout
 	return cmd
 }

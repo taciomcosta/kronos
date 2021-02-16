@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
 		writerReader := sqlite.NewWriterReader(":memory:")
-		host := &mocks.SpyHost{} // TODO: use real host (?)
+		host := &mocks.SpyHost{}
 		usecases.New(writerReader, writerReader, host)
 	})
 }
