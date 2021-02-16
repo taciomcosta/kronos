@@ -34,7 +34,9 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I provide valid data for job creation$`, jf.IProvideValidDataForJobCreation)
 	ctx.Step(`^I create a new job$`, jf.ICreateANewJob)
 	ctx.Step(`^I list the existing jobs$`, jf.IListTheExistingJobs)
-	ctx.Step(`^the new job should be listed$`, jf.TheNewJobShouldBeListed)
+	ctx.Step(`^the new job is listed$`, jf.TheNewJobIsListed)
 	ctx.Step(`^an error message is shown$`, jf.AnErrorMessageIsShown)
 	ctx.Step(`^I provide invalid data for job creation$`, jf.IProvideInvalidDataForJobCreation)
+	ctx.Step(`^I delete the new job$`, jf.IDeleteTheNewJob)
+	ctx.Step(`^the new job is not listed$`, jf.TheNewJobIsNotListed)
 }

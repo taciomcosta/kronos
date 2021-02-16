@@ -75,22 +75,49 @@ func (j *JobsFeature) AnErrorMessageIsShown() error {
 	return err
 }
 
-// TheNewJobShouldBeListed represents a BDD step
-func (j *JobsFeature) TheNewJobShouldBeListed() error {
+// TheNewJobIsListed represents a BDD step
+func (j *JobsFeature) TheNewJobIsListed() error {
 	var findJobsResponse uc.FindJobsResponse
 	err := rest.ReadJSON(j.response.Body, &findJobsResponse)
 	if err != nil {
 		return err
 	}
-	_, err = findJobByName(findJobsResponse, "list")
+	job := findJobByName(findJobsResponse, "list")
+	if job == nil {
+		return errors.New("job not listed when it should")
+	}
+	return nil
+}
+
+func findJobByName(response uc.FindJobsResponse, name string) *uc.JobDTO {
+	for _, j := range response.Jobs {
+		if j.Name == "list" {
+			return &j
+		}
+	}
+	return nil
+}
+
+// IDeleteTheNewJob represents a BDD step
+func (j *JobsFeature) IDeleteTheNewJob() error {
+	request, err := http.NewRequest("DELETE", "", nil)
+	response := httptest.NewRecorder()
+	name := httprouter.Param{Key: "name", Value: j.inputJob.Name}
+	params := httprouter.Params{name}
+	rest.DeleteJob(response, request, params)
 	return err
 }
 
-func findJobByName(response uc.FindJobsResponse, name string) (*uc.JobDTO, error) {
-	for _, j := range response.Jobs {
-		if j.Name == "list" {
-			return &j, nil
-		}
+// TheNewJobIsNotListed represents a BDD step
+func (j *JobsFeature) TheNewJobIsNotListed() error {
+	var findJobsResponse uc.FindJobsResponse
+	err := rest.ReadJSON(j.response.Body, &findJobsResponse)
+	if err != nil {
+		return err
 	}
-	return nil, errors.New("job not listed")
+	job := findJobByName(findJobsResponse, "list")
+	if job != nil {
+		return errors.New("job was listed when it should not")
+	}
+	return nil
 }
