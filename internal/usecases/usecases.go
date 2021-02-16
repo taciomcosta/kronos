@@ -33,10 +33,12 @@ type Host interface {
 // Writer represents a Layer Supertype similar to Repository pattern
 type Writer interface {
 	CreateJob(job *entities.Job) error
+	DeleteJob(name string) error
 }
 
 // Reader represents a Layer Supertype similar to Repository pattern
 type Reader interface {
 	FindJobs() []entities.Job
+	FindOneJob(name string) (entities.Job, error)
 	FindJobsResponse() FindJobsResponse
 }

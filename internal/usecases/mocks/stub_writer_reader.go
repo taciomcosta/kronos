@@ -1,6 +1,8 @@
 package mocks
 
 import (
+	"errors"
+
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
@@ -59,4 +61,20 @@ func (mr *StubWriter) CreateJobWithExpression(expression string) {
 		panic(err)
 	}
 	mr.jobs = append(mr.jobs, job)
+}
+
+// DeleteJob deletes a job
+func (mr *StubWriter) DeleteJob(name string) error {
+	mr.jobs = []entities.Job{}
+	return nil
+}
+
+// FindOneJob finds one job by name
+func (mr *StubWriter) FindOneJob(name string) (entities.Job, error) {
+	for _, j := range mr.jobs {
+		if j.Name == name {
+			return j, nil
+		}
+	}
+	return entities.Job{}, errors.New("resource not found")
 }

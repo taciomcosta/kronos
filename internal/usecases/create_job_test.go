@@ -158,7 +158,7 @@ func TestCreateJob(t *testing.T) {
 	}
 }
 
-func assertEqual(t *testing.T, got, want uc.CreateJobResponse) {
+func assertEqual(t *testing.T, got, want interface{}) {
 	if got != want {
 		t.Errorf("got %v, expected %v", got, want)
 	}
