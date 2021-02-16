@@ -2,7 +2,7 @@ package cli
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
 var rootCmd = &cobra.Command{
@@ -20,13 +20,13 @@ var createJobCmd = &cobra.Command{
 	Use:   "job",
 	Short: "Creates a new job",
 	Run: func(cmd *cobra.Command, args []string) {
-		createJobRequest := usecases.CreateJobRequest{
+		createJobRequest := uc.CreateJobRequest{
 			Name:    flags.Name,
 			Command: flags.Command,
 			Tick:    flags.Tick,
 		}
-		createJobResponse := &usecases.CreateJobResponse{}
-		err := post("/jobs", createJobRequest, createJobResponse)
+		createJobResponse := &uc.CreateJobResponse{}
+		err := client.post("/jobs", createJobRequest, createJobResponse)
 		out.error(err)
 		out.println(createJobResponse.Msg)
 	},
@@ -41,10 +41,26 @@ var listJobsCmd = &cobra.Command{
 	Use:   "jobs",
 	Short: "List jobs",
 	Run: func(cmd *cobra.Command, args []string) {
-		findJobsResponse := usecases.FindJobsResponse{}
-		err := get("/jobs", &findJobsResponse)
+		findJobsResponse := uc.FindJobsResponse{}
+		err := client.get("/jobs", &findJobsResponse)
 		out.error(err)
 		out.printf("Showing all %d jobs\n", findJobsResponse.Count)
 		out.printFindJobResponse(findJobsResponse)
+	},
+}
+
+var deleteCmd = &cobra.Command{
+	Use:   "delete [job | channel]",
+	Short: "Delete a job/channel",
+}
+
+var deleteJobCmd = &cobra.Command{
+	Use:   "job",
+	Short: "Delete a job",
+	Run: func(cmd *cobra.Command, args []string) {
+		deleteJobResponse := uc.DeleteJobResponse{}
+		err := client.delete("/jobs/"+flags.Name, &deleteJobResponse)
+		out.error(err)
+		out.println(deleteJobResponse.Msg)
 	},
 }
