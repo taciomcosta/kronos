@@ -14,17 +14,23 @@ func ReadJSON(r io.Reader, v interface{}) error {
 
 func respond(w http.ResponseWriter, v interface{}, err error) {
 	if err != nil {
-		respondJSONBadRequest(w, err)
+		respondError(w, err)
 	} else {
-		respondJSON(w, v)
+		respondSuccess(w, v)
 	}
 }
 
-func respondJSON(w http.ResponseWriter, v interface{}) {
+func respondError(w http.ResponseWriter, err error) {
+	errorMessage := ErrorMessage{Msg: err.Error()}
+	w.WriteHeader(http.StatusBadRequest)
+	respondSuccess(w, errorMessage)
+}
+
+func respondSuccess(w http.ResponseWriter, v interface{}) {
 	w.Header().Set("Content-type", "application/json")
 	bytes, err := json.Marshal(v)
 	if err != nil {
-		respondJSONBadRequest(w, err)
+		respondError(w, err)
 	} else {
 		_, _ = w.Write(bytes)
 	}
@@ -33,10 +39,4 @@ func respondJSON(w http.ResponseWriter, v interface{}) {
 // ErrorMessage represents a generic error message for http responses.
 type ErrorMessage struct {
 	Msg string `json:"msg"`
-}
-
-func respondJSONBadRequest(w http.ResponseWriter, err error) {
-	errorMessage := ErrorMessage{Msg: err.Error()}
-	w.WriteHeader(http.StatusBadRequest)
-	respondJSON(w, errorMessage)
 }
