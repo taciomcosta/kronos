@@ -27,9 +27,6 @@ func setup() {
 	listCmd.AddCommand(listJobsCmd)
 
 	deleteCmd.AddCommand(deleteJobCmd)
-
-	deleteJobCmd.Flags().StringVarP(&flags.Name, "name", "n", "", "Unique job name")
-	_ = deleteJobCmd.MarkFlagRequired("name")
 }
 
 // NewClient creates a new CLI client
