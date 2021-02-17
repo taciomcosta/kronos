@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/taciomcosta/kronos/internal/config"
 	"github.com/taciomcosta/kronos/internal/interfaces/os"
 	"github.com/taciomcosta/kronos/internal/interfaces/rest"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
@@ -11,7 +12,7 @@ import (
 )
 
 func main() {
-	writerReader := sqlite.NewWriterReader("kronos.db")
+	writerReader := sqlite.NewWriterReader(config.GetString("db"))
 	host := os.NewHost()
 	usecases.New(writerReader, writerReader, host)
 	go usecases.ScheduleExistingJobs()
@@ -20,6 +21,5 @@ func main() {
 
 	router := rest.NewRouter()
 
-	service := ":8080"
-	log.Fatal(http.ListenAndServe(service, router))
+	log.Fatal(http.ListenAndServe(config.GetString("host"), router))
 }

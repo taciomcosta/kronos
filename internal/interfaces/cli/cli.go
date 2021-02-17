@@ -4,8 +4,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var url = "http://localhost:8080"
-
 var flags = struct {
 	Name    string
 	Command string

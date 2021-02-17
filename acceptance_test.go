@@ -6,6 +6,7 @@ import (
 
 	"github.com/cucumber/godog"
 
+	"github.com/taciomcosta/kronos/internal/config"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	"github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
@@ -23,7 +24,8 @@ func TestMain(m *testing.M) {
 
 func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
-		writerReader := sqlite.NewWriterReader(":memory:")
+		config.EnableTestMode()
+		writerReader := sqlite.NewWriterReader(config.GetString("db"))
 		host := &mocks.SpyHost{}
 		usecases.New(writerReader, writerReader, host)
 	})

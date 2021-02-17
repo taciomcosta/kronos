@@ -6,10 +6,12 @@ import (
 	"errors"
 	"io"
 	"net/http"
+
+	"github.com/taciomcosta/kronos/internal/config"
 )
 
 var errKronosResponse = errors.New("Failed to obtain response from kronosd")
-
+var url = "http://localhost" + config.GetString("host")
 var client kronosClient
 
 type kronosClient struct{}
