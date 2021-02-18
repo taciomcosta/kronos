@@ -17,7 +17,7 @@ func DeleteJob(name string) (DeleteJobResponse, error) {
 	}
 	_ = writer.DeleteJob(name)
 	unscheduleJob(job)
-	return DeleteJobResponse{Msg: name + " deleted."}, nil
+	return DeleteJobResponse{Msg: name + " deleted"}, nil
 }
 
 func unscheduleJob(job entities.Job) {

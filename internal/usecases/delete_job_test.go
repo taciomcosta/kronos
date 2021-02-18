@@ -15,7 +15,7 @@ var testsDeleteJob = []struct {
 }{
 	{
 		request:  "name",
-		response: uc.DeleteJobResponse{Msg: "name deleted."},
+		response: uc.DeleteJobResponse{Msg: "name deleted"},
 		err:      nil,
 	},
 	{

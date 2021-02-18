@@ -20,7 +20,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "* * * * *",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -29,7 +29,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1 1 1 1 1",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -38,7 +38,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1,2,3 1,2,3 1,2,3 1,2,3 1,2,3",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -47,7 +47,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1,*,3 1,*,3 1,*,3 1,*,3 1,*,3",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -56,7 +56,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1-4 1-4 1-4 1-4 1-4",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -65,7 +65,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "*/2 */2 */2 */2 */2",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -74,7 +74,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1-5/2 1-5/2 1-5/2 1-5/2 1-5/2",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -83,7 +83,7 @@ var testsCreateJob = []struct {
 			Command: "ls",
 			Tick:    "1-5/2,6 1-5/2,6 1-5/2,6 1-5/2,6 1-5/2,6",
 		},
-		response: uc.CreateJobResponse{Msg: "list created."},
+		response: uc.CreateJobResponse{Msg: "list created"},
 		err:      nil,
 	},
 	{
@@ -185,7 +185,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 	for expr := range entities.SugarExpressionMap {
 		request := uc.CreateJobRequest{Name: "ls", Tick: expr}
 		response, err := uc.CreateJob(request)
-		expectedResponse := uc.CreateJobResponse{Msg: "ls created."}
+		expectedResponse := uc.CreateJobResponse{Msg: "ls created"}
 		assertEqual(t, response, expectedResponse)
 		assertError(t, err, nil)
 	}
