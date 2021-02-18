@@ -42,6 +42,18 @@ brew install kronos
 choco install kronos
 ```
 
+By default, Kronos daemon uses `:8080` as its host and creates a db named
+`kronos.db`. <br>
+You can create a file at `<home-directory>/.kronosd/config.json`
+to override this behavior.
+```json
+{
+    "host": ":8080",
+    "db": "kronos.db"
+}
+```
+
+
 ## Commands
 ```
 > kronos
