@@ -6,11 +6,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-func getConfigFilePath() string {
-	homeDir, _ := os.UserHomeDir()
-	return homeDir + "/.kronos"
-}
-
 // EnableDefaultMode reads config.json file or uses default configuration
 func EnableDefaultMode() error {
 	viper.SetConfigType("json")
@@ -19,6 +14,11 @@ func EnableDefaultMode() error {
 	viper.AddConfigPath(getConfigFilePath())
 	err := viper.ReadInConfig()
 	return err
+}
+
+func getConfigFilePath() string {
+	homeDir, _ := os.UserHomeDir()
+	return homeDir + "/.kronos"
 }
 
 // EnableTestMode sets test configuration as current
