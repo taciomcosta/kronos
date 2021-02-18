@@ -6,18 +6,15 @@ import (
 	"errors"
 	"io"
 	"net/http"
-
-	"github.com/taciomcosta/kronos/internal/config"
 )
 
 var errKronosResponse = errors.New("Failed to obtain response from kronosd")
-var url = "http://localhost" + config.GetString("host")
 var client kronosClient
 
 type kronosClient struct{}
 
 func (c kronosClient) get(urlPath string, response interface{}) error {
-	httpResponse, err := http.Get(url + urlPath)
+	httpResponse, err := http.Get(kronosdURL + urlPath)
 	if err != nil {
 		return errKronosResponse
 	}
@@ -26,7 +23,7 @@ func (c kronosClient) get(urlPath string, response interface{}) error {
 }
 
 func (c kronosClient) delete(urlPath string, response interface{}) error {
-	request, err := http.NewRequest("DELETE", url+urlPath, nil)
+	request, err := http.NewRequest("DELETE", kronosdURL+urlPath, nil)
 	if err != nil {
 		return errKronosResponse
 	}
@@ -43,7 +40,7 @@ func (c kronosClient) post(urlPath string, request interface{}, response interfa
 	if err != nil {
 		return errKronosResponse
 	}
-	httpResponse, err := http.Post(url+urlPath, "application/json", body)
+	httpResponse, err := http.Post(kronosdURL+urlPath, "application/json", body)
 	if err != nil {
 		return err
 	}

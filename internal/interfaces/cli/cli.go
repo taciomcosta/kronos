@@ -4,6 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var kronosdURL string
 var flags = struct {
 	Name    string
 	Command string
@@ -30,7 +31,8 @@ func setup() {
 }
 
 // NewClient creates a new CLI client
-func NewClient() *cobra.Command {
+func NewClient(url string) *cobra.Command {
+	kronosdURL = url
 	setup()
 	return rootCmd
 }
