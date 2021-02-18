@@ -29,11 +29,6 @@ func (s *SpyHost) WasRunJobCalled() bool {
 	return s.called
 }
 
-// GetDettachedStream stubs dettached stream
-func (s *SpyHost) GetDettachedStream() entities.Stream {
-	return entities.Stream{}
-}
-
 // TickEverySecond stubs channel so that we can emit desired time on tests
 func (s *SpyHost) TickEverySecond() <-chan time.Time {
 	// In production, we want tick channel to be open forever

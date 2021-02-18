@@ -21,8 +21,7 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	job, err := entities.NewJob(
 		request.Name,
 		request.Command,
-		request.Tick,
-		host.GetDettachedStream())
+		request.Tick)
 	if err != nil {
 		return CreateJobResponse{}, err
 	}

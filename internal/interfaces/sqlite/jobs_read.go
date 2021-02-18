@@ -17,11 +17,7 @@ func (wr *WriterReader) FindJobs() []entities.Job {
 func (wr *WriterReader) mapDTOToEntitities(dtos []uc.JobDTO) []entities.Job {
 	var jobs []entities.Job
 	for _, dto := range dtos {
-		job, _ := entities.NewJob(
-			dto.Name,
-			dto.Command,
-			dto.Tick,
-			uc.GetHost().GetDettachedStream())
+		job, _ := entities.NewJob(dto.Name, dto.Command, dto.Tick)
 		jobs = append(jobs, job)
 	}
 	return jobs
@@ -64,5 +60,5 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 		return dto, errors.New("resource not found")
 	}
 	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick)
-	return entities.NewJob(dto.Name, dto.Command, dto.Tick, entities.Stream{})
+	return entities.NewJob(dto.Name, dto.Command, dto.Tick)
 }

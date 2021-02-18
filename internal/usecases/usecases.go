@@ -26,7 +26,6 @@ func GetHost() entities.Host {
 // Host represents a host where jobs can be run
 type Host interface {
 	RunJob(job entities.Job)
-	GetDettachedStream() entities.Stream
 	TickEverySecond() <-chan time.Time
 }
 

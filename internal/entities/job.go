@@ -5,14 +5,13 @@ import (
 )
 
 // NewJob creates a new Job using options
-func NewJob(name string, command string, tick string, stream Stream) (Job, error) {
+func NewJob(name string, command string, tick string) (Job, error) {
 	ticker, err := NewTicker(tick)
 	job := Job{
 		Name:    name,
 		Command: command,
 		Tick:    tick,
 		ticker:  ticker,
-		stream:  stream,
 	}
 	return job, err
 }
@@ -23,7 +22,6 @@ type Job struct {
 	Command string
 	Tick    string
 	ticker  Ticker
-	stream  Stream
 }
 
 // IsTimeSet tells if job should run in time t

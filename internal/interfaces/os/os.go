@@ -15,11 +15,6 @@ func NewHost() entities.Host {
 	return &defaultOS{}
 }
 
-// GetDettachedStream gets empty streams
-func (o *defaultOS) GetDettachedStream() entities.Stream {
-	return entities.Stream{}
-}
-
 // TickEverySecond creates a channel that emits current time on every second
 func (o *defaultOS) TickEverySecond() <-chan time.Time {
 	ticker := time.NewTicker(1 * time.Second)
