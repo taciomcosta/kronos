@@ -6,5 +6,7 @@
     <key>Program</key><string>/usr/local/bin/kronosd</string>
     <key>KeepAlive</key><true/>
     <key>RunAtLoad</key><true/>
+    <key>StandardOutPath</key><string>/var/log/kronos.log</string>
+    <key>StandardErrorPath</key><string>/var/log/kronos.log</string>
   </dict>
 </plist>
