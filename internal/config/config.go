@@ -1,8 +1,6 @@
 package config
 
 import (
-	"os"
-
 	"github.com/spf13/viper"
 )
 
@@ -17,8 +15,7 @@ func EnableDefaultMode() error {
 }
 
 func getConfigFilePath() string {
-	homeDir, _ := os.UserHomeDir()
-	return homeDir + "/.kronos"
+	return "/etc/kronos/"
 }
 
 // EnableTestMode sets test configuration as current
