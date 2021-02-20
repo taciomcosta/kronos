@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/taciomcosta/kronos/internal/entities"
+	"github.com/taciomcosta/kronos/internal/usecases"
 )
 
 type defaultOS struct{}
 
 // NewHost creates a new host using default OS lib
-func NewHost() entities.Host {
+func NewHost() usecases.Host {
 	return &defaultOS{}
 }
 

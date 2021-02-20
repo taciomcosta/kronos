@@ -8,7 +8,7 @@ import (
 
 var writer Writer
 var reader Reader
-var host entities.Host
+var host Host
 var jobs []entities.Job
 
 // New is used for dependency injection on set up.
@@ -19,7 +19,7 @@ func New(w Writer, r Reader, h Host) {
 }
 
 // GetHost returns host being used
-func GetHost() entities.Host {
+func GetHost() Host {
 	return host
 }
 
