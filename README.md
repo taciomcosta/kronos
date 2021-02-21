@@ -4,6 +4,11 @@
   Kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs.
 </p>
 
+---
+
+[![codecov](https://codecov.io/gh/taciomcosta/kronos/branch/master/graph/badge.svg?token=bVwkHbOHOk)](https://codecov.io/gh/taciomcosta/kronos)
+[![Go Report Card](https://goreportcard.com/badge/github.com/taciomcosta/kronos)](https://goreportcard.com/report/github.com/taciomcosta/kronos)
+[![Latest Release](https://img.shields.io/github/v/release/taciomcosta/kronos?include_prereleases)](https://github.com/taciomcosta/kronos/releases/latest)
 
 ## Table of Contents
 - [Installation](#Installation)
