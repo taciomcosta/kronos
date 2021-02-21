@@ -11,6 +11,9 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/taciomcosta/kronos)](https://goreportcard.com/report/github.com/taciomcosta/kronos)
 [![Latest Release](https://img.shields.io/github/v/release/taciomcosta/kronos?include_prereleases)](https://github.com/taciomcosta/kronos/releases/latest)
 
+**This project is being developed using [RDD](https://tom.preston-werner.com/2010/08/23/readme-driven-development.html) and is not production-ready yet!**
+<br>Check the [architecture](docs/ARCHITECTURE.md) of the project and feel free to contribute. :)
+
 ## Table of Contents
 - [Installation](#Installation)
   - [Linux](#Linux)
