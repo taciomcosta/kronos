@@ -6,8 +6,8 @@ import (
 
 // FindJobsResponse represents response of FindJob usecase
 type FindJobsResponse struct {
-	Jobs  []JobDTO
-	Count int `json:"count"`
+	Jobs  []JobDTO `json:"jobs"`
+	Count int      `json:"count"`
 }
 
 // JobDTO represents a Job returnede by FindJobsResponse
