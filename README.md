@@ -6,6 +6,7 @@
 
 ---
 
+[![GitHub Actions](https://github.com/taciomcosta/kronos/workflows/main/badge.svg)](https://github.com/ktr0731/evans/actions)
 [![codecov](https://codecov.io/gh/taciomcosta/kronos/branch/master/graph/badge.svg?token=bVwkHbOHOk)](https://codecov.io/gh/taciomcosta/kronos)
 [![Go Report Card](https://goreportcard.com/badge/github.com/taciomcosta/kronos)](https://goreportcard.com/report/github.com/taciomcosta/kronos)
 [![Latest Release](https://img.shields.io/github/v/release/taciomcosta/kronos?include_prereleases)](https://github.com/taciomcosta/kronos/releases/latest)
