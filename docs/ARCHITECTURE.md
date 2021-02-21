@@ -33,7 +33,7 @@ The entrypoint of each program can be found at `cmd/` folder.
 
 ## Low Level Design
 
-![clean architecture](docs/clean_architecture-kronos.png)
+![clean architecture](clean_architecture-kronos.png)
 
 Kronos low level design was inspired by [Clean Architecture]().
 In a few words, the main goal is to separate business rules (use cases and entities)
