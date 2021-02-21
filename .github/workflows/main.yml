@@ -31,7 +31,14 @@ jobs:
           with:
               version: v1.29
 
+        - name: Codecov
+          run: make codecov
 
+        - name: Upload coverage report
+          uses: codecov/codecov-action@v1
+          with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            file: ./coverage.txt
 
 
 

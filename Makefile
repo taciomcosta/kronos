@@ -11,8 +11,8 @@ test-all:
 	@go test --tags=unit ./...
 	@echo "======================== ACCEPTANCE TESTS ======================== "
 	@godog test/features
-cover:
-	@go test ./... -v -cover
+codecov:
+	@go test -covermode atomic -coverprofile coverage.txt ./...
 lint:
 	@golangci-lint run
 build-any:
