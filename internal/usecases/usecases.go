@@ -18,11 +18,6 @@ func New(w Writer, r Reader, h Host) {
 	host = h
 }
 
-// GetHost returns host being used
-func GetHost() Host {
-	return host
-}
-
 // Host represents a host where jobs can be run
 type Host interface {
 	RunJob(job entities.Job)
