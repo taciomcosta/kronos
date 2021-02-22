@@ -190,3 +190,12 @@ func TestCreateJobExpressionMap(t *testing.T) {
 		assertError(t, err, nil)
 	}
 }
+
+func TestCreateJobFailingWriter(t *testing.T) {
+	writer := mocks.NewFailingWriter()
+	reader := mocks.NewStubWriterReader()
+	uc.New(writer, reader, mocks.NewSpyHost())
+	response, err := uc.CreateJob(uc.CreateJobRequest{Tick: "* * * * *"})
+	assertEqual(t, response, uc.CreateJobResponse{})
+	assertError(t, err, errors.New("StubFailingWriter"))
+}
