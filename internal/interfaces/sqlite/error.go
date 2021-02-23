@@ -5,6 +5,8 @@ import (
 	"strings"
 )
 
+var errResourceNotFound = errors.New("resource not found")
+
 var errorMap map[string]string = map[string]string{
 	"1555": "Cannot create duplicate resources",
 }

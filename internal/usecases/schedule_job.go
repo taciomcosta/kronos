@@ -6,7 +6,6 @@ import (
 
 // ScheduleExistingJobs schedules jobs on startup
 func ScheduleExistingJobs() {
-	jobs = reader.FindJobs()
 	tickForever()
 }
 
@@ -19,7 +18,7 @@ func tickForever() {
 }
 
 func runAllJobs(t time.Time) {
-	for _, job := range jobs {
+	for _, job := range reader.FindJobs() {
 		if job.IsTimeSet(t) {
 			host.RunJob(job)
 		}

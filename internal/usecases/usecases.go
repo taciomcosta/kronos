@@ -9,7 +9,6 @@ import (
 var writer Writer
 var reader Reader
 var host Host
-var jobs []entities.Job
 
 // New is used for dependency injection on set up.
 func New(w Writer, r Reader, h Host) {

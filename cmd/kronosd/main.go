@@ -17,7 +17,7 @@ func main() {
 		log.Println("No configuration file detected, using default values")
 	}
 
-	writerReader := sqlite.NewWriterReader(config.GetString("db"))
+	writerReader := sqlite.NewCacheableWriterReader(config.GetString("db"))
 	host := os.NewHost()
 	usecases.New(writerReader, writerReader, host)
 

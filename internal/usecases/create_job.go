@@ -29,6 +29,5 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	if err != nil {
 		return CreateJobResponse{}, err
 	}
-	jobs = append(jobs, job)
 	return CreateJobResponse{Msg: job.Name + " created"}, nil
 }

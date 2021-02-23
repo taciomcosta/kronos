@@ -1,8 +1,6 @@
 package sqlite
 
 import (
-	"errors"
-
 	"github.com/bvinc/go-sqlite-lite/sqlite3"
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
@@ -57,7 +55,7 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 	_ = stmt.Exec(name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
-		return dto, errors.New("resource not found")
+		return dto, errResourceNotFound
 	}
 	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick)
 	return entities.NewJob(dto.Name, dto.Command, dto.Tick)
