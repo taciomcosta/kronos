@@ -37,7 +37,7 @@ func (c *CacheableWriterReader) DeleteJob(name string) error {
 // FindJobs finds all jobs.
 func (c *CacheableWriterReader) FindJobs() []entities.Job {
 	if len(jobs) == 0 {
-		return c.wr.FindJobs()
+		jobs = c.wr.FindJobs()
 	}
 	return jobs
 }
