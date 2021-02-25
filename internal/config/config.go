@@ -7,7 +7,7 @@ import (
 // EnableDefaultMode reads config.json file or uses default configuration
 func EnableDefaultMode() error {
 	viper.SetConfigType("json")
-	viper.SetDefault("db", "/var/lib/kronos/kronos.db")
+	viper.SetDefault("db", "/usr/local/var/kronos/kronos.db")
 	viper.SetDefault("host", ":8080")
 	viper.AddConfigPath(getConfigFilePath())
 	err := viper.ReadInConfig()
@@ -15,7 +15,7 @@ func EnableDefaultMode() error {
 }
 
 func getConfigFilePath() string {
-	return "/etc/kronos/"
+	return "/usr/local/etc/kronos/"
 }
 
 // EnableTestMode sets test configuration as current
