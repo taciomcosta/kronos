@@ -44,6 +44,7 @@ sudo pacman -S kronos
 ```
 brew tap taciomcosta/kronos
 brew install kronos
+sudo brew services start kronos
 ```
 
 ### Windows
@@ -69,7 +70,7 @@ to override this behavior.
 kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs.
 
 Usage:
-    kronos [command]
+  kronos [command]
 
 Available Commands:
   create         Creates a new job/channel
@@ -84,7 +85,7 @@ Available Commands:
   assign         Assigns a channel to a job
 
 Flags:
-    -h, --help   help for kronos
+  -h, --help   help for kronos
 
 Use "kronos <command> --help" to learn more about a specific command.
 ```
