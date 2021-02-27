@@ -44,7 +44,13 @@ sudo pacman -S kronos
 ```
 brew tap taciomcosta/kronos
 brew install kronos
-sudo brew services start kronos
+brew services start kronos
+```
+
+Removing: 
+```
+brew services stop kronos
+brew uninstall kronos
 ```
 
 ### Windows
