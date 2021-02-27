@@ -11,6 +11,10 @@ import (
 var db *sqlite3.Conn
 var tablesStmts []string = []string{
 	`CREATE TABLE IF NOT EXISTS job(name TEXT PRIMARY KEY, command TEXT, tick TEXT)`,
+	`CREATE TABLE IF NOT EXISTS execution(
+		job_name TEXT, date DATE, STATUS TEXT, 
+		mem_usage REAL, cpu_usage REAL, net_in INTEGER, net_out INTEGER
+	)`,
 }
 
 func newDB(name string) {
