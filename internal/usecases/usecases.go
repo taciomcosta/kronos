@@ -34,4 +34,5 @@ type Reader interface {
 	FindJobs() []entities.Job
 	FindOneJob(name string) (entities.Job, error)
 	FindJobsResponse() FindJobsResponse
+	FindExecutionsResponse() FindExecutionsResponse
 }

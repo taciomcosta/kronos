@@ -10,7 +10,7 @@ type FindJobsResponse struct {
 	Count int      `json:"count"`
 }
 
-// JobDTO represents a Job returnede by FindJobsResponse
+// JobDTO represents a Job returned by FindJobsResponse
 type JobDTO struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`

@@ -78,3 +78,12 @@ func (mr *StubWriter) FindOneJob(name string) (entities.Job, error) {
 	}
 	return entities.Job{}, errors.New("resource not found")
 }
+
+// FindExecutionsResponse finds executions in FindExecution response format
+func (mr *StubWriter) FindExecutionsResponse() uc.FindExecutionsResponse {
+	return uc.FindExecutionsResponse{
+		Executions: []uc.ExecutionDTO{
+			{JobName: "list"},
+		},
+	}
+}
