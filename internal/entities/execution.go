@@ -5,8 +5,8 @@ type Execution struct {
 	JobName  string
 	Date     string
 	Status   string
-	MemUsage float32
-	CPUUsage float32
-	NetIn    float32
-	NetOut   float32
+	MemUsage float64
+	CPUUsage float64
+	NetIn    int
+	NetOut   int
 }

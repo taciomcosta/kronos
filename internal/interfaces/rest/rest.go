@@ -8,5 +8,6 @@ func NewRouter() *httprouter.Router {
 	router.POST("/jobs", CreateJob)
 	router.GET("/jobs", FindJobs)
 	router.DELETE("/jobs/:name", DeleteJob)
+	router.GET("/executions", FindExecutions)
 	return router
 }
