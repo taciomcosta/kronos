@@ -9,6 +9,7 @@ var flags = struct {
 	Name    string
 	Command string
 	Tick    string
+	Page    int
 }{}
 
 // NewClient creates a new CLI client
