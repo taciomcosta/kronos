@@ -5,17 +5,6 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "kronos",
-	Short: "kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs",
-	Long:  "kronos is a cross-platform job scheduler that helps you manage, monitor and inspect cronjobs",
-}
-
-var createCmd = &cobra.Command{
-	Use:   "create [job | channel]",
-	Short: "Creates a new job/channel",
-}
-
 var createJobCmd = &cobra.Command{
 	Use:   "job",
 	Short: "Creates a new job",
@@ -32,11 +21,6 @@ var createJobCmd = &cobra.Command{
 	},
 }
 
-var listCmd = &cobra.Command{
-	Use:   "list [jobs | channels]",
-	Short: "List jobs/channels",
-}
-
 var listJobsCmd = &cobra.Command{
 	Use:   "jobs",
 	Short: "List jobs",
@@ -47,11 +31,6 @@ var listJobsCmd = &cobra.Command{
 		out.printf("Showing all %d jobs\n", findJobsResponse.Count)
 		out.printFindJobResponse(findJobsResponse)
 	},
-}
-
-var deleteCmd = &cobra.Command{
-	Use:   "delete [job | channel]",
-	Short: "Delete a job/channel",
 }
 
 var deleteJobCmd = &cobra.Command{
@@ -65,4 +44,17 @@ var deleteJobCmd = &cobra.Command{
 		out.error(err)
 		out.println(deleteJobResponse.Msg)
 	},
+}
+
+func init() {
+	createJobCmd.Flags().StringVarP(&flags.Name, "name", "n", "", "Unique job name")
+	createJobCmd.Flags().StringVarP(&flags.Command, "cmd", "c", "", "Job entrypoint")
+	createJobCmd.Flags().StringVarP(
+		&flags.Tick,
+		"tick", "t", "",
+		"Cron expression or sugar expression:\n"+getTickExamplesTables(),
+	)
+	_ = createJobCmd.MarkFlagRequired("name")
+	_ = createJobCmd.MarkFlagRequired("cmd")
+	_ = createJobCmd.MarkFlagRequired("tick")
 }
