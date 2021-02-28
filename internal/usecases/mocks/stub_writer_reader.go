@@ -80,7 +80,7 @@ func (mr *StubWriter) FindOneJob(name string) (entities.Job, error) {
 }
 
 // FindExecutionsResponse finds executions in FindExecution response format
-func (mr *StubWriter) FindExecutionsResponse() uc.FindExecutionsResponse {
+func (mr *StubWriter) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.FindExecutionsResponse {
 	return uc.FindExecutionsResponse{
 		Executions: []uc.ExecutionDTO{
 			{JobName: "list"},

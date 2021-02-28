@@ -16,7 +16,7 @@ type ExecutionDTO struct {
 	JobName  string  `json:"job_name"`
 	Date     string  `json:"date"`
 	Status   string  `json:"status"`
-	MemUsage float64 `json:"mem_usage"`
+	MemUsage int     `json:"mem_usage"`
 	CPUUsage float64 `json:"cpu_usage"`
 	NetIn    int     `json:"net_in"`
 	NetOut   int     `json:"net_out"`
@@ -24,5 +24,5 @@ type ExecutionDTO struct {
 
 // FindExecutions finds last N executions of all jobs or a specific job
 func FindExecutions(request FindExecutionsRequest) FindExecutionsResponse {
-	return reader.FindExecutionsResponse()
+	return reader.FindExecutionsResponse(request)
 }

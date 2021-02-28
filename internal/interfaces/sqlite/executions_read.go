@@ -6,8 +6,27 @@ import (
 )
 
 // FindExecutionsResponse returns all executions in FindExecutionsResponse format
-func (wr *WriterReader) FindExecutionsResponse() uc.FindExecutionsResponse {
-	stmt, err := db.Prepare("SELECT * FROM execution")
+func (wr *WriterReader) FindExecutionsResponse(request uc.FindExecutionsRequest) uc.FindExecutionsResponse {
+	if request.JobName != "" {
+		return wr.findOne(request)
+	}
+	return wr.findAll(request)
+}
+
+func (wr *WriterReader) findAll(request uc.FindExecutionsRequest) uc.FindExecutionsResponse {
+	sql := "SELECT * FROM execution ORDER BY date DESC LIMIT ?"
+	stmt, err := db.Prepare(sql, request.Last)
+	if err != nil {
+		return uc.FindExecutionsResponse{}
+	}
+	response := wr.readExecutionsResponse(stmt)
+	_ = stmt.Close()
+	return response
+}
+
+func (wr *WriterReader) findOne(request uc.FindExecutionsRequest) uc.FindExecutionsResponse {
+	sql := "SELECT * FROM execution WHERE job_name = ? ORDER BY date DESC LIMIT ?"
+	stmt, err := db.Prepare(sql, request.JobName, request.Last)
 	if err != nil {
 		return uc.FindExecutionsResponse{}
 	}

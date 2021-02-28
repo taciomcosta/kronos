@@ -5,7 +5,7 @@ type Execution struct {
 	JobName  string
 	Date     string
 	Status   string
-	MemUsage float64
+	MemUsage int
 	CPUUsage float64
 	NetIn    int
 	NetOut   int

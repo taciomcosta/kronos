@@ -5,6 +5,6 @@ import (
 )
 
 // FindExecutionsResponse returns all jobs in FindExecutionsResponse format
-func (c *CacheableWriterReader) FindExecutionsResponse() uc.FindExecutionsResponse {
-	return c.wr.FindExecutionsResponse()
+func (c *CacheableWriterReader) FindExecutionsResponse(r uc.FindExecutionsRequest) uc.FindExecutionsResponse {
+	return c.wr.FindExecutionsResponse(r)
 }
