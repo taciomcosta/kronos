@@ -153,10 +153,9 @@ Alternatively, we can just log the last execution instead of attaching to the jo
 > kronos logs  myjob
 $ Doing the thing...
 $ Job finished
-> 
 ```
 
-Showing execution history for all jobs:
+Showing execution history of all jobs:
 ```
 > kronos history
 NAME            EXECUTION                  STATUS
@@ -165,9 +164,9 @@ myfiles         2021-01-02 00:00:00        Failed
 backup-db       2021-01-03 00:00:00        Succeeded
 ```
 
-Last 3 executions for a specific job:
+Paginating executions of a specific job:
 ```
-> kronos history myjob --last 3
+> kronos history myjob --page 3
 NAME            EXECUTION                  STATUS
 myjob           2021-01-01 00:00:00        Failed
 myjob           2021-01-02 00:00:00        Succeeded
