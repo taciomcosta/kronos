@@ -5,17 +5,19 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
+var pageSize = 10
+
 // FindExecutionsResponse returns all executions in FindExecutionsResponse format
 func (wr *WriterReader) FindExecutionsResponse(request uc.FindExecutionsRequest) uc.FindExecutionsResponse {
 	if request.JobName == "" {
 		return wr.findExecutionsResponse(
-			"SELECT * FROM execution ORDER BY date DESC LIMIT ?",
-			request.Last,
+			"SELECT * FROM execution ORDER BY date DESC LIMIT ? OFFSET ?",
+			pageSize, request.Page*pageSize,
 		)
 	}
 	return wr.findExecutionsResponse(
-		"SELECT * FROM execution WHERE job_name = ? ORDER BY date DESC LIMIT ?",
-		request.JobName, request.Last,
+		"SELECT * FROM execution WHERE job_name = ? ORDER BY date DESC LIMIT ? OFFSET ?",
+		request.JobName, pageSize, request.Page*pageSize,
 	)
 }
 

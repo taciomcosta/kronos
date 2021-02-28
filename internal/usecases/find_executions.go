@@ -3,7 +3,7 @@ package usecases
 // FindExecutionsRequest represent FindExecutions request
 type FindExecutionsRequest struct {
 	JobName string `json:"job_name"`
-	Last    int    `json:"last"`
+	Page    int    `json:"page"`
 }
 
 // FindExecutionsResponse represents FindExecutions response

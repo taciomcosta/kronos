@@ -8,8 +8,6 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-var maxLast = 10
-
 // FindExecutions handles finding all executions request
 func FindExecutions(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	request := parseFindExecutionsRequest(r)
@@ -20,9 +18,10 @@ func FindExecutions(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 func parseFindExecutionsRequest(r *http.Request) uc.FindExecutionsRequest {
 	query := r.URL.Query()
 	jobName := query.Get("jobName")
-	last, _ := strconv.Atoi(query.Get("last"))
-	if last > maxLast || last == 0 {
-		last = maxLast
+	page, _ := strconv.Atoi(query.Get("page"))
+	page--
+	if page < 0 {
+		page = 0
 	}
-	return uc.FindExecutionsRequest{JobName: jobName, Last: last}
+	return uc.FindExecutionsRequest{JobName: jobName, Page: page}
 }

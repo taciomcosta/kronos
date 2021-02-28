@@ -13,7 +13,7 @@ var historyCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		request := parseFindExecutionsRequest(args)
 		response := uc.FindExecutionsResponse{}
-		url := fmt.Sprintf("/executions?jobName=%s&last=%d", request.JobName, request.Last)
+		url := fmt.Sprintf("/executions?jobName=%s&page=%d", request.JobName, request.Page)
 		err := client.get(url, &response)
 		out.error(err)
 		printFindExecutionsTable(response)
@@ -23,7 +23,7 @@ var historyCmd = &cobra.Command{
 func parseFindExecutionsRequest(args []string) uc.FindExecutionsRequest {
 	request := uc.FindExecutionsRequest{
 		JobName: "",
-		Last:    flags.Page,
+		Page:    flags.Page,
 	}
 	if len(args) > 0 {
 		request.JobName = args[0]
