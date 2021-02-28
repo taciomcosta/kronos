@@ -29,8 +29,18 @@ var listJobsCmd = &cobra.Command{
 		err := client.get("/jobs", &findJobsResponse)
 		out.error(err)
 		out.printf("Showing all %d jobs\n", findJobsResponse.Count)
-		out.printFindJobResponse(findJobsResponse)
+		printFindJobResponse(findJobsResponse)
 	},
+}
+
+func printFindJobResponse(response uc.FindJobsResponse) {
+	header := []string{"NAME", "COMMAND", "TICK"}
+	rows := [][]string{}
+	for _, job := range response.Jobs {
+		row := []string{job.Name, job.Command, job.Tick}
+		rows = append(rows, row)
+	}
+	out.printTable(header, rows)
 }
 
 var deleteJobCmd = &cobra.Command{

@@ -7,7 +7,6 @@ import (
 
 	"github.com/olekukonko/tablewriter"
 	"github.com/taciomcosta/kronos/internal/entities"
-	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
 var out output
@@ -27,16 +26,6 @@ func (o output) error(err error) {
 		o.println(err)
 		os.Exit(1)
 	}
-}
-
-func (o output) printFindJobResponse(response uc.FindJobsResponse) {
-	header := []string{"NAME", "COMMAND", "TICK"}
-	rows := [][]string{}
-	for _, job := range response.Jobs {
-		row := []string{job.Name, job.Command, job.Tick}
-		rows = append(rows, row)
-	}
-	o.printTable(header, rows)
 }
 
 func (o output) printTable(header []string, rows [][]string) {
