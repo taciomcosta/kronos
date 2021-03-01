@@ -87,3 +87,8 @@ func (mr *StubWriter) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.Find
 		},
 	}
 }
+
+// CreateExecution stubs a new Execution creation
+func (mr *StubWriter) CreateExecution(execution *entities.Execution) error {
+	return nil
+}

@@ -27,6 +27,7 @@ type Host interface {
 type Writer interface {
 	CreateJob(job *entities.Job) error
 	DeleteJob(name string) error
+	CreateExecution(execution *entities.Execution) error
 }
 
 // Reader represents a Layer Supertype similar to Repository pattern
