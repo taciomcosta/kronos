@@ -2,7 +2,9 @@ package os
 
 import (
 	"log"
+	"os"
 	"os/exec"
+	"syscall"
 	"time"
 
 	"github.com/taciomcosta/kronos/internal/entities"
@@ -24,14 +26,14 @@ func (o *defaultOS) TickEverySecond() <-chan time.Time {
 
 // RunJob runs a job hosted by default OS lib
 func (o *defaultOS) RunJob(job entities.Job) entities.Execution {
-	err := o.runJob(job)
-	return newExecution(job, err)
+	processState, err := o.runJob(job)
+	return newExecution(job, processState, err)
 }
 
-func (o *defaultOS) runJob(job entities.Job) error {
+func (o *defaultOS) runJob(job entities.Job) (*os.ProcessState, error) {
 	log.Printf("Running job %s\n", job.Name)
 	cmd := o.newCommandFromJob(job)
-	return cmd.Run()
+	return cmd.ProcessState, cmd.Run()
 }
 
 func (o *defaultOS) newCommandFromJob(job entities.Job) *exec.Cmd {
@@ -39,13 +41,16 @@ func (o *defaultOS) newCommandFromJob(job entities.Job) *exec.Cmd {
 	return cmd
 }
 
-func newExecution(job entities.Job, err error) entities.Execution {
+func newExecution(job entities.Job, processState *os.ProcessState, err error) entities.Execution {
 	var execution entities.Execution
 	execution.JobName = job.Name
 	execution.Status = newExecutionStatus(err)
 	execution.Date = time.Now().UTC().Format(time.RFC822)
-	execution.MemUsage = 1.0
-	execution.CPUUsage = 1.0
+
+	usage := processState.SysUsage().(*syscall.Rusage)
+
+	execution.MemUsage = int(usage.Maxrss)
+	execution.CPUUsage = float64(usage.Utime.Usec) + float64(usage.Stime.Usec)
 	execution.NetIn = 1
 	execution.NetOut = 1
 	return execution
