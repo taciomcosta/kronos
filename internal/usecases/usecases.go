@@ -19,7 +19,7 @@ func New(w Writer, r Reader, h Host) {
 
 // Host represents a host where jobs can be run
 type Host interface {
-	RunJob(job entities.Job)
+	RunJob(job entities.Job) entities.Execution
 	TickEverySecond() <-chan time.Time
 }
 

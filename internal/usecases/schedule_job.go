@@ -2,6 +2,8 @@ package usecases
 
 import (
 	"time"
+
+	"github.com/taciomcosta/kronos/internal/entities"
 )
 
 // ScheduleExistingJobs schedules jobs on startup
@@ -20,7 +22,12 @@ func tickForever() {
 func runAllJobs(t time.Time) {
 	for _, job := range reader.FindJobs() {
 		if job.IsTimeSet(t) {
-			host.RunJob(job)
+			go runOneJob(job)
 		}
 	}
+}
+
+func runOneJob(job entities.Job) {
+	execution := host.RunJob(job)
+	_ = writer.CreateExecution(&execution)
 }
