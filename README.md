@@ -132,7 +132,6 @@ Executions: 4
 Resources:
  - Average CPU: 50%
  - Average Memory: 300MB
- - Average Networking: 100MB (IN) / 50KB (OUT)
  
 Assigned Channels:
   - my-slack
@@ -177,6 +176,5 @@ myjob           2021-01-03 00:00:00        Succeeded
 Deleting a job:
 ```
 > kronos delete job myjob
-myjob deleted.
 ```
 
