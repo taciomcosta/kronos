@@ -26,17 +26,18 @@ func (o *defaultOS) TickEverySecond() <-chan time.Time {
 
 // RunJob runs a job hosted by default OS lib
 func (o *defaultOS) RunJob(job entities.Job) entities.Execution {
-	processState, err := o.runJob(job)
+	processState, err := runJob(job)
 	return newExecution(job, processState, err)
 }
 
-func (o *defaultOS) runJob(job entities.Job) (*os.ProcessState, error) {
+func runJob(job entities.Job) (*os.ProcessState, error) {
 	log.Printf("Running job %s\n", job.Name)
-	cmd := o.newCommandFromJob(job)
-	return cmd.ProcessState, cmd.Run()
+	cmd := newCommandFromJob(job)
+	err := cmd.Run()
+	return cmd.ProcessState, err
 }
 
-func (o *defaultOS) newCommandFromJob(job entities.Job) *exec.Cmd {
+func newCommandFromJob(job entities.Job) *exec.Cmd {
 	cmd := exec.Command(job.Command)
 	return cmd
 }
@@ -46,9 +47,11 @@ func newExecution(job entities.Job, processState *os.ProcessState, err error) en
 	execution.JobName = job.Name
 	execution.Status = newExecutionStatus(err)
 	execution.Date = time.Now().UTC().Format(time.RFC822)
-
-	usage := processState.SysUsage().(*syscall.Rusage)
-
+	if err != nil {
+		return execution
+	}
+	sysusage := processState.SysUsage()
+	usage := sysusage.(*syscall.Rusage)
 	execution.MemUsage = int(usage.Maxrss)
 	execution.CPUUsage = float64(usage.Utime.Usec) + float64(usage.Stime.Usec)
 	execution.NetIn = 1
