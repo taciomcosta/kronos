@@ -11,7 +11,5 @@ func (wr *WriterReader) CreateExecution(execution *entities.Execution) error {
 		execution.Status,
 		execution.MemUsage,
 		execution.CPUTime,
-		execution.NetIn,
-		execution.NetOut,
 	)
 }

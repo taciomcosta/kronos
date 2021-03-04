@@ -7,6 +7,4 @@ type Execution struct {
 	Status   string
 	MemUsage int
 	CPUTime  int
-	NetIn    int
-	NetOut   int
 }

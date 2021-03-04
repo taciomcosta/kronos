@@ -54,8 +54,6 @@ func newExecution(job entities.Job, processState *os.ProcessState, err error) en
 	usage := sysusage.(*syscall.Rusage)
 	execution.MemUsage = int(usage.Maxrss)
 	execution.CPUTime = int(usage.Utime.Usec + usage.Stime.Usec)
-	execution.NetIn = 1
-	execution.NetOut = 1
 	return execution
 }
 
