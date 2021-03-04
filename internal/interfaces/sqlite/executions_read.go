@@ -47,7 +47,7 @@ func (wr *WriterReader) readExecutionDTO(stmt *sqlite3.Stmt) uc.ExecutionDTO {
 		&execution.Date,
 		&execution.Status,
 		&execution.MemUsage,
-		&execution.CPUUsage,
+		&execution.CPUTime,
 		&execution.NetIn,
 		&execution.NetOut,
 	)

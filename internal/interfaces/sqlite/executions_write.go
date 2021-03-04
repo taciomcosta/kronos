@@ -10,7 +10,7 @@ func (wr *WriterReader) CreateExecution(execution *entities.Execution) error {
 		execution.Date,
 		execution.Status,
 		execution.MemUsage,
-		execution.CPUUsage,
+		execution.CPUTime,
 		execution.NetIn,
 		execution.NetOut,
 	)
