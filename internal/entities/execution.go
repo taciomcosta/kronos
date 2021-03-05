@@ -10,6 +10,8 @@ type Execution struct {
 }
 
 const (
+	// SucceededStatus is set when execution exits with no errors
 	SucceededStatus = "Succeeded"
-	FailedStatus    = "Failed"
+	// FailedStatus is set when execution exits with an error
+	FailedStatus = "Failed"
 )
