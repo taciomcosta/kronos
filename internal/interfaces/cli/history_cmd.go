@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
@@ -32,13 +33,20 @@ func parseFindExecutionsRequest(args []string) uc.FindExecutionsRequest {
 }
 
 func printFindExecutionsTable(response uc.FindExecutionsResponse) {
-	header := []string{"NAME", "DATE", "STATUS"}
+	header := []string{"NAME", "DATE", "STATUS", "CPU TIME (ns)", "MEM USAGE (MB)"}
 	rows := [][]string{}
 	for _, exec := range response.Executions {
-		row := []string{exec.JobName, exec.Date, exec.Status}
+		cpu := strconv.Itoa(exec.CPUTime)
+		memory := parseMemoryColumn(exec.MemUsage)
+		row := []string{exec.JobName, exec.Date, exec.Status, cpu, memory}
 		rows = append(rows, row)
 	}
 	out.printTable(header, rows)
+}
+
+func parseMemoryColumn(memoryUsage int) string {
+	megabytes := float64(memoryUsage) / 1024 / 1024
+	return strconv.FormatFloat(megabytes, 'f', 2, 64)
 }
 
 func init() {
