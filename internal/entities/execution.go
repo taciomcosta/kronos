@@ -8,3 +8,8 @@ type Execution struct {
 	MemUsage int
 	CPUTime  int
 }
+
+const (
+	SucceededStatus = "Succeeded"
+	FailedStatus    = "Failed"
+)

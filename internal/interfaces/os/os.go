@@ -59,7 +59,7 @@ func newExecution(job entities.Job, processState *os.ProcessState, err error) en
 
 func newExecutionStatus(err error) string {
 	if err != nil {
-		return "Failed"
+		return entities.FailedStatus
 	}
-	return "Succeeded"
+	return entities.SucceededStatus
 }
