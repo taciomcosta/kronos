@@ -157,19 +157,19 @@ $ Job finished
 Showing execution history of all jobs:
 ```
 > kronos history
-NAME            EXECUTION                  STATUS
-myjob           2021-01-01 00:00:00        Succeeded
-myfiles         2021-01-02 00:00:00        Failed
-backup-db       2021-01-03 00:00:00        Succeeded
+NAME            EXECUTION                  STATUS           CPU TIME (ns)        MEM USAGE (MB)
+myjob           2021-01-01 00:00:00        Succeeded        12320                364
+myfiles         2021-01-02 00:00:00        Failed           7513                 60
+backup-db       2021-01-03 00:00:00        Succeeded        6470                 211
 ```
 
 Paginating executions of a specific job:
 ```
 > kronos history myjob --page 3
-NAME            EXECUTION                  STATUS
-myjob           2021-01-01 00:00:00        Failed
-myjob           2021-01-02 00:00:00        Succeeded
-myjob           2021-01-03 00:00:00        Succeeded
+NAME            EXECUTION                  STATUS           CPU TIME (ns)        MEM USAGE (MB)
+myjob           2021-01-01 00:00:00        Succeeded        12320                364
+myjob           2021-01-02 00:00:00        Succeeded        12320                364
+myjob           2021-01-03 00:00:00        Failed           0                    0
 ```
 
 
