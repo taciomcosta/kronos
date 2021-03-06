@@ -22,7 +22,13 @@ type SpyHost struct {
 // RunJob runs a job on spy host
 func (s *SpyHost) RunJob(job entities.Job) entities.Execution {
 	s.called = true
-	return entities.Execution{}
+	return entities.Execution{
+		JobName:  "spy-host",
+		Date:     "date",
+		Status:   "Succeeded",
+		CPUTime:  1000,
+		MemUsage: 1000,
+	}
 }
 
 // WasRunJobCalled tells if RunJob was called

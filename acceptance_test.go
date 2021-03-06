@@ -8,10 +8,12 @@ import (
 
 	"github.com/taciomcosta/kronos/internal/config"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"github.com/taciomcosta/kronos/test"
 )
+
+var host = mocks.NewSpyHost()
 
 func TestMain(m *testing.M) {
 	status := godog.TestSuite{
@@ -26,8 +28,7 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
 		config.EnableTestMode()
 		writerReader := sqlite.NewWriterReader(config.GetString("db"))
-		host := &mocks.SpyHost{}
-		usecases.New(writerReader, writerReader, host)
+		uc.New(writerReader, writerReader, host)
 	})
 }
 
@@ -42,8 +43,8 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I delete the new job$`, jf.IDeleteTheNewJob)
 	ctx.Step(`^the new job is not listed$`, jf.TheNewJobIsNotListed)
 
-	ef := features.ExecutionsFeature{}
-	ctx.Step(`^(\d+) execution should is listed$`, ef.ExecutionShouldIsListed)
+	ef := features.ExecutionsFeature{Host: host}
+	ctx.Step(`^(\d+) execution is listed$`, ef.ExecutionIsListed)
 	ctx.Step(`^I list all job execution history$`, ef.IListAllJobExecutionHistory)
 	ctx.Step(`^that I create a job$`, ef.ThatICreateAJob)
 	ctx.Step(`^the job finishes (\d+) execution$`, ef.TheJobFinishesExecution)
