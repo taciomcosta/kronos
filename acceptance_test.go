@@ -13,7 +13,7 @@ import (
 	"github.com/taciomcosta/kronos/test"
 )
 
-var host = mocks.NewSpyHost()
+var host *mocks.SpyHost
 
 func TestMain(m *testing.M) {
 	status := godog.TestSuite{
@@ -28,6 +28,7 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
 		config.EnableTestMode()
 		writerReader := sqlite.NewWriterReader(config.GetString("db"))
+		host = mocks.NewSpyHost()
 		uc.New(writerReader, writerReader, host)
 	})
 }
