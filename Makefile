@@ -1,4 +1,4 @@
-KRONOS_VERSION=0.1.0
+KRONOS_VERSION=0.2.0
 
 dev:
 	@env go run ./cmd/kronosd/main.go
@@ -21,3 +21,7 @@ build-any:
 release-darwin: 
 	@env GOOS=darwin GOARCH=amd64 make build-any
 	@tar -czvf build/kronos-$(KRONOS_VERSION)-darwin_amd64.tar.gz build/*
+release-linux:
+	@env GOOS=linux GOARCH=amd64 make build-any
+	@tar -czvf build/kronos-$(KRONOS_VERSION)-linux_amd64.tar.gz build/*
+
