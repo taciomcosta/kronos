@@ -13,12 +13,12 @@ var out output
 
 type output struct{}
 
-func (o output) println(a ...interface{}) (n int, err error) {
-	return fmt.Println(a...)
+func (o output) println(a ...interface{}) {
+	fmt.Println(a...)
 }
 
-func (o output) printf(format string, a ...interface{}) (n int, err error) {
-	return fmt.Printf(format, a...)
+func (o output) printf(format string, a ...interface{}) {
+	fmt.Printf(format, a...)
 }
 
 func (o output) error(err error) {
