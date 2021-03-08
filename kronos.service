@@ -1,0 +1,13 @@
+[Unit]
+Description=Kronos Service
+ConditionPathExists=/usr/bin/kronosd
+ 
+[Service]
+User=root
+Group=root
+
+Restart=on-failure
+ExecStart=/usr/bin/kronosd
+
+[Install]
+WantedBy=multi-user.target
