@@ -23,5 +23,6 @@ release-darwin:
 	@tar -czvf build/kronos-$(KRONOS_VERSION)-darwin_amd64.tar.gz build/*
 release-linux:
 	@env GOOS=linux GOARCH=amd64 make build-any
+	@cp kronos.service build/kronos.service
 	@tar -czvf build/kronos-$(KRONOS_VERSION)-linux_amd64.tar.gz build/*
 
