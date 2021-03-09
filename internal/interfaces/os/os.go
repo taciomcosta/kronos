@@ -32,34 +32,34 @@ func (o *defaultOS) RunJob(job entities.Job) entities.Execution {
 
 func runJob(job entities.Job) (*os.ProcessState, error) {
 	log.Printf("Running job %s\n", job.Name)
-	cmd := newCommandFromJob(job)
+	cmd := exec.Command(job.Command)
 	err := cmd.Run()
 	return cmd.ProcessState, err
 }
 
-func newCommandFromJob(job entities.Job) *exec.Cmd {
-	cmd := exec.Command(job.Command)
-	return cmd
+func newExecution(job entities.Job, processState *os.ProcessState, err error) entities.Execution {
+	if err != nil {
+		return failedExecution(job, processState)
+	}
+	return succeededExecution(job, processState)
 }
 
-func newExecution(job entities.Job, processState *os.ProcessState, err error) entities.Execution {
+func failedExecution(job entities.Job, processState *os.ProcessState) entities.Execution {
 	var execution entities.Execution
 	execution.JobName = job.Name
-	execution.Status = newExecutionStatus(err)
+	execution.Status = entities.FailedStatus
 	execution.Date = time.Now().UTC().Format(time.RFC822)
-	if err != nil {
-		return execution
-	}
+	return execution
+}
+
+func succeededExecution(job entities.Job, processState *os.ProcessState) entities.Execution {
+	var execution entities.Execution
+	execution.JobName = job.Name
+	execution.Status = entities.SucceededStatus
+	execution.Date = time.Now().UTC().Format(time.RFC822)
 	sysusage := processState.SysUsage()
 	usage := sysusage.(*syscall.Rusage)
 	execution.MemUsage = int(usage.Maxrss)
 	execution.CPUTime = int(usage.Utime.Usec + usage.Stime.Usec)
 	return execution
-}
-
-func newExecutionStatus(err error) string {
-	if err != nil {
-		return entities.FailedStatus
-	}
-	return entities.SucceededStatus
 }
