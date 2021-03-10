@@ -14,10 +14,10 @@ func EnableTestMode() {
 
 // EnableDefaultMode reads config.json file or uses default configuration
 func EnableDefaultMode() error {
-	if os.Getenv("ENVIRONMENT") == "production" {
-		return enableProductionMode()
+	if os.Getenv("ENVIRONMENT") == "development" {
+		return enableDevelopmentMode()
 	}
-	return enableDevelopmentMode()
+	return enableProductionMode()
 }
 
 // enableDevelopmentMode sets dev configuration as current
