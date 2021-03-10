@@ -8,7 +8,7 @@ url="https://github.com/taciomcosta/$pkgname"
 license=('MIT')
 makedepends=('go')
 source=("$url/releases/download/0.2.0/kronos-$pkgver-linux_amd64.tar.gz")
-sha256sums=('b9f738a6fffd75c669e7529711547f09a6d7b78ac50ac1481770d73b9ba8ff5d')
+sha256sums=('bd471668d9b1ad2e656724db9a5b3a9246b9ed2e2722220d1b7b20b5de2a99e0')
 
 prepare() {
 	cd "$srcdir"
