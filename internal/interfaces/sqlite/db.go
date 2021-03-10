@@ -25,7 +25,7 @@ func newDB(name string) {
 func connectDB(name string) {
 	conn, err := sqlite3.Open(name)
 	if err != nil {
-		log.Fatal("Cannot establish connection with sqlite db")
+		log.Fatalf("Cannot establish connection with sqlite db: %v", err)
 	}
 	conn.BusyTimeout(5 * time.Second)
 	db = conn
