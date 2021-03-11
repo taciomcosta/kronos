@@ -37,7 +37,8 @@ sudo apt-get install kronos
 
 **Arch**
 ```
-sudo pacman -S kronos
+git clone https://github.com/taciomcosta/kronos
+makepkg -Si
 ```
 
 ### macOs
