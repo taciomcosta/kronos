@@ -15,16 +15,16 @@ func NewFailingWriter() *StubFailingWriter {
 type StubFailingWriter struct{}
 
 // CreateJob creates a job.
-func (mr *StubFailingWriter) CreateJob(job *entities.Job) error {
+func (s *StubFailingWriter) CreateJob(job *entities.Job) error {
 	return errors.New("StubFailingWriter")
 }
 
 // CreateExecution creates a job.
-func (mr *StubFailingWriter) CreateExecution(e *entities.Execution) error {
+func (s *StubFailingWriter) CreateExecution(e *entities.Execution) error {
 	return errors.New("StubFailingWriter")
 }
 
 // DeleteJob deletes a job
-func (mr *StubFailingWriter) DeleteJob(name string) error {
+func (s *StubFailingWriter) DeleteJob(name string) error {
 	return errors.New("StubFailingWriter")
 }
