@@ -57,3 +57,8 @@ func (c *CacheableWriterReader) FindOneJob(name string) (entities.Job, error) {
 	}
 	return entities.Job{}, errResourceNotFound
 }
+
+// DescribeJobResponse finds job in DeDescribeJobResponse format
+func (c *CacheableWriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
+	return c.wr.DescribeJobResponse(name)
+}

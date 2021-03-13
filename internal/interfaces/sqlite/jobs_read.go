@@ -60,3 +60,8 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick)
 	return entities.NewJob(dto.Name, dto.Command, dto.Tick)
 }
+
+// DescribeJobResponse finds job in DeDescribeJobResponse format
+func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
+	return uc.DescribeJobResponse{}, nil
+}

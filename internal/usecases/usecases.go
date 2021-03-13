@@ -36,4 +36,5 @@ type Reader interface {
 	FindOneJob(name string) (entities.Job, error)
 	FindJobsResponse() FindJobsResponse
 	FindExecutionsResponse(request FindExecutionsRequest) FindExecutionsResponse
+	DescribeJobResponse(name string) (DescribeJobResponse, error)
 }
