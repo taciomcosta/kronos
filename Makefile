@@ -16,8 +16,8 @@ codecov:
 lint:
 	@golangci-lint run
 build-any:
-	@env ENVIRONMENT=production GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags "-s -w" -o build/kronosd ./cmd/kronosd
-	@env ENVIRONMENT=production GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags "-s -w" -o build/kronos ./cmd/kronoscli
+	@env ENVIRONMENT=production GOOS=$(GOOS) GOARCH=$(GOARCH) go build -tags $(GOOS) -ldflags "-s -w" -o build/kronosd ./cmd/kronosd
+	@env ENVIRONMENT=production GOOS=$(GOOS) GOARCH=$(GOARCH) go build -tags $(GOOS) -ldflags "-s -w" -o build/kronos ./cmd/kronoscli
 release-darwin: 
 	@env GOOS=darwin GOARCH=amd64 make build-any
 	@tar -czvf build/kronos-$(KRONOS_VERSION)-darwin_amd64.tar.gz build/*

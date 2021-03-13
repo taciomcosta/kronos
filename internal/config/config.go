@@ -1,10 +1,11 @@
 package config
 
 import (
-	"os"
-
 	"github.com/spf13/viper"
 )
+
+var defaultConfigPath = "./dev/kronos.db"
+var defaultDBPath = ".dev/"
 
 // EnableTestMode sets test configuration as current
 func EnableTestMode() {
@@ -14,28 +15,10 @@ func EnableTestMode() {
 
 // EnableDefaultMode reads config.json file or uses default configuration
 func EnableDefaultMode() error {
-	if os.Getenv("ENVIRONMENT") == "development" {
-		return enableDevelopmentMode()
-	}
-	return enableProductionMode()
-}
-
-// enableDevelopmentMode sets dev configuration as current
-func enableDevelopmentMode() error {
 	viper.SetConfigType("json")
-	viper.SetDefault("db", ".dev/kronos.db")
+	viper.SetDefault("db", defaultDBPath)
 	viper.SetDefault("host", ":8080")
-	viper.AddConfigPath(".dev/")
-	err := viper.ReadInConfig()
-	return err
-}
-
-// enableProductionMode sets production configuration as current
-func enableProductionMode() error {
-	viper.SetConfigType("json")
-	viper.SetDefault("db", "/usr/local/var/kronos/kronos.db")
-	viper.SetDefault("host", ":8080")
-	viper.AddConfigPath("/usr/local/etc/kronos/")
+	viper.AddConfigPath(defaultConfigPath)
 	err := viper.ReadInConfig()
 	return err
 }
