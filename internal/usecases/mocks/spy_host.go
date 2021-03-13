@@ -41,7 +41,7 @@ func (s *SpyHost) TickEverySecond() <-chan time.Time {
 	// In production, we want tick channel to be open forever
 	// but we don't this bevahior when testing.
 	// Thus we set an expiration time.
-	s.expireChannelAfter(1000 * time.Nanosecond)
+	s.expireChannelAfter(10 * time.Millisecond)
 	return s.channel
 }
 
