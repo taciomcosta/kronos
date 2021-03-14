@@ -61,24 +61,24 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 	return entities.NewJob(dto.Name, dto.Command, dto.Tick)
 }
 
-// DescribeJobResponse finds job in DeDescribeJobResponse format
+// DescribeJobResponse finds job in DescribeJobResponse format
 func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	r := uc.DescribeJobResponse{}
+	var r uc.DescribeJobResponse
 	stmt, _ := db.Prepare(
 		`SELECT
 			MAX(j.name) AS name,
 			MAX(j.command) as command,
 			MAX(j.tick) AS tick,
 			MAX(e.date) AS last_execution,
-			'enabled' AS status,
+			true AS status,
 			COUNT(CASE e.STATUS WHEN 'Succeeded' THEN 1 ELSE null END) AS executions_succeeded,
 			COUNT(CASE e.STATUS WHEN 'Failed' THEN 1 ELSE null END) AS executions_failed,
 			AVG(e.cpu_time) AS average_cpu,
 			AVG(e.mem_usage) AS average_mem
 		 FROM execution e
 		 INNER JOIN job j ON j.name = e.job_name
-		 GROUP BY e.job_name
-		 WHERE e.name = ?`,
+		 WHERE e.job_name=?
+		 GROUP BY e.job_name`,
 	)
 	_ = stmt.Exec(name)
 	hasRow, _ := stmt.Step()
