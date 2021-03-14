@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var defaultConfigPath = "./dev/kronos.db"
+var defaultConfigPath = ".dev/kronos.db"
 var defaultDBPath = ".dev/"
 
 // EnableTestMode sets test configuration as current
