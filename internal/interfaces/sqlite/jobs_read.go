@@ -63,5 +63,38 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 
 // DescribeJobResponse finds job in DeDescribeJobResponse format
 func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	return uc.DescribeJobResponse{}, nil
+	r := uc.DescribeJobResponse{}
+	stmt, _ := db.Prepare(
+		`SELECT
+			MAX(j.name) AS name,
+			MAX(j.command) as command,
+			MAX(j.tick) AS tick,
+			MAX(e.date) AS last_execution,
+			'enabled' AS status,
+			COUNT(CASE e.STATUS WHEN 'Succeeded' THEN 1 ELSE null END) AS executions_succeeded,
+			COUNT(CASE e.STATUS WHEN 'Failed' THEN 1 ELSE null END) AS executions_failed,
+			AVG(e.cpu_time) AS average_cpu,
+			AVG(e.mem_usage) AS average_mem
+		 FROM execution e
+		 INNER JOIN job j ON j.name = e.job_name
+		 GROUP BY e.job_name
+		 WHERE e.name = ?`,
+	)
+	_ = stmt.Exec(name)
+	hasRow, _ := stmt.Step()
+	if !hasRow {
+		return r, errResourceNotFound
+	}
+	_ = stmt.Scan(
+		&r.Name,
+		&r.Command,
+		&r.Tick,
+		&r.LastExecution,
+		&r.Status,
+		&r.ExecutionsSucceeded,
+		&r.ExecutionsFailed,
+		&r.AverageCPU,
+		&r.AverageMem,
+	)
+	return r, nil
 }
