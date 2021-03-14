@@ -1,7 +1,7 @@
 KRONOS_VERSION=0.2.0
 
 dev:
-	@env go run -tags -darwin -linux ./cmd/kronosd/main.go
+	@env ENVIRONMENT=development go run ./cmd/kronosd/main.go
 test-unit:
 	@go test --tags=unit ./...
 test-acceptance:
