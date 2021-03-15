@@ -44,11 +44,6 @@ func printFindExecutionsTable(response uc.FindExecutionsResponse) {
 	out.printTable(header, rows)
 }
 
-func parseMemory(memoryUsage int) string {
-	megabytes := float64(memoryUsage) / 1024 / 1024
-	return strconv.FormatFloat(megabytes, 'f', 2, 64)
-}
-
 func init() {
 	historyCmd.Flags().IntVarP(&flags.Page, "page", "p", 1, "Pagination argument")
 }
