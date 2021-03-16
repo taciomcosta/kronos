@@ -66,25 +66,38 @@ func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse
 	var r uc.DescribeJobResponse
 	stmt, _ := db.Prepare(
 		`SELECT
-			MAX(j.name) AS name,
-			MAX(j.command) as command,
-			MAX(j.tick) AS tick,
-			MAX(e.date) AS last_execution,
-			true AS status,
-			COUNT(CASE e.STATUS WHEN 'Succeeded' THEN 1 ELSE null END) AS executions_succeeded,
-			COUNT(CASE e.STATUS WHEN 'Failed' THEN 1 ELSE null END) AS executions_failed,
-			AVG(e.cpu_time) AS average_cpu,
-			AVG(e.mem_usage) AS average_mem
-		 FROM execution e
-		 INNER JOIN job j ON j.name = e.job_name
-		 WHERE e.job_name=?
-		 GROUP BY e.job_name`,
+			j.name AS name,
+			j.command as command,
+			j.tick AS tick,
+			exec.last_execution,
+			exec.status,
+			exec.executions_succeeded,
+			exec.executions_failed,
+			exec.average_cpu,
+			exec.average_mem
+		 FROM job j
+		 LEFT JOIN (
+			SELECT 
+				MAX(e.job_name) AS job_name,
+				MAX(e.date) AS last_execution,
+				true AS status,
+				COUNT(CASE e.STATUS WHEN 'Succeeded' THEN 1 ELSE null END) AS executions_succeeded,
+				COUNT(CASE e.STATUS WHEN 'Failed' THEN 1 ELSE null END) AS executions_failed,
+				AVG(e.cpu_time) AS average_cpu,
+				AVG(e.mem_usage) AS average_mem
+			FROM execution e
+			WHERE e.job_name=?
+			GROUP BY e.job_name
+		 ) AS exec
+		 ON j.name = exec.job_name
+		 WHERE j.name=?`,
 	)
-	_ = stmt.Exec(name)
+	_ = stmt.Exec(name, name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
 		return r, errResourceNotFound
 	}
+
 	_ = stmt.Scan(
 		&r.Name,
 		&r.Command,
