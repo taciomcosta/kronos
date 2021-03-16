@@ -11,12 +11,12 @@ var pageSize = 10
 func (wr *WriterReader) FindExecutionsResponse(request uc.FindExecutionsRequest) uc.FindExecutionsResponse {
 	if request.JobName == "" {
 		return wr.findExecutionsResponse(
-			"SELECT * FROM execution ORDER BY date DESC LIMIT ? OFFSET ?",
+			findiAllExecutions,
 			pageSize, request.Page*pageSize,
 		)
 	}
 	return wr.findExecutionsResponse(
-		"SELECT * FROM execution WHERE job_name = ? ORDER BY date DESC LIMIT ? OFFSET ?",
+		findJobExecutions,
 		request.JobName, pageSize, request.Page*pageSize,
 	)
 }

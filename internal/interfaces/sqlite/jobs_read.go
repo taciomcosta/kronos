@@ -23,7 +23,7 @@ func (wr *WriterReader) mapDTOToEntitities(dtos []uc.JobDTO) []entities.Job {
 
 // FindJobsResponse returns all jobs in FindJobsResponse format
 func (wr *WriterReader) FindJobsResponse() uc.FindJobsResponse {
-	stmt, err := db.Prepare("SELECT * FROM job")
+	stmt, err := db.Prepare(findAllJobsSQL)
 	if err != nil {
 		return uc.FindJobsResponse{}
 	}
@@ -51,7 +51,7 @@ func (wr *WriterReader) readJobDTO(stmt *sqlite3.Stmt) uc.JobDTO {
 // FindOneJob finds all jobs.
 func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 	var dto entities.Job
-	stmt, _ := db.Prepare("SELECT * FROM job WHERE name=?")
+	stmt, _ := db.Prepare(findOneJobSQL)
 	_ = stmt.Exec(name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
@@ -64,40 +64,12 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 // DescribeJobResponse finds job in DescribeJobResponse format
 func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
 	var r uc.DescribeJobResponse
-	stmt, _ := db.Prepare(
-		`SELECT
-			j.name AS name,
-			j.command as command,
-			j.tick AS tick,
-			exec.last_execution,
-			exec.status,
-			exec.executions_succeeded,
-			exec.executions_failed,
-			exec.average_cpu,
-			exec.average_mem
-		 FROM job j
-		 LEFT JOIN (
-			SELECT 
-				MAX(e.job_name) AS job_name,
-				MAX(e.date) AS last_execution,
-				true AS status,
-				COUNT(CASE e.STATUS WHEN 'Succeeded' THEN 1 ELSE null END) AS executions_succeeded,
-				COUNT(CASE e.STATUS WHEN 'Failed' THEN 1 ELSE null END) AS executions_failed,
-				AVG(e.cpu_time) AS average_cpu,
-				AVG(e.mem_usage) AS average_mem
-			FROM execution e
-			WHERE e.job_name=?
-			GROUP BY e.job_name
-		 ) AS exec
-		 ON j.name = exec.job_name
-		 WHERE j.name=?`,
-	)
+	stmt, _ := db.Prepare(describeJobSQL)
 	_ = stmt.Exec(name, name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
 		return r, errResourceNotFound
 	}
-
 	_ = stmt.Scan(
 		&r.Name,
 		&r.Command,

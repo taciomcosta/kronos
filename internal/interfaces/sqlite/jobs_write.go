@@ -6,18 +6,12 @@ import (
 
 // CreateJob creates a new job into database
 func (wr *WriterReader) CreateJob(job *entities.Job) error {
-	return wr.runWriteOperation(
-		"INSERT INTO job VALUES(?, ?, ?)",
-		job.Name, job.Command, job.Tick,
-	)
+	return wr.runWriteOperation(insertJobSQL, job.Name, job.Command, job.Tick)
 }
 
 // DeleteJob deletes a job
 func (wr *WriterReader) DeleteJob(name string) error {
-	return wr.runWriteOperation(
-		"DELETE FROM job where name=?",
-		name,
-	)
+	return wr.runWriteOperation(deleteJobSQL, name)
 }
 
 func (wr *WriterReader) runWriteOperation(sql string, args ...interface{}) error {
