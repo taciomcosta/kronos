@@ -2,6 +2,9 @@ name: lint
 on: [push]
 jobs:
     build:
+        name: Building with Go version 1.13.7
+        runs-on: ubuntu-latest
+        steps:
         - name: Lint
           uses: golangci/golangci-lint-action@v2
           with:
