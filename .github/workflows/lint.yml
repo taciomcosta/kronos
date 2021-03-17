@@ -1,10 +1,11 @@
 name: lint
 on: [push]
 jobs:
-    build:
-        name: Building with Go version 1.13.7
+    lint:
+        name: lint
         runs-on: ubuntu-latest
         steps:
+        - uses: actions/checkout@v2
         - name: Lint
           uses: golangci/golangci-lint-action@v2
           with:
