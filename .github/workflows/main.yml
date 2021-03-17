@@ -1,7 +1,7 @@
 name: main
 on: [push]
 jobs:
-    test:
+    build:
         name: Building with Go version 1.13.7
         runs-on: ubuntu-latest
         steps:
@@ -18,11 +18,6 @@ jobs:
           with:
             path: ~/go/pkg/mod
             key: ${{ runner.OS }}-go-${{ hashFiles('**/go.sum') }}
-
-        - name: Lint
-          uses: golangci/golangci-lint-action@v2
-          with:
-              version: v1.29
 
         - name: Get dependencies
           run:
