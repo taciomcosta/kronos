@@ -43,10 +43,13 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I provide invalid data for job creation$`, jf.IProvideInvalidDataForJobCreation)
 	ctx.Step(`^I delete the new job$`, jf.IDeleteTheNewJob)
 	ctx.Step(`^the new job is not listed$`, jf.TheNewJobIsNotListed)
+	ctx.Step(`^I describe the new job$`, jf.IDescribeTheNewJob)
+	ctx.Step(`^the new job is detailed$`, jf.TheNewJobIsDetailed)
 
 	ef := features.ExecutionsFeature{Host: host}
 	ctx.Step(`^(\d+) execution is listed$`, ef.ExecutionIsListed)
 	ctx.Step(`^I list all job execution history$`, ef.IListAllJobExecutionHistory)
 	ctx.Step(`^that I create a job$`, ef.ThatICreateAJob)
 	ctx.Step(`^the job finishes (\d+) execution$`, ef.TheJobFinishesExecution)
+
 }

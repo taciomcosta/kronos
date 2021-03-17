@@ -14,8 +14,9 @@ import (
 
 // JobsFeature contains BDD steps related to jobs feature
 type JobsFeature struct {
-	response *httptest.ResponseRecorder
-	inputJob uc.CreateJobRequest
+	responseFindJobs    *httptest.ResponseRecorder
+	responseDescribeJob *httptest.ResponseRecorder
+	inputJob            uc.CreateJobRequest
 }
 
 // IProvideValidDataForJobCreation represents a BDD step
@@ -41,9 +42,9 @@ func (j *JobsFeature) IProvideInvalidDataForJobCreation() error {
 // ICreateANewJob represents a BDD step
 func (j *JobsFeature) ICreateANewJob() error {
 	request, err := newRequest(j.inputJob)
-	j.response = httptest.NewRecorder()
+	j.responseFindJobs = httptest.NewRecorder()
 	ps := httprouter.Params{}
-	rest.CreateJob(j.response, request, ps)
+	rest.CreateJob(j.responseFindJobs, request, ps)
 	return err
 }
 
@@ -59,16 +60,16 @@ func newRequest(v interface{}) (*http.Request, error) {
 // IListTheExistingJobs represents a BDD step
 func (j *JobsFeature) IListTheExistingJobs() error {
 	request, err := http.NewRequest("GET", "", nil)
-	j.response = httptest.NewRecorder()
+	j.responseFindJobs = httptest.NewRecorder()
 	ps := httprouter.Params{}
-	rest.FindJobs(j.response, request, ps)
+	rest.FindJobs(j.responseFindJobs, request, ps)
 	return err
 }
 
 // AnErrorMessageIsShown represents a BDD step
 func (j *JobsFeature) AnErrorMessageIsShown() error {
 	var errorMsg rest.ErrorMessage
-	err := rest.ReadJSON(j.response.Body, &errorMsg)
+	err := rest.ReadJSON(j.responseFindJobs.Body, &errorMsg)
 	if errorMsg.Msg == "" {
 		return errors.New("no error message")
 	}
@@ -78,7 +79,7 @@ func (j *JobsFeature) AnErrorMessageIsShown() error {
 // TheNewJobIsListed represents a BDD step
 func (j *JobsFeature) TheNewJobIsListed() error {
 	var findJobsResponse uc.FindJobsResponse
-	err := rest.ReadJSON(j.response.Body, &findJobsResponse)
+	err := rest.ReadJSON(j.responseFindJobs.Body, &findJobsResponse)
 	if err != nil {
 		return err
 	}
@@ -110,14 +111,37 @@ func (j *JobsFeature) IDeleteTheNewJob() error {
 
 // TheNewJobIsNotListed represents a BDD step
 func (j *JobsFeature) TheNewJobIsNotListed() error {
-	var findJobsResponse uc.FindJobsResponse
-	err := rest.ReadJSON(j.response.Body, &findJobsResponse)
+	var response uc.FindJobsResponse
+	err := rest.ReadJSON(j.responseFindJobs.Body, &response)
 	if err != nil {
 		return err
 	}
-	job := findJobByName(findJobsResponse, "list")
+	job := findJobByName(response, "list")
 	if job != nil {
 		return errors.New("job was listed when it should not")
+	}
+	return nil
+}
+
+// IDescribeTheNewJob represents a BDD step
+func (j *JobsFeature) IDescribeTheNewJob() error {
+	request, err := http.NewRequest("GET", "", nil)
+	j.responseDescribeJob = httptest.NewRecorder()
+	name := httprouter.Param{Key: "name", Value: j.inputJob.Name}
+	ps := httprouter.Params{name}
+	rest.DescribeJob(j.responseDescribeJob, request, ps)
+	return err
+}
+
+// TheNewJobIsDetailed represents a BDD step
+func (j *JobsFeature) TheNewJobIsDetailed() error {
+	var response uc.DescribeJobResponse
+	err := rest.ReadJSON(j.responseDescribeJob.Body, &response)
+	if err != nil {
+		return err
+	}
+	if response.Name != j.inputJob.Name {
+		return errors.New("job not described")
 	}
 	return nil
 }

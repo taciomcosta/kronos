@@ -1,5 +1,5 @@
 Feature: Job
-    Scenario: Job is visualized after creation
+    Scenario: Job is listed after creation
         Given I provide valid data for job creation
         When I create a new job
         And I list the existing jobs
@@ -17,3 +17,8 @@ Feature: Job
         And I list the existing jobs
         Then the new job is not listed
 
+    Scenario: Job is described after creation
+        Given I provide valid data for job creation
+        When I create a new job
+        And I describe the new job
+        Then the new job is detailed
