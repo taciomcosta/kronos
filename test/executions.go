@@ -2,7 +2,6 @@ package features
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"time"
@@ -57,7 +56,6 @@ func (e *ExecutionsFeature) ExecutionIsListed(arg1 int) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(findExecutionsResponse)
 	if len(findExecutionsResponse.Executions) != 1 {
 		return errors.New("execution not listed when it should")
 	}
