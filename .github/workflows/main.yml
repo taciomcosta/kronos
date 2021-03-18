@@ -1,6 +1,16 @@
 name: main
 on: [push]
 jobs:
+    lint:
+       name: lint
+       runs-on: ubuntu-latest
+       steps:
+           - uses: actions/checkout@v2
+           - name: golangci-lint
+             uses: golangci/golangci-lint-action@v2
+             with:
+                 version: v1.29
+                 args: --timeout=2m0s
     build:
         name: Building with Go version 1.13.7
         runs-on: ubuntu-latest
