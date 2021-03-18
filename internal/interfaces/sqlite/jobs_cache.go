@@ -17,6 +17,10 @@ func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
 	return nil
 }
 
+// UpdateJob updates a job
+func (c *CacheableWriterReader) UpdateJob(job *entities.Job) {
+}
+
 // DeleteJob deletes a job
 func (c *CacheableWriterReader) DeleteJob(name string) error {
 	err := c.wr.DeleteJob(name)

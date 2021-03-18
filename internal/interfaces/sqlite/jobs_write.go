@@ -14,6 +14,11 @@ func (wr *WriterReader) DeleteJob(name string) error {
 	return wr.runWriteOperation(deleteJobSQL, name)
 }
 
+// UpdateJob updates a job
+func (wr *WriterReader) UpdateJob(job *entities.Job) {
+	//return wr.runWriteOperation(insertJobSQL, job.Name, job.Command, job.Tick)
+}
+
 func (wr *WriterReader) runWriteOperation(sql string, args ...interface{}) error {
 	stmt, err := db.Prepare(sql)
 	if err != nil {

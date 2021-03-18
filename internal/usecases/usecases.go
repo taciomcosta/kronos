@@ -28,6 +28,7 @@ type Writer interface {
 	CreateJob(job *entities.Job) error
 	DeleteJob(name string) error
 	CreateExecution(execution *entities.Execution) error
+	UpdateJob(job *entities.Job)
 }
 
 // Reader represents a Layer Supertype similar to Repository pattern

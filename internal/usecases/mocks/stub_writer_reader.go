@@ -107,3 +107,6 @@ func (mr *StubWR) DescribeJobResponse(name string) (uc.DescribeJobResponse, erro
 		AverageMem:          1024,
 	}, nil
 }
+
+// UpdateJob updates a job
+func (mr *StubWR) UpdateJob(job *entities.Job) {}

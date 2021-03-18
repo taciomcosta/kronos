@@ -28,3 +28,6 @@ func (s *StubFailingWriter) CreateExecution(e *entities.Execution) error {
 func (s *StubFailingWriter) DeleteJob(name string) error {
 	return errors.New("StubFailingWriter")
 }
+
+// UpdateJob updates a job
+func (s *StubFailingWriter) UpdateJob(job *entities.Job) {}
