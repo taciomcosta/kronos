@@ -16,7 +16,7 @@ func (wr *WriterReader) DeleteJob(name string) error {
 
 // UpdateJob updates a job
 func (wr *WriterReader) UpdateJob(job *entities.Job) {
-	_ = wr.runWriteOperation(updateJobSQL, job.Name, job.Status)
+	_ = wr.runWriteOperation(updateJobSQL, job.Status, job.Name)
 }
 
 func (wr *WriterReader) runWriteOperation(sql string, args ...interface{}) error {
