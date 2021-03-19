@@ -6,7 +6,7 @@ import (
 
 // CreateJob creates a new job into database
 func (wr *WriterReader) CreateJob(job *entities.Job) error {
-	return wr.runWriteOperation(insertJobSQL, job.Name, job.Command, job.Tick)
+	return wr.runWriteOperation(insertJobSQL, job.Name, job.Command, job.Tick, job.Status)
 }
 
 // DeleteJob deletes a job
@@ -16,7 +16,7 @@ func (wr *WriterReader) DeleteJob(name string) error {
 
 // UpdateJob updates a job
 func (wr *WriterReader) UpdateJob(job *entities.Job) {
-	//return wr.runWriteOperation(insertJobSQL, job.Name, job.Command, job.Tick)
+	_ = wr.runWriteOperation(updateJobSQL, job.Name, job.Status)
 }
 
 func (wr *WriterReader) runWriteOperation(sql string, args ...interface{}) error {

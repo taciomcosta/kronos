@@ -17,6 +17,7 @@ func UpdateJobStatus(request UpdateJobStatusRequest) (UpdateJobStatusResponse, e
 	if err != nil {
 		return UpdateJobStatusResponse{}, err
 	}
+	job.Status = request.Status
 	writer.UpdateJob(&job)
 	if request.Status {
 		return UpdateJobStatusResponse{Msg: request.Name + " enabled"}, nil

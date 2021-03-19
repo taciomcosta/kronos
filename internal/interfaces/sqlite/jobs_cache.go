@@ -19,6 +19,12 @@ func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
 
 // UpdateJob updates a job
 func (c *CacheableWriterReader) UpdateJob(job *entities.Job) {
+	c.wr.UpdateJob(job)
+	for _, j := range jobs {
+		if j.Name == job.Name {
+			j.Status = job.Status
+		}
+	}
 }
 
 // DeleteJob deletes a job
