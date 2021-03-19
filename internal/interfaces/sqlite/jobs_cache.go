@@ -20,7 +20,7 @@ func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
 // UpdateJob updates a job
 func (c *CacheableWriterReader) UpdateJob(job *entities.Job) {
 	c.wr.UpdateJob(job)
-	for _, j := range jobs {
+	for _, j := range c.FindJobs() {
 		if j.Name == job.Name {
 			j.Status = job.Status
 		}
@@ -34,7 +34,7 @@ func (c *CacheableWriterReader) DeleteJob(name string) error {
 		return err
 	}
 	var index int
-	for i := range jobs {
+	for i := range c.FindJobs() {
 		if jobs[i].Name == name {
 			index = i
 			break
@@ -59,7 +59,7 @@ func (c *CacheableWriterReader) FindJobsResponse() uc.FindJobsResponse {
 
 // FindOneJob finds all jobs.
 func (c *CacheableWriterReader) FindOneJob(name string) (entities.Job, error) {
-	for _, job := range jobs {
+	for _, job := range c.FindJobs() {
 		if job.Name == name {
 			return job, nil
 		}
