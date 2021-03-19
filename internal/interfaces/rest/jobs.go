@@ -37,3 +37,12 @@ func DescribeJob(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	response, err := uc.DescribeJob(name)
 	respond(w, response, err)
 }
+
+// UpdateJobStatus handles updating a job status
+func UpdateJobStatus(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	request := uc.UpdateJobStatusRequest{}
+	ReadJSON(r.Body, &request)
+	request.Name = ps.ByName("name")
+	response, err := uc.UpdateJobStatus(request)
+	respond(w, response, err)
+}
