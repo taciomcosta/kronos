@@ -63,6 +63,16 @@ func (mr *StubWR) CreateJobWithExpression(expression string) {
 	mr.jobs = append(mr.jobs, job)
 }
 
+// CreateDisabledJob is a shortcut to add a job that is disabled
+func (mr *StubWR) CreateDisabledJob(expression string) {
+	job, err := entities.NewJob("name", "cmd", expression)
+	job.Status = false
+	if err != nil {
+		panic(err)
+	}
+	mr.jobs = append(mr.jobs, job)
+}
+
 // DeleteJob deletes a job
 func (mr *StubWR) DeleteJob(name string) error {
 	mr.jobs = []entities.Job{}

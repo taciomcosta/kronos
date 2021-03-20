@@ -32,7 +32,7 @@ func (s *SpyHost) RunJob(job entities.Job) entities.Execution {
 }
 
 // WasRunJobCalled tells if RunJob was called
-func (s *SpyHost) WasRunJobCalled() bool {
+func (s *SpyHost) DidJobRun() bool {
 	return s.called
 }
 
