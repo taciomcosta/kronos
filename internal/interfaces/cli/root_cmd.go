@@ -14,4 +14,5 @@ func init() {
 	rootCmd.AddCommand(deleteCmd)
 	rootCmd.AddCommand(historyCmd)
 	rootCmd.AddCommand(describeCmd)
+	rootCmd.AddCommand(enableCmd)
 }

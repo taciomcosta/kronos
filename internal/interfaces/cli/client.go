@@ -48,6 +48,20 @@ func (c kronosClient) post(urlPath string, request interface{}, response interfa
 	return err
 }
 
+func (c kronosClient) put(urlPath string, request interface{}, response interface{}) error {
+	body, err := newBody(request)
+	if err != nil {
+		return errKronosResponse
+	}
+	httpReq, _ := http.NewRequest("PUT", kronosdURL+urlPath, body)
+	httpResponse, err := http.DefaultClient.Do(httpReq)
+	if err != nil {
+		return err
+	}
+	err = readJSON(httpResponse.Body, response)
+	return err
+}
+
 func newBody(v interface{}) (io.Reader, error) {
 	buf, err := json.Marshal(v)
 	if err != nil {
