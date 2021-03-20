@@ -15,7 +15,7 @@ func (wr *WriterReader) FindJobs() []entities.Job {
 func (wr *WriterReader) mapDTOToEntitities(dtos []uc.JobDTO) []entities.Job {
 	var jobs []entities.Job
 	for _, dto := range dtos {
-		job, _ := entities.NewJob(dto.Name, dto.Command, dto.Tick)
+		job, _ := entities.NewJob(dto.Name, dto.Command, dto.Tick, dto.Status)
 		jobs = append(jobs, job)
 	}
 	return jobs
@@ -44,7 +44,7 @@ func (wr *WriterReader) readAllJobsResponse(stmt *sqlite3.Stmt) uc.FindJobsRespo
 
 func (wr *WriterReader) readJobDTO(stmt *sqlite3.Stmt) uc.JobDTO {
 	job := uc.JobDTO{}
-	_ = stmt.Scan(&job.Name, &job.Command, &job.Tick)
+	_ = stmt.Scan(&job.Name, &job.Command, &job.Tick, &job.Status)
 	return job
 }
 
@@ -57,8 +57,8 @@ func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
 	if !hasRow {
 		return dto, errResourceNotFound
 	}
-	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick)
-	return entities.NewJob(dto.Name, dto.Command, dto.Tick)
+	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick, &dto.Status)
+	return entities.NewJob(dto.Name, dto.Command, dto.Tick, dto.Status)
 }
 
 // DescribeJobResponse finds job in DescribeJobResponse format

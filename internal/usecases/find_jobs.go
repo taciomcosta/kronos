@@ -15,6 +15,7 @@ type JobDTO struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
 	Tick    string `json:"tick"`
+	Status  bool   `json:"status"`
 }
 
 // FindJobs returns a list of all jobs.

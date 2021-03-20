@@ -21,7 +21,9 @@ func CreateJob(request CreateJobRequest) (CreateJobResponse, error) {
 	job, err := entities.NewJob(
 		request.Name,
 		request.Command,
-		request.Tick)
+		request.Tick,
+		true,
+	)
 	if err != nil {
 		return CreateJobResponse{}, err
 	}

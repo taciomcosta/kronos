@@ -5,13 +5,13 @@ import (
 )
 
 // NewJob creates a new Job using options
-func NewJob(name string, command string, tick string) (Job, error) {
+func NewJob(name string, command string, tick string, status bool) (Job, error) {
 	ticker, err := NewTicker(tick)
 	job := Job{
 		Name:    name,
 		Command: command,
 		Tick:    tick,
-		Status:  true,
+		Status:  status,
 		ticker:  ticker,
 	}
 	return job, err

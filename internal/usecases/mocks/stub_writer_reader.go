@@ -56,7 +56,7 @@ func (mr *StubWR) FindJobsResponse() uc.FindJobsResponse {
 
 // CreateJobWithExpression is a shortcut to add a job with provided expression
 func (mr *StubWR) CreateJobWithExpression(expression string) {
-	job, err := entities.NewJob("name", "cmd", expression)
+	job, err := entities.NewJob("name", "cmd", expression, true)
 	if err != nil {
 		panic(err)
 	}
@@ -65,8 +65,7 @@ func (mr *StubWR) CreateJobWithExpression(expression string) {
 
 // CreateDisabledJob is a shortcut to add a job that is disabled
 func (mr *StubWR) CreateDisabledJob(expression string) {
-	job, err := entities.NewJob("name", "cmd", expression)
-	job.Status = false
+	job, err := entities.NewJob("name", "cmd", expression, false)
 	if err != nil {
 		panic(err)
 	}
