@@ -26,7 +26,11 @@ type Job struct {
 	ticker  Ticker
 }
 
-// IsTimeSet tells if job should run in time t
-func (j *Job) IsTimeSet(t time.Time) bool {
-	return j.ticker.IsTimeSet(t)
+// ShouldRun checks provided time and job status to see if it should run
+func (j *Job) ShouldRun(t time.Time) bool {
+	return j.isEnabled() && j.ticker.IsTimeSet(t)
+}
+
+func (j *Job) isEnabled() bool {
+	return j.Status
 }
