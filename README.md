@@ -16,9 +16,9 @@
 
 ## Table of Contents
 - [Installation](#Installation)
+  - [From GitHub Releases](#From GitHub Releases)
   - [Linux](#Linux)
   - [macOS](#macOS)
-  - [Windows](#Windows)
 - [Commands](#Commands)
 - [Examples](#Examples)
   - [Jobs](#Jobs)
@@ -28,12 +28,10 @@
 
 
 ## Installation
-### Linux
+### From GitHub Releases
+You can find available binaries [here](https://github.com/taciomcosta/kronos/releases)
 
-**Debian/Ubuntu**
-```
-sudo apt-get install kronos
-```
+### Linux
 
 **Arch**
 ```
@@ -52,11 +50,6 @@ Removing:
 ```
 brew services stop kronos
 brew uninstall kronos
-```
-
-### Windows
-```
-choco install kronos
 ```
 
 By default, Kronos daemon uses `:8080` as its host and creates a db named
