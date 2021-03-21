@@ -44,10 +44,8 @@ makepkg -Si
 brew tap taciomcosta/kronos
 brew install kronos
 brew services start kronos
-```
 
-Removing: 
-```
+// Removing: 
 brew services stop kronos
 brew uninstall kronos
 ```
