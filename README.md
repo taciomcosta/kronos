@@ -16,7 +16,7 @@
 
 ## Table of Contents
 - [Installation](#Installation)
-  - [From GitHub Releases](#From GitHub Releases)
+  - [GitHub](#GitHub)
   - [Linux](#Linux)
   - [macOS](#macOS)
 - [Commands](#Commands)
@@ -28,8 +28,8 @@
 
 
 ## Installation
-### From GitHub Releases
-You can find available binaries [here](https://github.com/taciomcosta/kronos/releases)
+### GitHub
+You can find available binaries [here](https://github.com/taciomcosta/kronos/releases).
 
 ### Linux
 
