@@ -1,4 +1,4 @@
-KRONOS_VERSION=0.2.0
+KRONOS_VERSION=0.3.0
 
 dev:
 	@env ENVIRONMENT=development go run ./cmd/kronosd/main.go
