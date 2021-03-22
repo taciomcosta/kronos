@@ -39,3 +39,8 @@ type Reader interface {
 	FindExecutionsResponse(request FindExecutionsRequest) FindExecutionsResponse
 	DescribeJobResponse(name string) (DescribeJobResponse, error)
 }
+
+// NotifierService represents an external service: email, slack, discord,
+type NotifierService interface {
+	Send(msg string, notifier entities.Notifier) error
+}

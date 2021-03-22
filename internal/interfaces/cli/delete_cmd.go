@@ -6,8 +6,8 @@ import (
 )
 
 var deleteCmd = &cobra.Command{
-	Use:   "delete [job | channel]",
-	Short: "Delete a job/channel",
+	Use:   "delete [job | notifier]",
+	Short: "Delete a job/notifier",
 }
 
 var deleteJobCmd = &cobra.Command{

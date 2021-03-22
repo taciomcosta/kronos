@@ -23,8 +23,8 @@ Resources:
 `
 
 var describeCmd = &cobra.Command{
-	Use:   "describe [job | channel]",
-	Short: "Describe a job/channel",
+	Use:   "describe [job | notifier]",
+	Short: "Describe a job/notifier",
 }
 
 var describeJobCmd = &cobra.Command{

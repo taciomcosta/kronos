@@ -6,8 +6,8 @@ import (
 )
 
 var listCmd = &cobra.Command{
-	Use:   "list [jobs | channels]",
-	Short: "List jobs/channels",
+	Use:   "list [jobs | notifiers]",
+	Short: "List jobs/notifiers",
 }
 
 var listJobsCmd = &cobra.Command{

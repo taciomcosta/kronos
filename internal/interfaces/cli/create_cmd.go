@@ -6,8 +6,8 @@ import (
 )
 
 var createCmd = &cobra.Command{
-	Use:   "create [job | channel]",
-	Short: "Creates a new job/channel",
+	Use:   "create [job | notifier]",
+	Short: "Creates a new job/notifier",
 }
 
 var createJobCmd = &cobra.Command{

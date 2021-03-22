@@ -2,7 +2,7 @@ package entities
 
 // Notifier represents a notifier
 type Notifier struct {
-	cType    NotifierType
+	nType    NotifierType
 	metadata map[string]string
 }
 
@@ -10,6 +10,6 @@ type Notifier struct {
 type NotifierType int
 
 const (
-	// SlackChannelType represents slack notifier type
-	SlackChannelType NotifierType = 1
+	// SlackNotifierType represents slack notifier type
+	SlackNotifierType NotifierType = 1
 )
