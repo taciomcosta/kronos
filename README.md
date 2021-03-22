@@ -22,7 +22,7 @@
 - [Commands](#Commands)
 - [Examples](#Examples)
   - [Jobs](#Jobs)
-  - [Channels](#Channels)
+  - [Notifier](#Notifiers)
     - [Slack](#Slack)
     - [E-mail](#Email)
 
@@ -71,16 +71,16 @@ Usage:
   kronos [command]
 
 Available Commands:
-  create         Creates a new job/channel
-  delete         Deletes a job/channel
-  list           Lists all jobs/channels
-  describe       Shows detailed information about a job/channel
+  create         Creates a new job/notifier
+  delete         Deletes a job/notifier
+  list           Lists all jobs/notifiers
+  describe       Shows detailed information about a job/notifier
   history        Shows execution history of a job
   attach         Attaches local stdin, stdout, stderr to a job
   logs           Prints logs for a specific job execution
   enable         Enables a job execution
   disable        Disables a job execution
-  assign         Assigns a channel to a job
+  assign         Assigns a notifier to a job
 
 Flags:
   -h, --help   help for kronos
@@ -125,7 +125,7 @@ Resources:
  - Average CPU: 50%
  - Average Memory: 300MB
  
-Assigned Channels:
+Assigned Notifiers:
   - my-slack
   - my-email
 ```
