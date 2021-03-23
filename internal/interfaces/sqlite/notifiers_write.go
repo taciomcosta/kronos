@@ -6,6 +6,19 @@ import (
 
 // CreateNotifier creates a new job into database
 func (wr *WriterReader) CreateNotifier(notifier *entities.Notifier) error {
-	// TODO: implement query
-	return nil
+	return db.WithTx(func() error {
+		return wr.createSlackNotifier(notifier)
+	})
+}
+
+func (wr *WriterReader) createSlackNotifier(notifier *entities.Notifier) error {
+	err := wr.runWriteOperation(insertNotifierSQL, notifier.Name, notifier.Type)
+	if err != nil {
+		return err
+	}
+	err = wr.runWriteOperation(
+		insertSlackSQL,
+		notifier.Metadata["auth_token"], notifier.Metadata["channel_ids"],
+	)
+	return err
 }

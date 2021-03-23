@@ -67,3 +67,6 @@ var findiAllExecutions = "SELECT * FROM execution ORDER BY date DESC LIMIT ? OFF
 var findJobExecutions = "SELECT * FROM execution WHERE job_name = ? ORDER BY date DESC LIMIT ? OFFSET ?"
 
 var updateJobSQL = "UPDATE job SET status=? WHERE name=?"
+
+var insertNotifierSQL = "INSERT INTO notifier VALUES(?, ?)"
+var insertSlackSQL = "INSERT INTO slack VALUES(?, ?, ?)"
