@@ -2,8 +2,9 @@ package entities
 
 // Notifier represents a notifier
 type Notifier struct {
-	nType    NotifierType
-	metadata map[string]string
+	Name     string
+	Type     NotifierType
+	Metadata map[string]string
 }
 
 // NotifierType represents a notifier type: slack, email, etc
