@@ -119,3 +119,8 @@ func (mr *StubWR) DescribeJobResponse(name string) (uc.DescribeJobResponse, erro
 
 // UpdateJob updates a job
 func (mr *StubWR) UpdateJob(job *entities.Job) {}
+
+// CreateNotifier creates a notifier
+func (mr *StubWR) CreateNotifier(notifier *entities.Notifier) error {
+	return nil
+}

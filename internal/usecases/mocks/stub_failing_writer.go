@@ -31,3 +31,8 @@ func (s *StubFailingWriter) DeleteJob(name string) error {
 
 // UpdateJob updates a job
 func (s *StubFailingWriter) UpdateJob(job *entities.Job) {}
+
+// CreateNotifier creates a notifier.
+func (s *StubFailingWriter) CreateNotifier(notifier *entities.Notifier) error {
+	return errors.New("StubFailingWriter")
+}
