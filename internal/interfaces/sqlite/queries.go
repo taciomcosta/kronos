@@ -1,5 +1,13 @@
 package sqlite
 
+var tablesStmts []string = []string{
+	`CREATE TABLE IF NOT EXISTS job(name TEXT PRIMARY KEY, command TEXT, tick TEXT, status BOOLEAN)`,
+	`CREATE TABLE IF NOT EXISTS execution(
+		job_name TEXT, date DATE, STATUS TEXT, 
+		mem_usage INTEGER, cpu_time INTEGER
+	)`,
+}
+
 var findAllJobsSQL = "SELECT * FROM job"
 
 var findOneJobSQL = "SELECT * FROM job WHERE name=?"
