@@ -6,10 +6,12 @@ import (
 
 var kronosdURL string
 var flags = struct {
-	Name    string
-	Command string
-	Tick    string
-	Page    int
+	Name       string
+	Command    string
+	Tick       string
+	Page       int
+	AuthToken  string
+	ChannelIds string
 }{}
 
 // NewClient creates a new CLI client
