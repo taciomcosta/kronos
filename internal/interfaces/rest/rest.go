@@ -11,5 +11,6 @@ func NewRouter() *httprouter.Router {
 	router.PUT("/jobs/:name", UpdateJobStatus)
 	router.DELETE("/jobs/:name", DeleteJob)
 	router.GET("/executions", FindExecutions)
+	router.POST("/notifiers", CreateNotifier)
 	return router
 }
