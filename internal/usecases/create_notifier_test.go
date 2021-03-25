@@ -41,6 +41,16 @@ var testsCreateNotifiers = []struct {
 		err:      errors.New("StubFailingWriter"),
 		writer:   mocks.NewFailingWriter(),
 	},
+	{
+		request: uc.CreateNotifierRequest{
+			Name:     "mynotifier",
+			Type:     entities.SlackNotifierType,
+			Metadata: map[string]string{},
+		},
+		response: uc.CreateNotifierResponse{},
+		err:      errors.New("expected auth_token, channel_ids to be provided"),
+		writer:   mocks.NewStubWriterReader(),
+	},
 }
 
 func TestCreateNotifier(t *testing.T) {

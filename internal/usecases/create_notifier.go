@@ -16,12 +16,15 @@ type CreateNotifierResponse struct {
 
 // CreateNotifier creates a new notifier: slack, email, etc
 func CreateNotifier(request CreateNotifierRequest) (CreateNotifierResponse, error) {
-	notifier := entities.NewNotifier(
+	notifier, err := entities.NewNotifier(
 		request.Name,
 		request.Type,
 		request.Metadata,
 	)
-	err := writer.CreateNotifier(&notifier)
+	if err != nil {
+		return CreateNotifierResponse{}, err
+	}
+	err = writer.CreateNotifier(&notifier)
 	if err != nil {
 		return CreateNotifierResponse{}, err
 
