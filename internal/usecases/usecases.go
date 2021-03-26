@@ -39,6 +39,7 @@ type Reader interface {
 	FindJobsResponse() FindJobsResponse
 	FindExecutionsResponse(request FindExecutionsRequest) FindExecutionsResponse
 	DescribeJobResponse(name string) (DescribeJobResponse, error)
+	FindNotifiersResponse() FindNotifiersResponse
 }
 
 // NotifierService represents an external service: email, slack, discord,

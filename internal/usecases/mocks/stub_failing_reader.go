@@ -39,3 +39,8 @@ func (s *StubFailingReader) FindExecutionsResponse(_ uc.FindExecutionsRequest) u
 func (s *StubFailingReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
 	return uc.DescribeJobResponse{}, errors.New("stub-failing-reader")
 }
+
+// FindNotifiersResponse finds all notifiers in FindNotifiersResponse format
+func (s *StubFailingReader) FindNotifiersResponse() uc.FindNotifiersResponse {
+	return uc.FindNotifiersResponse{}
+}

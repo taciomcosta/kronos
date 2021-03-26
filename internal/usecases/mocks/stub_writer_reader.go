@@ -124,3 +124,11 @@ func (mr *StubWR) UpdateJob(job *entities.Job) {}
 func (mr *StubWR) CreateNotifier(notifier *entities.Notifier) error {
 	return nil
 }
+
+// FindNotifiersResponse finds all jobs in FindNotifiersResponse format
+func (mr *StubWR) FindNotifiersResponse() uc.FindNotifiersResponse {
+	return uc.FindNotifiersResponse{
+		Count:     1,
+		Notifiers: []uc.NotifierDTO{{Name: "myslack", Type: "slack"}},
+	}
+}
