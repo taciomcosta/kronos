@@ -17,3 +17,9 @@ func CreateNotifier(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	response, err := uc.CreateNotifier(notifierRequest)
 	respond(w, response, err)
 }
+
+// FindNotifiers handles finding all notifiers request
+func FindNotifiers(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	notifiers := uc.FindNotifiers()
+	respond(w, notifiers, nil)
+}
