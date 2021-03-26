@@ -69,4 +69,7 @@ var findJobExecutions = "SELECT * FROM execution WHERE job_name = ? ORDER BY dat
 var updateJobSQL = "UPDATE job SET status=? WHERE name=?"
 
 var insertNotifierSQL = "INSERT INTO notifier VALUES(?, ?)"
+
 var insertSlackSQL = "INSERT INTO slack VALUES(?, ?, ?)"
+
+var findAllNotifiersSQL = "SELECT * FROM notifier"
