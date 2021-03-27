@@ -18,11 +18,11 @@ var listJobsCmd = &cobra.Command{
 		err := client.get("/jobs", &findJobsResponse)
 		out.error(err)
 		out.printf("Showing all %d jobs\n", findJobsResponse.Count)
-		printFindJobResponse(findJobsResponse)
+		printFindJobsResponse(findJobsResponse)
 	},
 }
 
-func printFindJobResponse(response uc.FindJobsResponse) {
+func printFindJobsResponse(response uc.FindJobsResponse) {
 	header := []string{"NAME", "COMMAND", "TICK"}
 	rows := [][]string{}
 	for _, job := range response.Jobs {
@@ -32,6 +32,29 @@ func printFindJobResponse(response uc.FindJobsResponse) {
 	out.printTable(header, rows)
 }
 
+var listNotifiersCmd = &cobra.Command{
+	Use:   "notifiers",
+	Short: "List notifiers",
+	Run: func(cmd *cobra.Command, args []string) {
+		findNotifiersResponse := uc.FindNotifiersResponse{}
+		err := client.get("/notifiers", &findNotifiersResponse)
+		out.error(err)
+		out.printf("Showing all %d notifiers\n", findNotifiersResponse.Count)
+		printFindNotifiersResponse(findNotifiersResponse)
+	},
+}
+
+func printFindNotifiersResponse(response uc.FindNotifiersResponse) {
+	header := []string{"NAME", "TYPE"}
+	rows := [][]string{}
+	for _, notifier := range response.Notifiers {
+		row := []string{notifier.Name, notifier.Type}
+		rows = append(rows, row)
+	}
+	out.printTable(header, rows)
+}
+
 func init() {
 	listCmd.AddCommand(listJobsCmd)
+	listCmd.AddCommand(listNotifiersCmd)
 }
