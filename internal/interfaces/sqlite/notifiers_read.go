@@ -43,3 +43,9 @@ func notifierTypeToString(nType entities.NotifierType) string {
 		return "unknown"
 	}
 }
+
+// FindOneNotifier finds all notifiers
+func (wr *WriterReader) FindOneNotifier(name string) (entities.Notifier, error) {
+	// TODO: implement query
+	return entities.Notifier{}, nil
+}

@@ -44,3 +44,8 @@ func (s *StubFailingReader) DescribeJobResponse(name string) (uc.DescribeJobResp
 func (s *StubFailingReader) FindNotifiersResponse() uc.FindNotifiersResponse {
 	return uc.FindNotifiersResponse{}
 }
+
+// FindOneNotifier finds one notifier by name
+func (s *StubFailingReader) FindOneNotifier(name string) (entities.Notifier, error) {
+	return entities.Notifier{}, errors.New("resource not found")
+}

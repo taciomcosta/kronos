@@ -30,6 +30,7 @@ type Writer interface {
 	CreateExecution(execution *entities.Execution) error
 	UpdateJob(job *entities.Job)
 	CreateNotifier(notifier *entities.Notifier) error
+	DeleteNotifier(name string) error
 }
 
 // Reader represents a Layer Supertype similar to Repository pattern
@@ -39,6 +40,7 @@ type Reader interface {
 	FindJobsResponse() FindJobsResponse
 	FindExecutionsResponse(request FindExecutionsRequest) FindExecutionsResponse
 	DescribeJobResponse(name string) (DescribeJobResponse, error)
+	FindOneNotifier(name string) (entities.Notifier, error)
 	FindNotifiersResponse() FindNotifiersResponse
 }
 

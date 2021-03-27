@@ -10,7 +10,17 @@ func (c *CacheableWriterReader) CreateNotifier(notifier *entities.Notifier) erro
 	return c.wr.CreateNotifier(notifier)
 }
 
-// FindNotifiersResponse returns all jobs in FindNotifiersResponse format
+// DeleteNotifier deletes a notifier
+func (c *CacheableWriterReader) DeleteNotifier(name string) error {
+	return c.wr.DeleteNotifier(name)
+}
+
+// FindNotifiersResponse returns all notifiers in FindNotifiersResponse format
 func (c *CacheableWriterReader) FindNotifiersResponse() uc.FindNotifiersResponse {
 	return c.wr.FindNotifiersResponse()
+}
+
+// FindOneNotifier finds all notifiers.
+func (c *CacheableWriterReader) FindOneNotifier(name string) (entities.Notifier, error) {
+	return c.wr.FindOneNotifier(name)
 }

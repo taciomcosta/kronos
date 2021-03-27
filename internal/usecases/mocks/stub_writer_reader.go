@@ -125,10 +125,20 @@ func (mr *StubWR) CreateNotifier(notifier *entities.Notifier) error {
 	return nil
 }
 
-// FindNotifiersResponse finds all jobs in FindNotifiersResponse format
+// DeleteNotifier deletes a notifier
+func (mr *StubWR) DeleteNotifier(name string) error {
+	return nil
+}
+
+// FindNotifiersResponse finds all notifiers in FindNotifiersResponse format
 func (mr *StubWR) FindNotifiersResponse() uc.FindNotifiersResponse {
 	return uc.FindNotifiersResponse{
 		Count:     1,
 		Notifiers: []uc.NotifierDTO{{Name: "myslack", Type: "slack"}},
 	}
+}
+
+// FindOneNotifier finds one notifier by name
+func (mr *StubWR) FindOneNotifier(name string) (entities.Notifier, error) {
+	return entities.Notifier{Name: "myslack"}, nil
 }

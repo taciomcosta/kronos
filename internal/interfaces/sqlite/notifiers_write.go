@@ -11,6 +11,12 @@ func (wr *WriterReader) CreateNotifier(notifier *entities.Notifier) error {
 	})
 }
 
+// DeleteNotifier deletes a notifier
+func (wr *WriterReader) DeleteNotifier(name string) error {
+	// TODO: implement query
+	return nil
+}
+
 func (wr *WriterReader) createSlackNotifier(notifier *entities.Notifier) error {
 	err := wr.runWriteOperation(
 		insertNotifierSQL,
