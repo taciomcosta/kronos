@@ -52,4 +52,9 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^that I create a job$`, ef.ThatICreateAJob)
 	ctx.Step(`^the job finishes (\d+) execution$`, ef.TheJobFinishesExecution)
 
+	nf := features.NotifiersFeature{}
+	ctx.Step(`^I provide valid data for notifier creation$`, nf.IProvideValidDataForNotifierCreation)
+	ctx.Step(`^I create a new notifier$`, nf.ICreateANewNotifier)
+	ctx.Step(`^I list the existing notifiers$`, nf.IListTheExistingNotifiers)
+	ctx.Step(`^the new notifier is listed$`, nf.TheNewNotifierIsListed)
 }
