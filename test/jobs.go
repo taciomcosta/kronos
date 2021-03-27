@@ -67,7 +67,7 @@ func (j *JobsFeature) IListTheExistingJobs() error {
 }
 
 // AnErrorMessageIsShown represents a BDD step
-func (j *JobsFeature) AnErrorMessageIsShown() error {
+func (j *JobsFeature) AnErrorMessageIsShownForJob() error {
 	var errorMsg rest.ErrorMessage
 	err := rest.ReadJSON(j.responseFindJobs.Body, &errorMsg)
 	if errorMsg.Msg == "" {

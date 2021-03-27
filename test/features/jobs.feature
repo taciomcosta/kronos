@@ -8,7 +8,7 @@ Feature: Job
     Scenario: Invalid job creation
         Given I provide invalid data for job creation
         When I create a new job
-        Then an error message is shown
+        Then an error message is shown for job
 
     Scenario: Job is not visualized after deletion
         Given I provide valid data for job creation

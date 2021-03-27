@@ -39,7 +39,7 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I create a new job$`, jf.ICreateANewJob)
 	ctx.Step(`^I list the existing jobs$`, jf.IListTheExistingJobs)
 	ctx.Step(`^the new job is listed$`, jf.TheNewJobIsListed)
-	ctx.Step(`^an error message is shown$`, jf.AnErrorMessageIsShown)
+	ctx.Step(`^an error message is shown for job$`, jf.AnErrorMessageIsShownForJob)
 	ctx.Step(`^I provide invalid data for job creation$`, jf.IProvideInvalidDataForJobCreation)
 	ctx.Step(`^I delete the new job$`, jf.IDeleteTheNewJob)
 	ctx.Step(`^the new job is not listed$`, jf.TheNewJobIsNotListed)
@@ -57,4 +57,6 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^I create a new notifier$`, nf.ICreateANewNotifier)
 	ctx.Step(`^I list the existing notifiers$`, nf.IListTheExistingNotifiers)
 	ctx.Step(`^the new notifier is listed$`, nf.TheNewNotifierIsListed)
+	ctx.Step(`^an error message is shown for notifier$`, nf.AnErrorMessageIsShownForNotifier)
+	ctx.Step(`^I provide invalid data for notifier creation$`, nf.IProvideInvalidDataForNotifierCreation)
 }

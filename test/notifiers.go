@@ -30,6 +30,12 @@ func (n *NotifiersFeature) IProvideValidDataForNotifierCreation() error {
 	return nil
 }
 
+// IProvideInvalidDataForNotifierCreation represents a BDD step
+func (n *NotifiersFeature) IProvideInvalidDataForNotifierCreation() error {
+	n.inputNotifier = uc.CreateNotifierRequest{}
+	return nil
+}
+
 // ICreateANewNotifier represents a BDD step
 func (n *NotifiersFeature) ICreateANewNotifier() error {
 	request, err := newRequest(n.inputNotifier)
@@ -45,6 +51,16 @@ func (n *NotifiersFeature) IListTheExistingNotifiers() error {
 	n.responseFindNotifiers = httptest.NewRecorder()
 	ps := httprouter.Params{}
 	rest.FindNotifiers(n.responseFindNotifiers, request, ps)
+	return err
+}
+
+// AnErrorMessageIsShownForNotifier represents a BDD step
+func (n *NotifiersFeature) AnErrorMessageIsShownForNotifier() error {
+	var errorMsg rest.ErrorMessage
+	err := rest.ReadJSON(n.responseFindNotifiers.Body, &errorMsg)
+	if errorMsg.Msg == "" {
+		return errors.New("no error message")
+	}
 	return err
 }
 
