@@ -10,7 +10,7 @@ func NewWriterReader(name string) *WriterReader {
 // with in-memory cache
 func NewCacheableWriterReader(name string) *CacheableWriterReader {
 	wr := NewWriterReader(name)
-	return &CacheableWriterReader{wr}
+	return &CacheableWriterReader{*wr, wr}
 }
 
 // WriterReader implements usecase.Writer and usecase.Reader
@@ -19,5 +19,6 @@ type WriterReader struct{}
 // CacheableWriterReader implements usecase.Writer and usecase.Reader
 // and adds a in-memory cache layer on top of it
 type CacheableWriterReader struct {
-	wr *WriterReader
+	WriterReader
+	parent *WriterReader
 }

@@ -9,7 +9,7 @@ var jobs []entities.Job
 
 // CreateJob creates a new job into database
 func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
-	err := c.wr.CreateJob(job)
+	err := c.parent.CreateJob(job)
 	if err != nil {
 		return err
 	}
@@ -19,7 +19,7 @@ func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
 
 // UpdateJob updates a job
 func (c *CacheableWriterReader) UpdateJob(job *entities.Job) {
-	c.wr.UpdateJob(job)
+	c.parent.UpdateJob(job)
 	for _, j := range c.FindJobs() {
 		if j.Name == job.Name {
 			j.Status = job.Status
@@ -29,7 +29,7 @@ func (c *CacheableWriterReader) UpdateJob(job *entities.Job) {
 
 // DeleteJob deletes a job
 func (c *CacheableWriterReader) DeleteJob(name string) error {
-	err := c.wr.DeleteJob(name)
+	err := c.parent.DeleteJob(name)
 	if err != nil {
 		return err
 	}
@@ -47,14 +47,14 @@ func (c *CacheableWriterReader) DeleteJob(name string) error {
 // FindJobs finds all jobs.
 func (c *CacheableWriterReader) FindJobs() []entities.Job {
 	if len(jobs) == 0 {
-		jobs = c.wr.FindJobs()
+		jobs = c.parent.FindJobs()
 	}
 	return jobs
 }
 
 // FindJobsResponse returns all jobs in FindJobsResponse format
 func (c *CacheableWriterReader) FindJobsResponse() uc.FindJobsResponse {
-	return c.wr.FindJobsResponse()
+	return c.parent.FindJobsResponse()
 }
 
 // FindOneJob finds all jobs.
@@ -70,5 +70,5 @@ func (c *CacheableWriterReader) FindOneJob(name string) (entities.Job, error) {
 
 // DescribeJobResponse finds job in DeDescribeJobResponse format
 func (c *CacheableWriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	return c.wr.DescribeJobResponse(name)
+	return c.parent.DescribeJobResponse(name)
 }
