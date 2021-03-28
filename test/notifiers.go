@@ -86,3 +86,27 @@ func findNotifierByName(response uc.FindNotifiersResponse, name string) *uc.Noti
 	}
 	return nil
 }
+
+// IDeleteTheNewNotifier represents a BDD step
+func (n *NotifiersFeature) IDeleteTheNewNotifier() error {
+	request, err := http.NewRequest("DELETE", "", nil)
+	response := httptest.NewRecorder()
+	name := httprouter.Param{Key: "name", Value: n.inputNotifier.Name}
+	params := httprouter.Params{name}
+	rest.DeleteNotifier(response, request, params)
+	return err
+}
+
+// TheNewNotifierIsNotListed represents a BDD step
+func (n *NotifiersFeature) TheNewNotifierIsNotListed() error {
+	var response uc.FindNotifiersResponse
+	err := rest.ReadJSON(n.responseFindNotifiers.Body, &response)
+	if err != nil {
+		return err
+	}
+	notifier := findNotifierByName(response, n.inputNotifier.Name)
+	if notifier != nil {
+		return errors.New("notifier was listed when it should not")
+	}
+	return nil
+}

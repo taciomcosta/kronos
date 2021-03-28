@@ -59,4 +59,6 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^the new notifier is listed$`, nf.TheNewNotifierIsListed)
 	ctx.Step(`^an error message is shown for notifier$`, nf.AnErrorMessageIsShownForNotifier)
 	ctx.Step(`^I provide invalid data for notifier creation$`, nf.IProvideInvalidDataForNotifierCreation)
+	ctx.Step(`^I delete the new notifier$`, nf.IDeleteTheNewNotifier)
+	ctx.Step(`^the new notifier is not listed$`, nf.TheNewNotifierIsNotListed)
 }
