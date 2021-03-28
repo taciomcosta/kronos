@@ -35,30 +35,40 @@ func (wr *WriterReader) FindJobsResponse() uc.FindJobsResponse {
 func (wr *WriterReader) readAllJobsResponse(stmt *sqlite3.Stmt) uc.FindJobsResponse {
 	var response uc.FindJobsResponse
 	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
-		job := wr.readJobDTO(stmt)
-		response.Jobs = append(response.Jobs, job)
+		row := wr.readJobRow(stmt)
+		dto := mapJobRowToDto(row)
+		response.Jobs = append(response.Jobs, dto)
 	}
 	response.Count = len(response.Jobs)
 	return response
 }
 
-func (wr *WriterReader) readJobDTO(stmt *sqlite3.Stmt) uc.JobDTO {
-	job := uc.JobDTO{}
-	_ = stmt.Scan(&job.Name, &job.Command, &job.Tick, &job.Status)
-	return job
+func mapJobRowToDto(row jobRow) uc.JobDTO {
+	return uc.JobDTO{
+		Name:    row.name,
+		Command: row.command,
+		Tick:    row.tick,
+		Status:  row.status,
+	}
+}
+
+func (wr *WriterReader) readJobRow(stmt *sqlite3.Stmt) jobRow {
+	var row jobRow
+	_ = stmt.Scan(&row.name, &row.command, &row.tick, &row.status)
+	return row
 }
 
 // FindOneJob finds all jobs.
 func (wr *WriterReader) FindOneJob(name string) (entities.Job, error) {
-	var dto entities.Job
+	var row jobRow
 	stmt, _ := db.Prepare(findOneJobSQL)
 	_ = stmt.Exec(name)
 	hasRow, _ := stmt.Step()
 	if !hasRow {
-		return dto, errResourceNotFound
+		return entities.Job{}, errResourceNotFound
 	}
-	_ = stmt.Scan(&dto.Name, &dto.Command, &dto.Tick, &dto.Status)
-	return entities.NewJob(dto.Name, dto.Command, dto.Tick, dto.Status)
+	_ = stmt.Scan(&row.name, &row.command, &row.tick, &row.status)
+	return entities.NewJob(row.name, row.command, row.tick, row.status)
 }
 
 // DescribeJobResponse finds job in DescribeJobResponse format
