@@ -5,7 +5,7 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-var jobs []entities.Job
+var jobsInMemory []entities.Job
 
 // CreateJob creates a new job into database
 func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
@@ -13,7 +13,7 @@ func (c *CacheableWriterReader) CreateJob(job *entities.Job) error {
 	if err != nil {
 		return err
 	}
-	jobs = append(jobs, *job)
+	jobsInMemory = append(jobsInMemory, *job)
 	return nil
 }
 
@@ -35,21 +35,21 @@ func (c *CacheableWriterReader) DeleteJob(name string) error {
 	}
 	var index int
 	for i := range c.FindJobs() {
-		if jobs[i].Name == name {
+		if jobsInMemory[i].Name == name {
 			index = i
 			break
 		}
 	}
-	jobs = append(jobs[:index], jobs[index+1:]...)
+	jobsInMemory = append(jobsInMemory[:index], jobsInMemory[index+1:]...)
 	return nil
 }
 
 // FindJobs finds all jobs.
 func (c *CacheableWriterReader) FindJobs() []entities.Job {
-	if len(jobs) == 0 {
-		jobs = c.parent.FindJobs()
+	if len(jobsInMemory) == 0 {
+		jobsInMemory = c.parent.FindJobs()
 	}
-	return jobs
+	return jobsInMemory
 }
 
 // FindJobsResponse returns all jobs in FindJobsResponse format
