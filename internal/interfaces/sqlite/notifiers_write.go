@@ -11,15 +11,6 @@ func (wr *WriterReader) CreateNotifier(notifier *entities.Notifier) error {
 	})
 }
 
-// DeleteNotifier deletes a notifier
-func (wr *WriterReader) DeleteNotifier(name string) error {
-	err := wr.runWriteOperation(deleteNotifierSQL, name)
-	if err != nil {
-		return err
-	}
-	return wr.runWriteOperation(deleteSlackSQL, name)
-}
-
 func (wr *WriterReader) createSlackNotifier(notifier *entities.Notifier) error {
 	err := wr.runWriteOperation(
 		insertNotifierSQL,
@@ -36,4 +27,15 @@ func (wr *WriterReader) createSlackNotifier(notifier *entities.Notifier) error {
 		notifier.Name,
 	)
 	return err
+}
+
+// DeleteNotifier deletes a notifier
+func (wr *WriterReader) DeleteNotifier(name string) error {
+	return db.WithTx(func() error {
+		err := wr.runWriteOperation(deleteNotifierSQL, name)
+		if err != nil {
+			return err
+		}
+		return wr.runWriteOperation(deleteSlackSQL, name)
+	})
 }
