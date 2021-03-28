@@ -73,3 +73,11 @@ var insertNotifierSQL = "INSERT INTO notifier VALUES(?, ?)"
 var insertSlackSQL = "INSERT INTO slack VALUES(?, ?, ?)"
 
 var findAllNotifiersSQL = "SELECT * FROM notifier"
+
+var deleteNotifierSQL = "DELETE FROM notifier where name=?"
+
+var deleteSlackSQL = "DELETE FROM slack where notifier_name=?"
+
+var findOneNotifierSQL = "SELECT * FROM notifier WHERE name=?"
+
+var findOneSlackSQL = "SELECT auth_token, channel_ids FROM slack WHERE notifier_name=?"

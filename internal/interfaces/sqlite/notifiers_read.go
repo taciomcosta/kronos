@@ -46,6 +46,47 @@ func notifierTypeToString(nType entities.NotifierType) string {
 
 // FindOneNotifier finds all notifiers
 func (wr *WriterReader) FindOneNotifier(name string) (entities.Notifier, error) {
-	// TODO: implement query
-	return entities.Notifier{}, nil
+	notifierRow, err := wr.findBaseNotifier(name)
+	if err != nil {
+		return entities.Notifier{}, err
+	}
+	slackRow, err := wr.findSlackMetadata(name)
+	if err != nil {
+		return entities.Notifier{}, err
+	}
+	return entities.NewNotifier(
+		notifierRow.name,
+		entities.NotifierType(notifierRow.ntype),
+		slackRowToMetadata(slackRow))
+}
+
+func (wr *WriterReader) findBaseNotifier(name string) (notifierRow, error) {
+	var row notifierRow
+	stmt, _ := db.Prepare(findOneNotifierSQL)
+	_ = stmt.Exec(name)
+	hasRow, _ := stmt.Step()
+	if !hasRow {
+		return row, errResourceNotFound
+	}
+	err := stmt.Scan(&row.name, &row.ntype)
+	return row, err
+}
+
+func (wr *WriterReader) findSlackMetadata(name string) (slackRow, error) {
+	var row slackRow
+	stmt, _ := db.Prepare(findOneSlackSQL)
+	_ = stmt.Exec(name)
+	hasRow, _ := stmt.Step()
+	if !hasRow {
+		return row, errResourceNotFound
+	}
+	err := stmt.Scan(&row.authToken, &row.channelIds)
+	return row, err
+}
+
+func slackRowToMetadata(row slackRow) map[string]string {
+	metadata := make(map[string]string)
+	metadata["auth_token"] = row.authToken
+	metadata["channel_ids"] = row.channelIds
+	return metadata
 }

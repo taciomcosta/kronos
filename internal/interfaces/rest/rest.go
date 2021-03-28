@@ -13,5 +13,6 @@ func NewRouter() *httprouter.Router {
 	router.GET("/executions", FindExecutions)
 	router.POST("/notifiers", CreateNotifier)
 	router.GET("/notifiers", FindNotifiers)
+	router.DELETE("/notifiers/:name", DeleteNotifier)
 	return router
 }

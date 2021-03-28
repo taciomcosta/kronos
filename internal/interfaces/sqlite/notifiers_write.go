@@ -13,8 +13,11 @@ func (wr *WriterReader) CreateNotifier(notifier *entities.Notifier) error {
 
 // DeleteNotifier deletes a notifier
 func (wr *WriterReader) DeleteNotifier(name string) error {
-	// TODO: implement query
-	return nil
+	err := wr.runWriteOperation(deleteNotifierSQL, name)
+	if err != nil {
+		return err
+	}
+	return wr.runWriteOperation(deleteSlackSQL, name)
 }
 
 func (wr *WriterReader) createSlackNotifier(notifier *entities.Notifier) error {

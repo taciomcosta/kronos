@@ -23,3 +23,10 @@ func FindNotifiers(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 	notifiers := uc.FindNotifiers()
 	respond(w, notifiers, nil)
 }
+
+// DeleteNotifier handles deleting a job
+func DeleteNotifier(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	name := ps.ByName("name")
+	response, err := uc.DeleteNotifier(name)
+	respond(w, response, err)
+}
