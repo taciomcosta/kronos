@@ -15,7 +15,12 @@ var testsFindJobsResponse = []struct {
 		given: "every minute",
 		expect: uc.FindJobsResponse{
 			Jobs: []uc.JobDTO{
-				{Name: "list", Command: "ls", Tick: "* * * * * (every minute)"},
+				{
+					Name:    "name",
+					Command: "cmd",
+					Tick:    "* * * * * (every minute)",
+					Status:  true,
+				},
 			},
 			Count: 1,
 		},
@@ -24,7 +29,12 @@ var testsFindJobsResponse = []struct {
 		given: "* * * * *",
 		expect: uc.FindJobsResponse{
 			Jobs: []uc.JobDTO{
-				{Name: "list", Command: "ls", Tick: "* * * * *"},
+				{
+					Name:    "name",
+					Command: "cmd",
+					Tick:    "* * * * *",
+					Status:  true,
+				},
 			},
 			Count: 1,
 		},
@@ -33,9 +43,10 @@ var testsFindJobsResponse = []struct {
 
 func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
-		writeReader := mocks.NewStubJobResponseWithExpression(tt.given)
+		writer := mocks.NewStubSuccessWriter()
+		reader := mocks.NewStubSuccessReaderWithExpr(tt.given)
 		host := mocks.NewSpyHost()
-		uc.New(writeReader, writeReader, host)
+		uc.New(writer, reader, host)
 		got := uc.FindJobs()
 		assertFindJobsResponse(t, got, tt.expect)
 	}

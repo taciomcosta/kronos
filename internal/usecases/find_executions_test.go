@@ -8,9 +8,10 @@ import (
 )
 
 func TestFindExecutions(t *testing.T) {
-	writeReader := mocks.NewStubWriterReader()
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
-	uc.New(writeReader, writeReader, host)
+	uc.New(writer, reader, host)
 	got := uc.FindExecutions(uc.FindExecutionsRequest{})
 	want := uc.FindExecutionsResponse{
 		Executions: []uc.ExecutionDTO{

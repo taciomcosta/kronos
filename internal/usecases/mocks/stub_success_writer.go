@@ -12,8 +12,7 @@ func NewStubSuccessWriter() uc.Writer {
 
 // StubW implements entities.Writer for tests purposes
 type StubW struct {
-	jobs         []entities.Job
-	jobsResponse uc.FindJobsResponse
+	jobs []entities.Job
 }
 
 // CreateJob creates a job.

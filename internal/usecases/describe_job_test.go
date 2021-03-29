@@ -9,9 +9,10 @@ import (
 )
 
 func TestDescribeJob(t *testing.T) {
-	writerReader := mocks.NewStubWriterReader()
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
-	uc.New(writerReader, writerReader, host)
+	uc.New(writer, reader, host)
 	got, err := uc.DescribeJob("list")
 	want := uc.DescribeJobResponse{
 		Name:                "list",
@@ -29,10 +30,10 @@ func TestDescribeJob(t *testing.T) {
 }
 
 func TestDescribeJobFailure(t *testing.T) {
-	writerReader := mocks.NewStubWriterReader()
-	failingReader := mocks.NewStubFailingReader()
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubFailingReader()
 	host := mocks.NewSpyHost()
-	uc.New(writerReader, failingReader, host)
+	uc.New(writer, reader, host)
 	got, gotErr := uc.DescribeJob("list")
 	want := uc.DescribeJobResponse{}
 	wantErr := errors.New("stub-failing-reader")

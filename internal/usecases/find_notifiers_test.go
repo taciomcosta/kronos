@@ -20,9 +20,10 @@ var testsFindNotifiersResponse = []struct {
 
 func TestFindNotifiers(t *testing.T) {
 	for _, tt := range testsFindNotifiersResponse {
-		writeReader := mocks.NewStubWriterReader()
+		writer := mocks.NewStubSuccessWriter()
+		reader := mocks.NewStubSuccessReader()
 		host := mocks.NewSpyHost()
-		uc.New(writeReader, writeReader, host)
+		uc.New(writer, reader, host)
 		got := uc.FindNotifiers()
 		assertFindNotifiersResponse(t, got, tt.expect)
 	}
