@@ -5,13 +5,21 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewStubSucessReader stubs sucess reader implementation
+// NewStubSuccessReader stubs sucess reader implementation
 func NewStubSuccessReader() uc.Reader {
-	return &StubR{}
+	return NewStubSuccessReaderWithExpr("* * * * *")
+}
+
+// NewStubSuccessReaderWithExpr stubs sucess reader implementation
+func NewStubSuccessReaderWithExpr(expression string) uc.Reader {
+	job, _ := entities.NewJob("name", "cmd", expression, true)
+	return &StubR{job}
 }
 
 // StubR implements entities.Reader for tests purposes
-type StubR struct{}
+type StubR struct {
+	job entities.Job
+}
 
 // FindJobs finds all jobs.
 func (mr *StubR) FindJobs() []entities.Job {
@@ -25,7 +33,7 @@ func (mr *StubR) FindJobsResponse() uc.FindJobsResponse {
 
 // FindOneJob finds one job by name
 func (mr *StubR) FindOneJob(name string) (entities.Job, error) {
-	return entities.Job{}, nil
+	return mr.job, nil
 }
 
 // FindExecutionsResponse finds executions in FindExecution response format

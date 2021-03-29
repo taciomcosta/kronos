@@ -149,8 +149,9 @@ var testsCreateJob = []struct {
 }
 
 func TestCreateJob(t *testing.T) {
-	writerReader := mocks.NewStubWriterReader()
-	uc.New(writerReader, writerReader, mocks.NewSpyHost())
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubSuccessReader()
+	uc.New(writer, reader, mocks.NewSpyHost())
 	for _, tt := range testsCreateJob {
 		response, err := uc.CreateJob(tt.request)
 		assertEqual(t, response, tt.response)
@@ -180,8 +181,9 @@ func assertError(t *testing.T, got error, want error) {
 }
 
 func TestCreateJobExpressionMap(t *testing.T) {
-	writerReader := mocks.NewStubWriterReader()
-	uc.New(writerReader, writerReader, mocks.NewSpyHost())
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubSuccessReader()
+	uc.New(writer, reader, mocks.NewSpyHost())
 	for expr := range entities.SugarExpressionMap {
 		request := uc.CreateJobRequest{Name: "ls", Tick: expr}
 		response, err := uc.CreateJob(request)
@@ -193,7 +195,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 
 func TestCreateJobFailingWriter(t *testing.T) {
 	writer := mocks.NewStubFailingWriter()
-	reader := mocks.NewStubWriterReader()
+	reader := mocks.NewStubSuccessReader()
 	uc.New(writer, reader, mocks.NewSpyHost())
 	response, err := uc.CreateJob(uc.CreateJobRequest{Tick: "* * * * *"})
 	assertEqual(t, response, uc.CreateJobResponse{})
