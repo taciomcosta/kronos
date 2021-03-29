@@ -30,7 +30,7 @@ func TestDescribeJob(t *testing.T) {
 
 func TestDescribeJobFailure(t *testing.T) {
 	writerReader := mocks.NewStubWriterReader()
-	failingReader := mocks.NewFailingReader()
+	failingReader := mocks.NewStubFailingReader()
 	host := mocks.NewSpyHost()
 	uc.New(writerReader, failingReader, host)
 	got, gotErr := uc.DescribeJob("list")

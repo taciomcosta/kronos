@@ -18,25 +18,25 @@ var testsUpdateJobStatus = []struct {
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: true},
 		response: uc.UpdateJobStatusResponse{Msg: "name enabled"},
 		err:      nil,
-		reader:   mocks.NewStubWriterReaderNJobs(1),
+		reader:   mocks.NewStubSuccessReader(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{Msg: "name disabled"},
 		err:      nil,
-		reader:   mocks.NewStubWriterReaderNJobs(1),
+		reader:   mocks.NewStubSuccessReader(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.NewFailingReader(),
+		reader:   mocks.NewStubFailingReader(),
 	},
 }
 
 func TestUpdateJobStatus(t *testing.T) {
 	for _, tt := range testsUpdateJobStatus {
-		writerReader := mocks.NewStubWriterReader()
+		writerReader := mocks.NewStubSuccessWriter()
 		host := mocks.NewSpyHost()
 		uc.New(writerReader, tt.reader, host)
 		got, err := uc.UpdateJobStatus(tt.request)

@@ -8,7 +8,7 @@ import (
 )
 
 // NewFailingReader stubs reader that always fails
-func NewFailingReader() *StubFailingReader {
+func NewStubFailingReader() *StubFailingReader {
 	return &StubFailingReader{}
 }
 

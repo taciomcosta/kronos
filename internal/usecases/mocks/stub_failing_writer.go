@@ -7,7 +7,7 @@ import (
 )
 
 // NewFailingWriter stubs a writer that always returns error
-func NewFailingWriter() *StubFailingWriter {
+func NewStubFailingWriter() *StubFailingWriter {
 	return &StubFailingWriter{}
 }
 

@@ -18,13 +18,13 @@ var testsDeleteNotifier = []struct {
 		request:  "myslack",
 		response: uc.DeleteNotifierResponse{Msg: "myslack deleted"},
 		err:      nil,
-		reader:   mocks.NewStubWriterReader(),
+		reader:   mocks.NewStubSuccessReader(),
 	},
 	{
 		request:  "non-existing",
 		response: uc.DeleteNotifierResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.NewFailingReader(),
+		reader:   mocks.NewStubFailingReader(),
 	},
 }
 
