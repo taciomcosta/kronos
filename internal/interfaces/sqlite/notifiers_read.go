@@ -93,5 +93,17 @@ func slackRowToMetadata(row slackRow) map[string]string {
 
 // DescribeNotifierResponse finds notifier in DescribeNotifierResponse format
 func (wr *WriterReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
-	return uc.DescribeNotifierResponse{}, nil
+	notifierRow, err := wr.findBaseNotifier(name)
+	if err != nil {
+		return uc.DescribeNotifierResponse{}, err
+	}
+	slackRow, err := wr.findSlackMetadata(name)
+	if err != nil {
+		return uc.DescribeNotifierResponse{}, err
+	}
+	return uc.DescribeNotifierResponse{
+		Name:     notifierRow.name,
+		Type:     notifierTypeToString(entities.NotifierType(notifierRow.ntype)),
+		Metadata: slackRowToMetadata(slackRow),
+	}, nil
 }
