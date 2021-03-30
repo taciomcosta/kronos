@@ -2,6 +2,7 @@ package usecases_test
 
 import (
 	"errors"
+	"reflect"
 	"testing"
 
 	"github.com/taciomcosta/kronos/internal/entities"
@@ -160,7 +161,7 @@ func TestCreateJob(t *testing.T) {
 }
 
 func assertEqual(t *testing.T, got, want interface{}) {
-	if got != want {
+	if !reflect.DeepEqual(got, want) {
 		t.Errorf("got %v, expected %v", got, want)
 	}
 }
