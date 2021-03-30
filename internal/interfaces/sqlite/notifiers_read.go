@@ -90,3 +90,8 @@ func slackRowToMetadata(row slackRow) map[string]string {
 	metadata["channel_ids"] = row.channelIds
 	return metadata
 }
+
+// DescribeNotifierResponse finds notifier in DescribeNotifierResponse format
+func (wr *WriterReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
+	return uc.DescribeNotifierResponse{}, nil
+}

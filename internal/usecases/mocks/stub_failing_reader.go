@@ -49,3 +49,8 @@ func (s *StubFailingReader) FindNotifiersResponse() uc.FindNotifiersResponse {
 func (s *StubFailingReader) FindOneNotifier(name string) (entities.Notifier, error) {
 	return entities.Notifier{}, errors.New("resource not found")
 }
+
+// DescribeNotifierResponse finds executions in FindExecution response format
+func (s *StubFailingReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
+	return uc.DescribeNotifierResponse{}, errors.New("stub-failing-reader")
+}

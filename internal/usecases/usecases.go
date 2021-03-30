@@ -42,6 +42,7 @@ type Reader interface {
 	DescribeJobResponse(name string) (DescribeJobResponse, error)
 	FindOneNotifier(name string) (entities.Notifier, error)
 	FindNotifiersResponse() FindNotifiersResponse
+	DescribeNotifierResponse(name string) (DescribeNotifierResponse, error)
 }
 
 // NotifierService represents an external service: email, slack, discord,

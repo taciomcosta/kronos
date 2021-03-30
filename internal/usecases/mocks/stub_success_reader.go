@@ -89,3 +89,15 @@ func (mr *StubR) FindNotifiersResponse() uc.FindNotifiersResponse {
 func (mr *StubR) FindOneNotifier(name string) (entities.Notifier, error) {
 	return entities.Notifier{Name: "myslack"}, nil
 }
+
+// DescribeNotifierResponse finds executions in FindExecution response format
+func (mr *StubR) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
+	return uc.DescribeNotifierResponse{
+		Name: "myslack",
+		Type: "slack",
+		Metadata: map[string]string{
+			"auth_token":  "123",
+			"channel_ids": "1,2,3",
+		},
+	}, nil
+}
