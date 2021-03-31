@@ -13,8 +13,9 @@ import (
 
 // NotifiersFeature contains BDD steps related to notifiers feature
 type NotifiersFeature struct {
-	responseFindNotifiers *httptest.ResponseRecorder
-	inputNotifier         uc.CreateNotifierRequest
+	responseFindNotifiers    *httptest.ResponseRecorder
+	inputNotifier            uc.CreateNotifierRequest
+	responseDescribeNotifier *httptest.ResponseRecorder
 }
 
 // IProvideValidDataForNotifierCreation represents a BDD step
@@ -107,6 +108,29 @@ func (n *NotifiersFeature) TheNewNotifierIsNotListed() error {
 	notifier := findNotifierByName(response, n.inputNotifier.Name)
 	if notifier != nil {
 		return errors.New("notifier was listed when it should not")
+	}
+	return nil
+}
+
+// IDescribeTheNewNotifier represents a BDD step
+func (n *NotifiersFeature) IDescribeTheNewNotifier() error {
+	request, err := http.NewRequest("GET", "", nil)
+	n.responseDescribeNotifier = httptest.NewRecorder()
+	name := httprouter.Param{Key: "name", Value: n.inputNotifier.Name}
+	ps := httprouter.Params{name}
+	rest.DescribeNotifier(n.responseDescribeNotifier, request, ps)
+	return err
+}
+
+// TheNewNotifierIsDetailed represents a BDD step
+func (n *NotifiersFeature) TheNewNotifierIsDetailed() error {
+	var response uc.DescribeNotifierResponse
+	err := rest.ReadJSON(n.responseDescribeNotifier.Body, &response)
+	if err != nil {
+		return err
+	}
+	if response.Name != n.inputNotifier.Name {
+		return errors.New("job not described")
 	}
 	return nil
 }
