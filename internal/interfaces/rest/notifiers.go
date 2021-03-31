@@ -30,3 +30,10 @@ func DeleteNotifier(w http.ResponseWriter, r *http.Request, ps httprouter.Params
 	response, err := uc.DeleteNotifier(name)
 	respond(w, response, err)
 }
+
+// DescribeNotifier handles describe a notifier
+func DescribeNotifier(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	name := ps.ByName("name")
+	response, err := uc.DescribeNotifier(name)
+	respond(w, response, err)
+}
