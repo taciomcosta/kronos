@@ -12,7 +12,8 @@ func TestDescribeJob(t *testing.T) {
 	writer := mocks.NewStubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
-	uc.New(writer, reader, host)
+	notifierService := mocks.NewSpyNotifierService()
+	uc.New(writer, reader, host, notifierService)
 	got, err := uc.DescribeJob("list")
 	want := uc.DescribeJobResponse{
 		Name:                "list",
@@ -33,7 +34,8 @@ func TestDescribeJobFailure(t *testing.T) {
 	writer := mocks.NewStubSuccessWriter()
 	reader := mocks.NewStubFailingReader()
 	host := mocks.NewSpyHost()
-	uc.New(writer, reader, host)
+	notifierService := mocks.NewSpyNotifierService()
+	uc.New(writer, reader, host, notifierService)
 	got, gotErr := uc.DescribeJob("list")
 	want := uc.DescribeJobResponse{}
 	wantErr := errors.New("stub-failing-reader")

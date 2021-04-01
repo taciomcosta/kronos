@@ -38,7 +38,8 @@ func TestUpdateJobStatus(t *testing.T) {
 	for _, tt := range testsUpdateJobStatus {
 		writerReader := mocks.NewStubSuccessWriter()
 		host := mocks.NewSpyHost()
-		uc.New(writerReader, tt.reader, host)
+		notifierService := mocks.NewSpyNotifierService()
+		uc.New(writerReader, tt.reader, host, notifierService)
 		got, err := uc.UpdateJobStatus(tt.request)
 		assertEqual(t, got, tt.response)
 		assertError(t, err, tt.err)

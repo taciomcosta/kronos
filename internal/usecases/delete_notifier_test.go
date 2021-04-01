@@ -32,7 +32,8 @@ func TestDeleteNotifier(t *testing.T) {
 	for _, tt := range testsDeleteNotifier {
 		writer := mocks.NewStubSuccessWriter()
 		host := mocks.NewSpyHost()
-		uc.New(writer, tt.reader, host)
+		notifierService := mocks.NewSpyNotifierService()
+		uc.New(writer, tt.reader, host, notifierService)
 		got, err := uc.DeleteNotifier(tt.request)
 		assertEqual(t, got, tt.response)
 		assertError(t, err, tt.err)

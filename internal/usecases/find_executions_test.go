@@ -11,7 +11,8 @@ func TestFindExecutions(t *testing.T) {
 	writer := mocks.NewStubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
-	uc.New(writer, reader, host)
+	notifierService := mocks.NewSpyNotifierService()
+	uc.New(writer, reader, host, notifierService)
 	got := uc.FindExecutions(uc.FindExecutionsRequest{})
 	want := uc.FindExecutionsResponse{
 		Executions: []uc.ExecutionDTO{

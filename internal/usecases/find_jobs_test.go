@@ -46,7 +46,8 @@ func TestFindJobs(t *testing.T) {
 		writer := mocks.NewStubSuccessWriter()
 		reader := mocks.NewStubSuccessReaderWithExpr(tt.given)
 		host := mocks.NewSpyHost()
-		uc.New(writer, reader, host)
+		notifierService := mocks.NewSpyNotifierService()
+		uc.New(writer, reader, host, notifierService)
 		got := uc.FindJobs()
 		assertFindJobsResponse(t, got, tt.expect)
 	}

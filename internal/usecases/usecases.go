@@ -10,11 +10,14 @@ var writer Writer
 var reader Reader
 var host Host
 
+//var notifierService NotifierService
+
 // New is used for dependency injection on set up.
-func New(w Writer, r Reader, h Host) {
+func New(w Writer, r Reader, h Host, n NotifierService) {
 	writer = w
 	reader = r
 	host = h
+	//notifierService = n
 }
 
 // Host represents a host where jobs can be run

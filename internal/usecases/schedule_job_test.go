@@ -59,9 +59,10 @@ func TestScheduleExistingJobs(t *testing.T) {
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
+	notifierService := mocks.NewSpyNotifierService()
 	writer := mocks.NewStubSuccessWriter()
 	reader := mocks.NewStubSuccessReaderWithExpr(expr)
-	usecases.New(writer, reader, spyHost)
+	usecases.New(writer, reader, spyHost, notifierService)
 	spyHost.NotifyCurrentTimeIs(now)
 	usecases.ScheduleExistingJobs()
 	if !spyHost.DidJobRun() {
@@ -71,9 +72,10 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 
 func TestScheduleDisabledJob(t *testing.T) {
 	spyHost := mocks.NewSpyHost()
+	notifierService := mocks.NewSpyNotifierService()
 	writer := mocks.NewStubSuccessWriter()
 	reader := mocks.NewStubSuccessReaderWithDisabledJob("* * * * *")
-	usecases.New(writer, reader, spyHost)
+	usecases.New(writer, reader, spyHost, notifierService)
 	spyHost.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
 	usecases.ScheduleExistingJobs()
 	if spyHost.DidJobRun() {
