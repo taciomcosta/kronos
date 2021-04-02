@@ -82,3 +82,16 @@ func TestScheduleDisabledJob(t *testing.T) {
 		t.Fatalf("disabled job was called")
 	}
 }
+
+func TestScheduleNotifyOnError(t *testing.T) {
+	host := mocks.NewStubFailingHost()
+	spyNotifierService := mocks.NewSpyNotifierService()
+	writer := mocks.NewStubSuccessWriter()
+	reader := mocks.NewStubSuccessReaderWithExpr("* * * * *")
+	usecases.New(writer, reader, host, spyNotifierService)
+	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
+	usecases.ScheduleExistingJobs()
+	if !spyNotifierService.SendWasCalled() {
+		t.Fatalf("notifier was not called on job execution error")
+	}
+}

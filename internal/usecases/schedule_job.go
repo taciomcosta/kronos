@@ -32,7 +32,7 @@ func runOneJob(job entities.Job) {
 	if execution.Status == entities.FailedStatus {
 		// TODO: use assigned notifier
 		notifier := entities.Notifier{}
-		notifierService.Send(execution.ErrorMessage(), notifier)
+		_ = notifierService.Send(execution.ErrorMessage(), notifier)
 	}
 	_ = writer.CreateExecution(&execution)
 }

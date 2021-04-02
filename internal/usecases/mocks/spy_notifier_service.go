@@ -17,3 +17,8 @@ func (s *SpyNotifierService) Send(msg string, notifier entities.Notifier) error 
 	s.called = true
 	return nil
 }
+
+// SendWasCalled checks if Send() was called
+func (s *SpyNotifierService) SendWasCalled() bool {
+	return s.called
+}

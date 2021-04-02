@@ -1,5 +1,7 @@
 package entities
 
+import "fmt"
+
 // Execution represents execution of a job
 type Execution struct {
 	JobName  string
@@ -7,6 +9,11 @@ type Execution struct {
 	Status   string
 	MemUsage int
 	CPUTime  int
+}
+
+// ErrorMessage formats error messsage of an execution
+func (e Execution) ErrorMessage() string {
+	return fmt.Sprintf("%s: %s execution failed", e.Date, e.JobName)
 }
 
 const (
