@@ -7,9 +7,9 @@ import (
 	"github.com/taciomcosta/kronos/internal/config"
 	"github.com/taciomcosta/kronos/internal/interfaces/os"
 	"github.com/taciomcosta/kronos/internal/interfaces/rest"
+	"github.com/taciomcosta/kronos/internal/interfaces/services"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	"github.com/taciomcosta/kronos/internal/usecases"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 
 	writerReader := sqlite.NewCacheableWriterReader(config.GetString("db"))
 	host := os.NewHost()
-	notifierService := mocks.NewSpyNotifierService()
+	notifierService := services.NewNotifierService()
 	usecases.New(writerReader, writerReader, host, notifierService)
 
 	go usecases.ScheduleExistingJobs()
