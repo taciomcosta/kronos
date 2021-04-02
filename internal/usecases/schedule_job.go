@@ -29,5 +29,10 @@ func runAllJobs(t time.Time) {
 
 func runOneJob(job entities.Job) {
 	execution := host.RunJob(job)
+	if execution.Status == entities.FailedStatus {
+		// TODO: use assigned notifier
+		notifier := entities.Notifier{}
+		notifierService.Send(execution.ErrorMessage(), notifier)
+	}
 	_ = writer.CreateExecution(&execution)
 }
