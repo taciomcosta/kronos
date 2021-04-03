@@ -90,6 +90,8 @@ Use "kronos <command> --help" to learn more about a specific command.
 
 ## Examples
 
+### Jobs
+
 Creating a new job with sugar expressions: 
 ```
 > kronos create job --name myjob --cmd ./my-job.sh --tick "every day"
@@ -170,3 +172,24 @@ Deleting a job:
 > kronos delete job myjob
 ```
 
+### Notifiers
+
+#### Slack
+
+Add kronos's slack bot to your workspace <br>
+<a href="https://slack.com/oauth/v2/authorize?client_id=1880148272661.1937554624689&scope=chat:write&user_scope="><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+
+Then you can create a slack notifier with the auth token generated and a comma separated list of slack channel ids:
+``` 
+> kronos create notifier slack --name myslack --channel-ids 123456,123456 --auth-token #123
+myslack created successfully
+```
+
+Lastly, you can assign your new slack notifier to any job you want
+```
+> kronos assign myslack myjob
+myslack assigned to myjob
+
+> kronos assign myslack myjob2 --errors-only
+myslack assigned to myjob2
+```
