@@ -41,3 +41,8 @@ func (s *StubFailingWriter) CreateNotifier(notifier *entities.Notifier) error {
 func (s *StubFailingWriter) DeleteNotifier(name string) error {
 	return errors.New("StubFailingWriter")
 }
+
+// CreateAssignment creates a assignment
+func (s *StubFailingWriter) CreateAssignment(assignment *entities.Assignment) error {
+	return errors.New("StubFailingWriter")
+}

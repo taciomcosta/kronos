@@ -7,39 +7,44 @@ import (
 
 // NewStubSuccessWriter stubs writer implementation
 func NewStubSuccessWriter() uc.Writer {
-	return &StubW{}
+	return &StubSuccessWriter{}
 }
 
-// StubW implements entities.Writer for tests purposes
-type StubW struct {
+// StubSuccessWriter implements entities.Writer for tests purposes
+type StubSuccessWriter struct {
 	jobs []entities.Job
 }
 
 // CreateJob creates a job.
-func (mr *StubW) CreateJob(job *entities.Job) error {
+func (mr *StubSuccessWriter) CreateJob(job *entities.Job) error {
 	return nil
 }
 
 // DeleteJob deletes a job
-func (mr *StubW) DeleteJob(name string) error {
+func (mr *StubSuccessWriter) DeleteJob(name string) error {
 	mr.jobs = []entities.Job{}
 	return nil
 }
 
 // CreateExecution stubs a new Execution creation
-func (mr *StubW) CreateExecution(execution *entities.Execution) error {
+func (mr *StubSuccessWriter) CreateExecution(execution *entities.Execution) error {
 	return nil
 }
 
 // UpdateJob updates a job
-func (mr *StubW) UpdateJob(job *entities.Job) {}
+func (mr *StubSuccessWriter) UpdateJob(job *entities.Job) {}
 
 // CreateNotifier creates a notifier
-func (mr *StubW) CreateNotifier(notifier *entities.Notifier) error {
+func (mr *StubSuccessWriter) CreateNotifier(notifier *entities.Notifier) error {
 	return nil
 }
 
 // DeleteNotifier deletes a notifier
-func (mr *StubW) DeleteNotifier(name string) error {
+func (mr *StubSuccessWriter) DeleteNotifier(name string) error {
+	return nil
+}
+
+// CreateAssignment creates a assignment
+func (mr *StubSuccessWriter) CreateAssignment(assignment *entities.Assignment) error {
 	return nil
 }

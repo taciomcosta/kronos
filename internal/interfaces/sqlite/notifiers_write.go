@@ -4,7 +4,7 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 )
 
-// CreateNotifier creates a new job into database
+// CreateNotifier creates a new notifier into database
 func (wr *WriterReader) CreateNotifier(notifier *entities.Notifier) error {
 	return db.WithTx(func() error {
 		return wr.createSlackNotifier(notifier)
