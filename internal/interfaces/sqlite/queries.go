@@ -57,4 +57,4 @@ var findOneNotifierSQL = "SELECT * FROM notifier WHERE name=?"
 
 var findOneSlackSQL = "SELECT auth_token, channel_ids FROM slack WHERE notifier_name=?"
 
-var insertAssignmentSQL = "INSERT INTO assignemnt VALUES(?, ?, ?)"
+var insertAssignmentSQL = "INSERT INTO assignment VALUES(?, ?, ?)"

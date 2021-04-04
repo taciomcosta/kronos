@@ -43,6 +43,8 @@ var tablesStmts []string = []string{
 	`CREATE TABLE IF NOT EXISTS assignment(
 		job_name TEXT REFERENCES job(name),
 		notifier_name TEXT REFERENCES notifier(name),
-		on_error_only BOOLEAN
+		on_error_only BOOLEAN,
+		PRIMARY KEY (job_name, notifier_name)
+
 	)`,
 }
