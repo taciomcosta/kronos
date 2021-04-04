@@ -40,4 +40,9 @@ var tablesStmts []string = []string{
 		channel_ids TEXT,
 		notifier_name TEXT REFERENCES notifier(name)
 	)`,
+	`CREATE TABLE IF NOT EXISTS assignment(
+		job_name TEXT REFERENCES job(name),
+		notifier_name TEXT REFERENCES notifier(name),
+		on_error_only BOOLEAN
+	)`,
 }
