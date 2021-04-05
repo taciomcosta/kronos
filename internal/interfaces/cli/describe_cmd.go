@@ -21,6 +21,8 @@ Executions:
 Resources:
  - Average CPU: %dns
  - Average Memory: %sMB
+
+Assigned notifiers: %s
 `
 
 var describeCmd = &cobra.Command{
@@ -40,7 +42,7 @@ var describeJobCmd = &cobra.Command{
 		out.printf(describeJobTemplate,
 			r.Name, r.Command, r.Tick, r.LastExecution, r.Status,
 			r.ExecutionsSucceeded, r.ExecutionsFailed, r.AverageCPU,
-			parseMemory(r.AverageMem))
+			parseMemory(r.AverageMem), parseAssignedNotifiers(r.AssignedNotifiers))
 	},
 }
 
