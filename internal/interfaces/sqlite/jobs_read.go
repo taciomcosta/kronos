@@ -71,7 +71,20 @@ func (wr *WriterReader) DescribeJobResponse(name string) (uc.DescribeJobResponse
 		&r.AverageCPU,
 		&r.AverageMem,
 	)
+	r.AssignedNotifiers = readAssignedNotifiers(name)
 	return r, nil
+}
+
+func readAssignedNotifiers(name string) []string {
+	assignedNotifiers := []string{}
+	stmt, _ := db.Prepare(describeJobAssignedNotifiersSQL)
+	_ = stmt.Exec(name)
+	var notifier string
+	for hasRow, _ := stmt.Step(); hasRow; hasRow, _ = stmt.Step() {
+		_ = stmt.Scan(&notifier)
+		assignedNotifiers = append(assignedNotifiers, notifier)
+	}
+	return assignedNotifiers
 }
 
 // FindJobsResponse returns all jobs in FindJobsResponse format

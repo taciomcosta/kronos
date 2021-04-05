@@ -31,6 +31,8 @@ LEFT JOIN (
 ON j.name = exec.job_name
 WHERE j.name=?`
 
+var describeJobAssignedNotifiersSQL = `SELECT notifier_name FROM assignment WHERE job_name=?`
+
 var insertJobSQL = "INSERT INTO job VALUES(?, ?, ?, ?)"
 
 var deleteJobSQL = "DELETE FROM job where name=?"
