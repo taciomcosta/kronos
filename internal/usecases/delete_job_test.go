@@ -24,7 +24,7 @@ var testsDeleteJob = []struct {
 		request:  "non-existing",
 		response: uc.DeleteJobResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.NewStubFailingReader(),
+		reader:   mocks.StubFailingReader(),
 	},
 }
 

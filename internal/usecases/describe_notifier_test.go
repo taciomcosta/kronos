@@ -29,7 +29,7 @@ func TestDescribeNotifier(t *testing.T) {
 
 func TestDescribeNotifierFailure(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
-	reader := mocks.NewStubFailingReader()
+	reader := mocks.StubFailingReader()
 	host := mocks.NewSpyHost()
 	notifierService := mocks.NewSpyNotifierService()
 	uc.New(writer, reader, host, notifierService)

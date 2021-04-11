@@ -24,7 +24,7 @@ var testsDeleteNotifier = []struct {
 		request:  "non-existing",
 		response: uc.DeleteNotifierResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.NewStubFailingReader(),
+		reader:   mocks.StubFailingReader(),
 	},
 }
 

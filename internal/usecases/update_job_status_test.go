@@ -30,7 +30,7 @@ var testsUpdateJobStatus = []struct {
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.NewStubFailingReader(),
+		reader:   mocks.StubFailingReader(),
 	},
 }
 
