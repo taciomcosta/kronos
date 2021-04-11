@@ -9,7 +9,7 @@ import (
 )
 
 func TestDescribeJob(t *testing.T) {
-	writer := mocks.NewStubSuccessWriter()
+	writer := mocks.StubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
 	notifierService := mocks.NewSpyNotifierService()
@@ -31,7 +31,7 @@ func TestDescribeJob(t *testing.T) {
 }
 
 func TestDescribeJobFailure(t *testing.T) {
-	writer := mocks.NewStubSuccessWriter()
+	writer := mocks.StubSuccessWriter()
 	reader := mocks.NewStubFailingReader()
 	host := mocks.NewSpyHost()
 	notifierService := mocks.NewSpyNotifierService()

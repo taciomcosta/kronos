@@ -30,7 +30,7 @@ var testsDeleteNotifier = []struct {
 
 func TestDeleteNotifier(t *testing.T) {
 	for _, tt := range testsDeleteNotifier {
-		writer := mocks.NewStubSuccessWriter()
+		writer := mocks.StubSuccessWriter()
 		host := mocks.NewSpyHost()
 		notifierService := mocks.NewSpyNotifierService()
 		uc.New(writer, tt.reader, host, notifierService)

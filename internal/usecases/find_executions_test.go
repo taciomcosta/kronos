@@ -8,7 +8,7 @@ import (
 )
 
 func TestFindExecutions(t *testing.T) {
-	writer := mocks.NewStubSuccessWriter()
+	writer := mocks.StubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	host := mocks.NewSpyHost()
 	notifierService := mocks.NewSpyNotifierService()

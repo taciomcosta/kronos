@@ -150,7 +150,7 @@ var testsCreateJob = []struct {
 }
 
 func TestCreateJob(t *testing.T) {
-	writer := mocks.NewStubSuccessWriter()
+	writer := mocks.StubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	uc.New(writer, reader, mocks.NewSpyHost(), mocks.NewSpyNotifierService())
 	for _, tt := range testsCreateJob {
@@ -182,7 +182,7 @@ func assertError(t *testing.T, got error, want error) {
 }
 
 func TestCreateJobExpressionMap(t *testing.T) {
-	writer := mocks.NewStubSuccessWriter()
+	writer := mocks.StubSuccessWriter()
 	reader := mocks.NewStubSuccessReader()
 	uc.New(writer, reader, mocks.NewSpyHost(), mocks.NewSpyNotifierService())
 	for expr := range entities.SugarExpressionMap {

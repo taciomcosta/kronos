@@ -5,46 +5,46 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewStubSuccessWriter stubs writer implementation
-func NewStubSuccessWriter() uc.Writer {
-	return &StubSuccessWriter{}
+// StubSuccessWriter stubs writer implementation
+func StubSuccessWriter() uc.Writer {
+	return &stubSuccessWriter{}
 }
 
-// StubSuccessWriter implements entities.Writer for tests purposes
-type StubSuccessWriter struct {
+// stubSuccessWriter implements entities.Writer for tests purposes
+type stubSuccessWriter struct {
 	jobs []entities.Job
 }
 
 // CreateJob creates a job.
-func (mr *StubSuccessWriter) CreateJob(job *entities.Job) error {
+func (mr *stubSuccessWriter) CreateJob(job *entities.Job) error {
 	return nil
 }
 
 // DeleteJob deletes a job
-func (mr *StubSuccessWriter) DeleteJob(name string) error {
+func (mr *stubSuccessWriter) DeleteJob(name string) error {
 	mr.jobs = []entities.Job{}
 	return nil
 }
 
 // CreateExecution stubs a new Execution creation
-func (mr *StubSuccessWriter) CreateExecution(execution *entities.Execution) error {
+func (mr *stubSuccessWriter) CreateExecution(execution *entities.Execution) error {
 	return nil
 }
 
 // UpdateJob updates a job
-func (mr *StubSuccessWriter) UpdateJob(job *entities.Job) {}
+func (mr *stubSuccessWriter) UpdateJob(job *entities.Job) {}
 
 // CreateNotifier creates a notifier
-func (mr *StubSuccessWriter) CreateNotifier(notifier *entities.Notifier) error {
+func (mr *stubSuccessWriter) CreateNotifier(notifier *entities.Notifier) error {
 	return nil
 }
 
 // DeleteNotifier deletes a notifier
-func (mr *StubSuccessWriter) DeleteNotifier(name string) error {
+func (mr *stubSuccessWriter) DeleteNotifier(name string) error {
 	return nil
 }
 
 // CreateAssignment creates a assignment
-func (mr *StubSuccessWriter) CreateAssignment(assignment *entities.Assignment) error {
+func (mr *stubSuccessWriter) CreateAssignment(assignment *entities.Assignment) error {
 	return nil
 }

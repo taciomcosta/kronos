@@ -25,7 +25,7 @@ var testsAssignNotifierToJob = []struct {
 			Msg: "myslack assigned to name",
 		},
 		err:    nil,
-		writer: mocks.NewStubSuccessWriter(),
+		writer: mocks.StubSuccessWriter(),
 		reader: mocks.NewStubSuccessReader(),
 	},
 	{
@@ -47,7 +47,7 @@ var testsAssignNotifierToJob = []struct {
 		},
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("error finding job/notifier"),
-		writer:   mocks.NewStubSuccessWriter(),
+		writer:   mocks.StubSuccessWriter(),
 		reader:   mocks.NewStubFailingReader(),
 	},
 }

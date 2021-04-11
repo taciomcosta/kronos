@@ -26,7 +26,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{Msg: "mynotifier created"},
 		err:      nil,
-		writer:   mocks.NewStubSuccessWriter(),
+		writer:   mocks.StubSuccessWriter(),
 	},
 	{
 		request: uc.CreateNotifierRequest{
@@ -49,7 +49,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{},
 		err:      errors.New("expected auth_token, channel_ids to be provided"),
-		writer:   mocks.NewStubSuccessWriter(),
+		writer:   mocks.StubSuccessWriter(),
 	},
 }
 

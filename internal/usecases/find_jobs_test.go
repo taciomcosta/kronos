@@ -43,7 +43,7 @@ var testsFindJobsResponse = []struct {
 
 func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
-		writer := mocks.NewStubSuccessWriter()
+		writer := mocks.StubSuccessWriter()
 		reader := mocks.NewStubSuccessReaderWithExpr(tt.given)
 		host := mocks.NewSpyHost()
 		notifierService := mocks.NewSpyNotifierService()
