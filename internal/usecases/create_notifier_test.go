@@ -39,7 +39,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{},
 		err:      errors.New("StubFailingWriter"),
-		writer:   mocks.NewStubFailingWriter(),
+		writer:   mocks.StubFailingWriter(),
 	},
 	{
 		request: uc.CreateNotifierRequest{

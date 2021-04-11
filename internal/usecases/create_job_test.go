@@ -195,7 +195,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 }
 
 func TestCreateJobFailingWriter(t *testing.T) {
-	writer := mocks.NewStubFailingWriter()
+	writer := mocks.StubFailingWriter()
 	reader := mocks.StubSuccessReader()
 	uc.New(writer, reader, mocks.NewSpyHost(), mocks.NewSpyNotifierService())
 	response, err := uc.CreateJob(uc.CreateJobRequest{Tick: "* * * * *"})

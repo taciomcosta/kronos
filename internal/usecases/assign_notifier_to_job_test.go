@@ -36,7 +36,7 @@ var testsAssignNotifierToJob = []struct {
 		},
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("StubFailingWriter"),
-		writer:   mocks.NewStubFailingWriter(),
+		writer:   mocks.StubFailingWriter(),
 		reader:   mocks.StubSuccessReader(),
 	},
 	{
