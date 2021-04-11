@@ -9,7 +9,7 @@ import (
 
 func TestFindExecutions(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
-	reader := mocks.NewStubSuccessReader()
+	reader := mocks.StubSuccessReader()
 	host := mocks.NewSpyHost()
 	notifierService := mocks.NewSpyNotifierService()
 	uc.New(writer, reader, host, notifierService)

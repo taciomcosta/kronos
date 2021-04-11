@@ -5,35 +5,35 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-// NewStubSuccessReader stubs success reader
-func NewStubSuccessReader() uc.Reader {
-	return NewStubSuccessReaderWithExpr("* * * * *")
+// StubSuccessReader stubs success reader
+func StubSuccessReader() uc.Reader {
+	return StubSuccessReaderWithExpr("* * * * *")
 }
 
-// NewStubSuccessReaderWithDisabledJob stubs success reader with disabled job
-func NewStubSuccessReaderWithDisabledJob(expression string) uc.Reader {
+// StubSuccessReaderWithDisabledJob stubs success reader with disabled job
+func StubSuccessReaderWithDisabledJob(expression string) uc.Reader {
 	job, _ := entities.NewJob("name", "cmd", expression, false)
-	return &StubR{job}
+	return &stubSuccessReader{job}
 }
 
-// NewStubSuccessReaderWithExpr stubs success reader with job expr
-func NewStubSuccessReaderWithExpr(expression string) uc.Reader {
+// StubSuccessReaderWithExpr stubs success reader with job expr
+func StubSuccessReaderWithExpr(expression string) uc.Reader {
 	job, _ := entities.NewJob("name", "cmd", expression, true)
-	return &StubR{job}
+	return &stubSuccessReader{job}
 }
 
-// StubR implements entities.Reader for tests purposes
-type StubR struct {
+// stubSuccessReader implements entities.Reader for tests purposes
+type stubSuccessReader struct {
 	job entities.Job
 }
 
 // FindJobs finds all jobs.
-func (mr *StubR) FindJobs() []entities.Job {
+func (mr *stubSuccessReader) FindJobs() []entities.Job {
 	return []entities.Job{mr.job}
 }
 
 // FindJobsResponse finds all jobs in FindJobsResponse format
-func (mr *StubR) FindJobsResponse() uc.FindJobsResponse {
+func (mr *stubSuccessReader) FindJobsResponse() uc.FindJobsResponse {
 	return uc.FindJobsResponse{
 		Count: 1,
 		Jobs: []uc.JobDTO{
@@ -49,12 +49,12 @@ func (mr *StubR) FindJobsResponse() uc.FindJobsResponse {
 }
 
 // FindOneJob finds one job by name
-func (mr *StubR) FindOneJob(name string) (entities.Job, error) {
+func (mr *stubSuccessReader) FindOneJob(name string) (entities.Job, error) {
 	return mr.job, nil
 }
 
 // FindExecutionsResponse finds executions in FindExecution response format
-func (mr *StubR) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.FindExecutionsResponse {
+func (mr *stubSuccessReader) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.FindExecutionsResponse {
 	return uc.FindExecutionsResponse{
 		Executions: []uc.ExecutionDTO{
 			{JobName: "list"},
@@ -63,7 +63,7 @@ func (mr *StubR) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.FindExecu
 }
 
 // DescribeJobResponse finds executions in FindExecution response format
-func (mr *StubR) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
+func (mr *stubSuccessReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
 	return uc.DescribeJobResponse{
 		Name:                "list",
 		Command:             "ls",
@@ -78,7 +78,7 @@ func (mr *StubR) DescribeJobResponse(name string) (uc.DescribeJobResponse, error
 }
 
 // FindNotifiersResponse finds all notifiers in FindNotifiersResponse format
-func (mr *StubR) FindNotifiersResponse() uc.FindNotifiersResponse {
+func (mr *stubSuccessReader) FindNotifiersResponse() uc.FindNotifiersResponse {
 	return uc.FindNotifiersResponse{
 		Count:     1,
 		Notifiers: []uc.NotifierDTO{{Name: "myslack", Type: "slack"}},
@@ -86,12 +86,12 @@ func (mr *StubR) FindNotifiersResponse() uc.FindNotifiersResponse {
 }
 
 // FindOneNotifier finds one notifier by name
-func (mr *StubR) FindOneNotifier(name string) (entities.Notifier, error) {
+func (mr *stubSuccessReader) FindOneNotifier(name string) (entities.Notifier, error) {
 	return entities.Notifier{Name: "myslack"}, nil
 }
 
 // DescribeNotifierResponse finds executions in FindExecution response format
-func (mr *StubR) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
+func (mr *stubSuccessReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
 	return uc.DescribeNotifierResponse{
 		Name: "myslack",
 		Type: "slack",

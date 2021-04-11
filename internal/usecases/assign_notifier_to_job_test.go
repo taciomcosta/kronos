@@ -26,7 +26,7 @@ var testsAssignNotifierToJob = []struct {
 		},
 		err:    nil,
 		writer: mocks.StubSuccessWriter(),
-		reader: mocks.NewStubSuccessReader(),
+		reader: mocks.StubSuccessReader(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{
@@ -37,7 +37,7 @@ var testsAssignNotifierToJob = []struct {
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("StubFailingWriter"),
 		writer:   mocks.NewStubFailingWriter(),
-		reader:   mocks.NewStubSuccessReader(),
+		reader:   mocks.StubSuccessReader(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{

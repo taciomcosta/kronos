@@ -18,13 +18,13 @@ var testsUpdateJobStatus = []struct {
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: true},
 		response: uc.UpdateJobStatusResponse{Msg: "name enabled"},
 		err:      nil,
-		reader:   mocks.NewStubSuccessReader(),
+		reader:   mocks.StubSuccessReader(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{Msg: "name disabled"},
 		err:      nil,
-		reader:   mocks.NewStubSuccessReader(),
+		reader:   mocks.StubSuccessReader(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},

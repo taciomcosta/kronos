@@ -18,7 +18,7 @@ var testsDeleteNotifier = []struct {
 		request:  "myslack",
 		response: uc.DeleteNotifierResponse{Msg: "myslack deleted"},
 		err:      nil,
-		reader:   mocks.NewStubSuccessReader(),
+		reader:   mocks.StubSuccessReader(),
 	},
 	{
 		request:  "non-existing",

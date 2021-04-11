@@ -18,7 +18,7 @@ var testsDeleteJob = []struct {
 		request:  "name",
 		response: uc.DeleteJobResponse{Msg: "name deleted"},
 		err:      nil,
-		reader:   mocks.NewStubSuccessReader(),
+		reader:   mocks.StubSuccessReader(),
 	},
 	{
 		request:  "non-existing",
