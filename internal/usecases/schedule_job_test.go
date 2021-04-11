@@ -59,7 +59,7 @@ func TestScheduleExistingJobs(t *testing.T) {
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	spyHost := mocks.NewSpyHost()
-	notifierService := mocks.NewSpyNotifierService()
+	notifierService := mocks.SpyNotifierService()
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubSuccessReaderWithExpr(expr)
 	usecases.New(writer, reader, spyHost, notifierService)
@@ -72,7 +72,7 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 
 func TestScheduleDisabledJob(t *testing.T) {
 	spyHost := mocks.NewSpyHost()
-	notifierService := mocks.NewSpyNotifierService()
+	notifierService := mocks.SpyNotifierService()
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubSuccessReaderWithDisabledJob("* * * * *")
 	usecases.New(writer, reader, spyHost, notifierService)

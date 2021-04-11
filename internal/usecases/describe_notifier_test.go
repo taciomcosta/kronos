@@ -12,7 +12,7 @@ func TestDescribeNotifier(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubSuccessReader()
 	host := mocks.NewSpyHost()
-	notifierService := mocks.NewSpyNotifierService()
+	notifierService := mocks.SpyNotifierService()
 	uc.New(writer, reader, host, notifierService)
 	got, err := uc.DescribeNotifier("myslack")
 	want := uc.DescribeNotifierResponse{
@@ -31,7 +31,7 @@ func TestDescribeNotifierFailure(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubFailingReader()
 	host := mocks.NewSpyHost()
-	notifierService := mocks.NewSpyNotifierService()
+	notifierService := mocks.SpyNotifierService()
 	uc.New(writer, reader, host, notifierService)
 	got, gotErr := uc.DescribeNotifier("list")
 	want := uc.DescribeNotifierResponse{}
