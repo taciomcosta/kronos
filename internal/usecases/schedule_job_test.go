@@ -58,27 +58,27 @@ func TestScheduleExistingJobs(t *testing.T) {
 }
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
-	spyHost := mocks.NewSpyHost()
+	host := mocks.NewSpyHost()
 	notifierService := mocks.SpyNotifierService()
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubSuccessReaderWithExpr(expr)
-	usecases.New(writer, reader, spyHost, notifierService)
-	spyHost.NotifyCurrentTimeIs(now)
+	usecases.New(writer, reader, host, notifierService)
+	host.NotifyCurrentTimeIs(now)
 	usecases.ScheduleExistingJobs()
-	if !spyHost.DidJobRun() {
+	if !host.DidJobRun() {
 		t.Fatalf("job was not called in time %v", now)
 	}
 }
 
 func TestScheduleDisabledJob(t *testing.T) {
-	spyHost := mocks.NewSpyHost()
+	host := mocks.NewSpyHost()
 	notifierService := mocks.SpyNotifierService()
 	writer := mocks.StubSuccessWriter()
 	reader := mocks.StubSuccessReaderWithDisabledJob("* * * * *")
-	usecases.New(writer, reader, spyHost, notifierService)
-	spyHost.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
+	usecases.New(writer, reader, host, notifierService)
+	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
 	usecases.ScheduleExistingJobs()
-	if spyHost.DidJobRun() {
+	if host.DidJobRun() {
 		t.Fatalf("disabled job was called")
 	}
 }
