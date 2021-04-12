@@ -15,3 +15,8 @@ func Assign(job *Job, notifier *Notifier, onErrorOnly bool) Assignment {
 		OnErrorOnly: onErrorOnly,
 	}
 }
+
+// ShouldNotifyExecution decides if job execution is notifiable or not
+func (a Assignment) ShouldNotifyExecution(execution Execution) bool {
+	return true
+}

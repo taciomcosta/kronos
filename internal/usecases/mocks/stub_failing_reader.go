@@ -53,3 +53,8 @@ func (s *stubFailingReader) FindOneNotifier(name string) (entities.Notifier, err
 func (s *stubFailingReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
 	return uc.DescribeNotifierResponse{}, errors.New("stub-failing-reader")
 }
+
+// FindFindAssignmentsByJob finds assignments for a job
+func (mr *stubFailingReader) FindAssignmentsByJob(jobName string) []entities.Assignment {
+	return []entities.Assignment{}
+}

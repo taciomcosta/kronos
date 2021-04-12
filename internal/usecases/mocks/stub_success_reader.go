@@ -101,3 +101,14 @@ func (mr *stubSuccessReader) DescribeNotifierResponse(name string) (uc.DescribeN
 		},
 	}, nil
 }
+
+// FindFindAssignmentsByJob finds assignments for a job
+func (mr *stubSuccessReader) FindAssignmentsByJob(jobName string) []entities.Assignment {
+	return []entities.Assignment{
+		{
+			Job:         &entities.Job{},
+			Notifier:    &entities.Notifier{},
+			OnErrorOnly: true,
+		},
+	}
+}
