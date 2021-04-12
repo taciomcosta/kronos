@@ -8,8 +8,8 @@ import (
 func (wr *WriterReader) CreateAssignment(assignment *entities.Assignment) error {
 	return wr.runWriteOperation(
 		insertAssignmentSQL,
-		assignment.Job.Name,
-		assignment.Notifier.Name,
+		assignment.Job,
+		assignment.Notifier,
 		assignment.OnErrorOnly,
 	)
 }

@@ -106,8 +106,8 @@ func (mr *stubSuccessReader) DescribeNotifierResponse(name string) (uc.DescribeN
 func (mr *stubSuccessReader) FindAssignmentsByJob(jobName string) []entities.Assignment {
 	return []entities.Assignment{
 		{
-			Job:         &entities.Job{},
-			Notifier:    &entities.Notifier{},
+			Job:         "name",
+			Notifier:    "myslack",
 			OnErrorOnly: true,
 		},
 	}

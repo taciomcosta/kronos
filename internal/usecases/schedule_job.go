@@ -36,7 +36,7 @@ func runOneJob(job entities.Job) {
 func handleExecutionsNotifications(execution entities.Execution, job entities.Job) {
 	for _, assignment := range reader.FindAssignmentsByJob(job.Name) {
 		if assignment.ShouldNotifyExecution(execution) {
-			notifier, _ := reader.FindOneNotifier(assignment.Notifier.Name)
+			notifier, _ := reader.FindOneNotifier(assignment.Notifier)
 			notifierService.Send(execution.ErrorMessage(), notifier)
 		}
 	}
