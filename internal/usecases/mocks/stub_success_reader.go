@@ -108,7 +108,7 @@ func (mr *stubSuccessReader) FindAssignmentsByJob(jobName string) []entities.Ass
 		{
 			Job:         "name",
 			Notifier:    "myslack",
-			OnErrorOnly: true,
+			OnErrorOnly: false,
 		},
 	}
 }
