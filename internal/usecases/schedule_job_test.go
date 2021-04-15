@@ -112,15 +112,20 @@ func TestScheduleNotifyOnError(t *testing.T) {
 	if !spyNotifierService.SendWasCalled() {
 		t.Fatalf("notifier was not called on job execution error")
 	}
-
-	//host := mocks.Stub().Host().RunJob().Return(executionError).Build()
-	//reader := mocks.Stub().Reader().FindAssignmentsByJob().Return(assignmentOnError).Build()
-	//writer := mocks.Stub().Writer().AlwaysSucceed().Build()
-	//host, wasCalled := mocks.Spy().Host().Build()
-
-	// expr := mocker.<what>.<who>.(<method>.<value>)*.build
 }
 
-// OK if notifier has assignment forever, then it should notifiy
-// if notifier has assignment on error, execution succeed, then dont notifiy
-// if notifier has assignment on error, execution failis, then notify
+func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
+	host := mocks.NewSpyHost()
+	spyNotifierService := mocks.SpyNotifierService()
+	writer := mocks.StubSuccessWriter()
+	reader := mocker.
+		Stub().Reader().
+		FindAssignmentsByJob().Return(entities.Assignment{OnErrorOnly: true}).
+		Build()
+	usecases.New(writer, reader, host, spyNotifierService)
+	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
+	usecases.ScheduleExistingJobs()
+	if spyNotifierService.SendWasCalled() {
+		t.Fatalf("notifier was called on job execution error")
+	}
+}
