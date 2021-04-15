@@ -18,7 +18,7 @@ func (s *StubReaderBuilder) Return(vs ...interface{}) *StubReaderBuilder {
 }
 
 // Make ...
-func (s *StubReaderBuilder) Make(method string) *StubReaderBuilder {
+func (s *StubReaderBuilder) Set(method string) *StubReaderBuilder {
 	s.current = method
 	return s
 }
