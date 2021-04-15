@@ -104,7 +104,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocker.
 		Stub().Reader().
-		FindAssignmentsByJob().Return(entities.Assignment{OnErrorOnly: true}).
+		Make("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
 		Build()
 	usecases.New(writer, reader, host, spyNotifierService)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
@@ -120,7 +120,7 @@ func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocker.
 		Stub().Reader().
-		FindAssignmentsByJob().Return(entities.Assignment{OnErrorOnly: true}).
+		Make("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
 		Build()
 	usecases.New(writer, reader, host, spyNotifierService)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))

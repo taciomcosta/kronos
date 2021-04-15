@@ -17,8 +17,8 @@ func (s *StubReaderBuilder) Return(vs ...interface{}) *StubReaderBuilder {
 	return s
 }
 
-// FindAssignmentsByJob ...
-func (s *StubReaderBuilder) FindAssignmentsByJob() *StubReaderBuilder {
-	s.current = "FindAssignmentsByJob"
+// Make ...
+func (s *StubReaderBuilder) Make(method string) *StubReaderBuilder {
+	s.current = method
 	return s
 }
