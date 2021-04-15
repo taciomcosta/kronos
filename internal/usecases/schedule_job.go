@@ -37,7 +37,7 @@ func handleExecutionsNotifications(execution entities.Execution, job entities.Jo
 	for _, assignment := range reader.FindAssignmentsByJob(job.Name) {
 		if assignment.ShouldNotifyExecution(execution) {
 			notifier, _ := reader.FindOneNotifier(assignment.Notifier)
-			notifierService.Send(execution.ErrorMessage(), notifier)
+			_ = notifierService.Send(execution.ErrorMessage(), notifier)
 		}
 	}
 }
