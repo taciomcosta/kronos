@@ -7,9 +7,9 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-func newStubReader(returnFn *ReturnFn) *StubReader {
-	returnFn.outputs["FindJobs"] = []interface{}{mustNewJob()}
-	stub := &StubReader{returnFn}
+func newStubReader(stubReaderBuilder *StubReaderBuilder) *StubReader {
+	stubReaderBuilder.outputs["FindJobs"] = []interface{}{mustNewJob()}
+	stub := &StubReader{stubReaderBuilder}
 	return stub
 }
 
@@ -20,7 +20,7 @@ func mustNewJob() entities.Job {
 
 // StubReader ...
 type StubReader struct {
-	r *ReturnFn
+	r *StubReaderBuilder
 }
 
 // FindJobs ...
