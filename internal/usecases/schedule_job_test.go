@@ -94,7 +94,7 @@ func TestScheduleNotify(t *testing.T) {
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
 	usecases.ScheduleExistingJobs()
 	if !spyNotifierService.SendWasCalled() {
-		t.Fatalf("notifier was not called on job execution error")
+		t.Fatalf("notifier was not called on job execution")
 	}
 }
 

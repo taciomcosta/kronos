@@ -14,7 +14,7 @@ func newStubReader(returnFn *ReturnFn) *StubReader {
 }
 
 func mustNewJob() entities.Job {
-	job, _ := entities.NewJob("name", "cmd", "* * * * *", false)
+	job, _ := entities.NewJob("name", "cmd", "* * * * *", true)
 	return job
 }
 
