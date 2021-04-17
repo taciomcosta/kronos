@@ -37,6 +37,9 @@ func (e *ExecutionsFeature) TheJobFinishesExecution(arg1 int) error {
 	currentTime := time.Date(2021, 1, 13, 0, 0, 0, 0, time.UTC)
 	e.Host.NotifyCurrentTimeIs(currentTime)
 	uc.ScheduleExistingJobs()
+	if !e.Host.DidJobRun() {
+		return errors.New("job did not execute")
+	}
 	return nil
 }
 

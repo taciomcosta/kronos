@@ -32,7 +32,7 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 		dependencies := uc.Dependencies{
 			Writer:          writerReader,
 			Reader:          writerReader,
-			Host:            mocks.NewSpyHost(),
+			Host:            host,
 			NotifierService: mocks.SpyNotifierService(),
 		}
 		uc.New(dependencies)
