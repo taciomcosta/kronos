@@ -9,7 +9,7 @@ import (
 	"github.com/taciomcosta/kronos/internal/interfaces/rest"
 	"github.com/taciomcosta/kronos/internal/interfaces/services"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
 func main() {
@@ -21,10 +21,16 @@ func main() {
 	writerReader := sqlite.NewCacheableWriterReader(config.GetString("db"))
 	host := os.NewHost()
 	notifierService := services.NewNotifierService()
-	usecases.New(writerReader, writerReader, host, notifierService)
+	dependencies := uc.Dependencies{
+		Writer:          writerReader,
+		Reader:          writerReader,
+		Host:            host,
+		NotifierService: notifierService,
+	}
+	uc.New(dependencies)
 
-	go usecases.ScheduleExistingJobs()
-	log.Printf("%d job(s) loaded", usecases.FindJobs().Count)
+	go uc.ScheduleExistingJobs()
+	log.Printf("%d job(s) loaded", uc.FindJobs().Count)
 
 	router := rest.NewRouter()
 	log.Fatal(http.ListenAndServe(config.GetString("host"), router))

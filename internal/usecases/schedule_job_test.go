@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/taciomcosta/kronos/internal/entities"
-	"github.com/taciomcosta/kronos/internal/usecases"
+	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
@@ -61,12 +61,15 @@ func TestScheduleExistingJobs(t *testing.T) {
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	host := mocks.NewSpyHost()
-	notifierService := mocks.SpyNotifierService()
-	writer := mocks.StubSuccessWriter()
-	reader := mocks.StubSuccessReaderWithExpr(expr)
-	usecases.New(writer, reader, host, notifierService)
+	dependencies := uc.Dependencies{
+		mocks.StubSuccessWriter(),
+		mocks.StubSuccessReaderWithExpr(expr),
+		host,
+		mocks.SpyNotifierService(),
+	}
+	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(now)
-	usecases.ScheduleExistingJobs()
+	uc.ScheduleExistingJobs()
 	if !host.DidJobRun() {
 		t.Fatalf("job was not called in time %v", now)
 	}
@@ -74,12 +77,15 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 
 func TestScheduleDisabledJob(t *testing.T) {
 	host := mocks.NewSpyHost()
-	notifierService := mocks.SpyNotifierService()
-	writer := mocks.StubSuccessWriter()
-	reader := mocks.StubSuccessReaderWithDisabledJob("* * * * *")
-	usecases.New(writer, reader, host, notifierService)
+	dependencies := uc.Dependencies{
+		mocks.StubSuccessWriter(),
+		mocks.StubSuccessReaderWithDisabledJob("* * * * *"),
+		host,
+		mocks.SpyNotifierService(),
+	}
+	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
-	usecases.ScheduleExistingJobs()
+	uc.ScheduleExistingJobs()
 	if host.DidJobRun() {
 		t.Fatalf("disabled job was called")
 	}
@@ -88,11 +94,15 @@ func TestScheduleDisabledJob(t *testing.T) {
 func TestScheduleNotify(t *testing.T) {
 	host := mocks.StubFailingHost()
 	spyNotifierService := mocks.SpyNotifierService()
-	writer := mocks.StubSuccessWriter()
-	reader := mocks.StubSuccessReaderWithExpr("* * * * *")
-	usecases.New(writer, reader, host, spyNotifierService)
+	dependencies := uc.Dependencies{
+		mocks.StubSuccessWriter(),
+		mocks.StubSuccessReaderWithExpr("* * * * *"),
+		host,
+		spyNotifierService,
+	}
+	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
-	usecases.ScheduleExistingJobs()
+	uc.ScheduleExistingJobs()
 	if !spyNotifierService.SendWasCalled() {
 		t.Fatalf("notifier was not called on job execution")
 	}
@@ -106,9 +116,10 @@ func TestScheduleNotifyOnError(t *testing.T) {
 		Stub().Reader().
 		Set("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
 		Build()
-	usecases.New(writer, reader, host, spyNotifierService)
+	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
+	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
-	usecases.ScheduleExistingJobs()
+	uc.ScheduleExistingJobs()
 	if !spyNotifierService.SendWasCalled() {
 		t.Fatalf("notifier was not called on job execution error")
 	}
@@ -122,9 +133,10 @@ func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 		Stub().Reader().
 		Set("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
 		Build()
-	usecases.New(writer, reader, host, spyNotifierService)
+	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
+	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
-	usecases.ScheduleExistingJobs()
+	uc.ScheduleExistingJobs()
 	if spyNotifierService.SendWasCalled() {
 		t.Fatalf("notifier was called on job execution error")
 	}

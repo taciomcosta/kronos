@@ -43,11 +43,13 @@ var testsFindJobsResponse = []struct {
 
 func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
-		writer := mocks.StubSuccessWriter()
-		reader := mocks.StubSuccessReaderWithExpr(tt.given)
-		host := mocks.NewSpyHost()
-		notifierService := mocks.SpyNotifierService()
-		uc.New(writer, reader, host, notifierService)
+		dependencies := uc.Dependencies{
+			mocks.StubSuccessWriter(),
+			mocks.StubSuccessReaderWithExpr(tt.given),
+			mocks.NewSpyHost(),
+			mocks.SpyNotifierService(),
+		}
+		uc.New(dependencies)
 		got := uc.FindJobs()
 		assertFindJobsResponse(t, got, tt.expect)
 	}

@@ -9,11 +9,13 @@ import (
 )
 
 func TestDescribeNotifier(t *testing.T) {
-	writer := mocks.StubSuccessWriter()
-	reader := mocks.StubSuccessReader()
-	host := mocks.NewSpyHost()
-	notifierService := mocks.SpyNotifierService()
-	uc.New(writer, reader, host, notifierService)
+	dependencies := uc.Dependencies{
+		mocks.StubSuccessWriter(),
+		mocks.StubSuccessReader(),
+		mocks.NewSpyHost(),
+		mocks.SpyNotifierService(),
+	}
+	uc.New(dependencies)
 	got, err := uc.DescribeNotifier("myslack")
 	want := uc.DescribeNotifierResponse{
 		Name: "myslack",
@@ -28,11 +30,13 @@ func TestDescribeNotifier(t *testing.T) {
 }
 
 func TestDescribeNotifierFailure(t *testing.T) {
-	writer := mocks.StubSuccessWriter()
-	reader := mocks.StubFailingReader()
-	host := mocks.NewSpyHost()
-	notifierService := mocks.SpyNotifierService()
-	uc.New(writer, reader, host, notifierService)
+	dependencies := uc.Dependencies{
+		mocks.StubSuccessWriter(),
+		mocks.StubFailingReader(),
+		mocks.NewSpyHost(),
+		mocks.SpyNotifierService(),
+	}
+	uc.New(dependencies)
 	got, gotErr := uc.DescribeNotifier("list")
 	want := uc.DescribeNotifierResponse{}
 	wantErr := errors.New("stub-failing-reader")

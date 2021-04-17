@@ -36,10 +36,13 @@ var testsUpdateJobStatus = []struct {
 
 func TestUpdateJobStatus(t *testing.T) {
 	for _, tt := range testsUpdateJobStatus {
-		writerReader := mocks.StubSuccessWriter()
-		host := mocks.NewSpyHost()
-		notifierService := mocks.SpyNotifierService()
-		uc.New(writerReader, tt.reader, host, notifierService)
+		dependencies := uc.Dependencies{
+			mocks.StubSuccessWriter(),
+			tt.reader,
+			mocks.NewSpyHost(),
+			mocks.SpyNotifierService(),
+		}
+		uc.New(dependencies)
 		got, err := uc.UpdateJobStatus(tt.request)
 		assertEqual(t, got, tt.response)
 		assertError(t, err, tt.err)

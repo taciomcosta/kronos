@@ -29,8 +29,13 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 		config.EnableTestMode()
 		writerReader := sqlite.NewWriterReader(config.GetString("db"))
 		host = mocks.NewSpyHost()
-		notifierService := mocks.SpyNotifierService()
-		uc.New(writerReader, writerReader, host, notifierService)
+		dependencies := uc.Dependencies{
+			Writer:          writerReader,
+			Reader:          writerReader,
+			Host:            mocks.NewSpyHost(),
+			NotifierService: mocks.SpyNotifierService(),
+		}
+		uc.New(dependencies)
 	})
 }
 

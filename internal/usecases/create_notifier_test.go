@@ -55,8 +55,13 @@ var testsCreateNotifiers = []struct {
 
 func TestCreateNotifier(t *testing.T) {
 	for _, tt := range testsCreateNotifiers {
-		reader := mocks.StubSuccessReader()
-		uc.New(tt.writer, reader, mocks.NewSpyHost(), mocks.SpyNotifierService())
+		dependencies := uc.Dependencies{
+			tt.writer,
+			mocks.StubSuccessReader(),
+			mocks.NewSpyHost(),
+			mocks.SpyNotifierService(),
+		}
+		uc.New(dependencies)
 		response, err := uc.CreateNotifier(tt.request)
 		assertEqual(t, response, tt.response)
 		assertError(t, err, tt.err)

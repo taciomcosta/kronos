@@ -11,12 +11,20 @@ var reader Reader
 var host Host
 var notifierService NotifierService
 
+// Dependencies represent interfaces that can be plugged in usecases
+type Dependencies struct {
+	Writer          Writer
+	Reader          Reader
+	Host            Host
+	NotifierService NotifierService
+}
+
 // New is used for dependency injection on set up.
-func New(w Writer, r Reader, h Host, n NotifierService) {
-	writer = w
-	reader = r
-	host = h
-	notifierService = n
+func New(dependencies Dependencies) {
+	writer = dependencies.Writer
+	reader = dependencies.Reader
+	host = dependencies.Host
+	notifierService = dependencies.NotifierService
 }
 
 // Host represents a host where jobs can be run

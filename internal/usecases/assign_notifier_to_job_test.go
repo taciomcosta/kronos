@@ -56,7 +56,8 @@ func TestAssignNotifierToJob(t *testing.T) {
 	for _, tt := range testsAssignNotifierToJob {
 		host := mocks.NewSpyHost()
 		notifierService := mocks.SpyNotifierService()
-		uc.New(tt.writer, tt.reader, host, notifierService)
+		dependencies := uc.Dependencies{tt.writer, tt.reader, host, notifierService}
+		uc.New(dependencies)
 		got, err := uc.AssignNotifierToJob(tt.request)
 		assertEqual(t, got, tt.response)
 		assertError(t, err, tt.err)
