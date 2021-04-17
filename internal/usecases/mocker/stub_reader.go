@@ -10,6 +10,14 @@ import (
 func newStubReader(stubReaderBuilder *StubReaderBuilder) *StubReader {
 	d := &defaultStubReader{}
 	stubReaderBuilder.outputs["FindJobs"] = d.FindJobs()
+	stubReaderBuilder.outputs["FindOneJob"] = d.FindOneJob()
+	stubReaderBuilder.outputs["FindJobsResponse"] = d.FindJobsResponse()
+	stubReaderBuilder.outputs["FindExecutionsResponse"] = d.FindExecutionsResponse()
+	stubReaderBuilder.outputs["DescribeJobResponse"] = d.DescribeJobResponse()
+	stubReaderBuilder.outputs["FindOneNotifier"] = d.FindOneNotifier()
+	stubReaderBuilder.outputs["FindNotifiersResponse"] = d.FindNotifiersResponse()
+	stubReaderBuilder.outputs["DescribeNotifierResponse"] = d.DescribeNotifierResponse()
+	stubReaderBuilder.outputs["FindAssignmentsByJob"] = d.FindAssignmentsByJob()
 	stub := &StubReader{stubReaderBuilder}
 	return stub
 }

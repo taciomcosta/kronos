@@ -15,8 +15,8 @@ func (mr *defaultStubReader) FindJobs() []interface{} {
 }
 
 // FindJobsResponse finds all jobs in FindJobsResponse format
-func (mr *defaultStubReader) FindJobsResponse() uc.FindJobsResponse {
-	return uc.FindJobsResponse{
+func (mr *defaultStubReader) FindJobsResponse() []interface{} {
+	response := uc.FindJobsResponse{
 		Count: 1,
 		Jobs: []uc.JobDTO{
 			{
@@ -28,25 +28,28 @@ func (mr *defaultStubReader) FindJobsResponse() uc.FindJobsResponse {
 			},
 		},
 	}
+	return []interface{}{response}
 }
 
 // FindOneJob finds one job by name
-func (mr *defaultStubReader) FindOneJob(name string) (entities.Job, error) {
-	return entities.NewJob("name", "cmd", "* * * * *", true)
+func (mr *defaultStubReader) FindOneJob() []interface{} {
+	job, err := entities.NewJob("name", "cmd", "* * * * *", true)
+	return []interface{}{job, err}
 }
 
 // FindExecutionsResponse finds executions in FindExecution response format
-func (mr *defaultStubReader) FindExecutionsResponse(_ uc.FindExecutionsRequest) uc.FindExecutionsResponse {
-	return uc.FindExecutionsResponse{
+func (mr *defaultStubReader) FindExecutionsResponse() []interface{} {
+	response := uc.FindExecutionsResponse{
 		Executions: []uc.ExecutionDTO{
 			{JobName: "list"},
 		},
 	}
+	return []interface{}{response}
 }
 
 // DescribeJobResponse finds executions in FindExecution response format
-func (mr *defaultStubReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	return uc.DescribeJobResponse{
+func (mr *defaultStubReader) DescribeJobResponse() []interface{} {
+	response := uc.DescribeJobResponse{
 		Name:                "list",
 		Command:             "ls",
 		Tick:                "* * * * *",
@@ -56,41 +59,44 @@ func (mr *defaultStubReader) DescribeJobResponse(name string) (uc.DescribeJobRes
 		ExecutionsFailed:    1,
 		AverageCPU:          50,
 		AverageMem:          1024,
-	}, nil
+	}
+	return []interface{}{response, nil}
 }
 
 // FindNotifiersResponse finds all notifiers in FindNotifiersResponse format
-func (mr *defaultStubReader) FindNotifiersResponse() uc.FindNotifiersResponse {
-	return uc.FindNotifiersResponse{
+func (mr *defaultStubReader) FindNotifiersResponse() []interface{} {
+	response := uc.FindNotifiersResponse{
 		Count:     1,
 		Notifiers: []uc.NotifierDTO{{Name: "myslack", Type: "slack"}},
 	}
+	return []interface{}{response}
 }
 
 // FindOneNotifier finds one notifier by name
-func (mr *defaultStubReader) FindOneNotifier(name string) (entities.Notifier, error) {
-	return entities.Notifier{Name: "myslack"}, nil
+func (mr *defaultStubReader) FindOneNotifier() []interface{} {
+	notifier := entities.Notifier{Name: "myslack"}
+	return []interface{}{notifier, nil}
 }
 
 // DescribeNotifierResponse finds executions in FindExecution response format
-func (mr *defaultStubReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
-	return uc.DescribeNotifierResponse{
+func (mr *defaultStubReader) DescribeNotifierResponse() []interface{} {
+	response := uc.DescribeNotifierResponse{
 		Name: "myslack",
 		Type: "slack",
 		Metadata: map[string]string{
 			"auth_token":  "123",
 			"channel_ids": "1,2,3",
 		},
-	}, nil
+	}
+	return []interface{}{response, nil}
 }
 
 // FindFindAssignmentsByJob finds assignments for a job
-func (mr *defaultStubReader) FindAssignmentsByJob(jobName string) []entities.Assignment {
-	return []entities.Assignment{
-		{
-			Job:         "name",
-			Notifier:    "myslack",
-			OnErrorOnly: false,
-		},
+func (mr *defaultStubReader) FindAssignmentsByJob() []interface{} {
+	assignment := entities.Assignment{
+		Job:         "name",
+		Notifier:    "myslack",
+		OnErrorOnly: false,
 	}
+	return []interface{}{assignment}
 }
