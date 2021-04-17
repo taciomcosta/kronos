@@ -13,25 +13,37 @@ import (
 )
 
 func main() {
+	initializeConfig()
+	uc.New(buildDependencies())
+	initializeScheduler()
+	initializeAPI()
+}
+
+func initializeConfig() {
 	err := config.EnableDefaultMode()
 	if err != nil {
 		log.Println("No configuration file detected, using default values")
 	}
+}
 
+func buildDependencies() uc.Dependencies {
 	writerReader := sqlite.NewCacheableWriterReader(config.GetString("db"))
 	host := os.NewHost()
 	notifierService := services.NewNotifierService()
-	dependencies := uc.Dependencies{
+	return uc.Dependencies{
 		Writer:          writerReader,
 		Reader:          writerReader,
 		Host:            host,
 		NotifierService: notifierService,
 	}
-	uc.New(dependencies)
+}
 
+func initializeScheduler() {
 	go uc.ScheduleExistingJobs()
 	log.Printf("%d job(s) loaded", uc.FindJobs().Count)
+}
 
+func initializeAPI() {
 	router := rest.NewRouter()
 	log.Fatal(http.ListenAndServe(config.GetString("host"), router))
 }
