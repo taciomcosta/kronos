@@ -11,14 +11,3 @@ func Stub() *Stubber {
 	stubReaderBuilder := &StubReaderBuilder{}
 	return &Stubber{stubReaderBuilder}
 }
-
-// Stubber ...
-type Stubber struct {
-	stubReaderBuilder *StubReaderBuilder
-}
-
-// Reader ...
-func (s *Stubber) Reader() *StubReaderBuilder {
-	s.stubReaderBuilder.outputs = make(map[string]interface{})
-	return s.stubReaderBuilder
-}
