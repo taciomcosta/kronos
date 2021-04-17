@@ -8,14 +8,10 @@ import (
 )
 
 func newStubReader(stubReaderBuilder *StubReaderBuilder) *StubReader {
-	stubReaderBuilder.outputs["FindJobs"] = []interface{}{mustNewJob()}
+	d := &defaultStubReader{}
+	stubReaderBuilder.outputs["FindJobs"] = d.FindJobs()
 	stub := &StubReader{stubReaderBuilder}
 	return stub
-}
-
-func mustNewJob() entities.Job {
-	job, _ := entities.NewJob("name", "cmd", "* * * * *", true)
-	return job
 }
 
 // StubReader ...
