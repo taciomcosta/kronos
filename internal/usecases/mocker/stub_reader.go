@@ -1,8 +1,6 @@
 package mocker
 
 import (
-	"errors"
-
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
@@ -45,11 +43,8 @@ func (s *StubReader) FindJobs() []entities.Job {
 
 // FindOneJob ...
 func (s *StubReader) FindOneJob(name string) (entities.Job, error) {
-	args, ok := s.outputs["FindOneJob"].([]interface{})
-	if !ok {
-		return entities.Job{}, errors.New("error")
-	}
-	return args[0].(entities.Job), args[1].(error)
+	args, _ := s.outputs["FindOneJob"].([]interface{})
+	return args[0].(entities.Job), castError(args[1])
 }
 
 // FindJobsResponse ...
@@ -66,39 +61,27 @@ func (s *StubReader) FindExecutionsResponse(request uc.FindExecutionsRequest) uc
 
 // DescribeJobResponse ...
 func (s *StubReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	args, ok := s.outputs["FindOneJob"].([]interface{})
-	if !ok {
-		return uc.DescribeJobResponse{}, errors.New("error")
-	}
-	return args[0].(uc.DescribeJobResponse), args[1].(error)
+	args, _ := s.outputs["FindOneJob"].([]interface{})
+	return args[0].(uc.DescribeJobResponse), castError(args[1])
+
 }
 
 // FindOneNotifier ...
 func (s *StubReader) FindOneNotifier(name string) (entities.Notifier, error) {
 	args, _ := s.outputs["FindOneNotifier"].([]interface{})
-	var err error = nil
-	if args[1] != nil {
-		err = args[1].(error)
-	}
-	return args[0].(entities.Notifier), err
+	return args[0].(entities.Notifier), castError(args[1])
 }
 
 // FindNotifiersResponse ...
 func (s *StubReader) FindNotifiersResponse() uc.FindNotifiersResponse {
-	args, ok := s.outputs["FindNotifierResponse"].([]interface{})
-	if !ok {
-		return uc.FindNotifiersResponse{}
-	}
+	args, _ := s.outputs["FindNotifierResponse"].([]interface{})
 	return args[0].(uc.FindNotifiersResponse)
 }
 
 // DescribeNotifierResponse ...
 func (s *StubReader) DescribeNotifierResponse(name string) (uc.DescribeNotifierResponse, error) {
-	args, ok := s.outputs["DescribeNotifierResponse"].([]interface{})
-	if !ok {
-		return uc.DescribeNotifierResponse{}, errors.New("error")
-	}
-	return args[0].(uc.DescribeNotifierResponse), args[1].(error)
+	args, _ := s.outputs["DescribeNotifierResponse"].([]interface{})
+	return args[0].(uc.DescribeNotifierResponse), castError(args[1])
 }
 
 // FindAssignmentsByJob ...
@@ -109,4 +92,11 @@ func (s *StubReader) FindAssignmentsByJob(jobName string) []entities.Assignment 
 		output = append(output, a.(entities.Assignment))
 	}
 	return output
+}
+
+func castError(v interface{}) error {
+	if v != nil {
+		return v.(error)
+	}
+	return nil
 }

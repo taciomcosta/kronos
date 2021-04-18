@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -18,13 +19,15 @@ var testsDeleteJob = []struct {
 		request:  "name",
 		response: uc.DeleteJobResponse{Msg: "name deleted"},
 		err:      nil,
-		reader:   mocks.StubSuccessReader(),
+		reader:   mocker.Stub().Reader().Build(),
 	},
 	{
 		request:  "non-existing",
 		response: uc.DeleteJobResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.StubFailingReader(),
+		reader: mocker.Stub().Reader().
+			Set("FindOneJob").Return(mocker.Data().Job().Build(), errors.New("resource not found")).
+			Build(),
 	},
 }
 
