@@ -4,13 +4,14 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 func TestFindExecutions(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReader(),
+		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}

@@ -9,7 +9,7 @@ type Stubber struct {
 
 // Reader ...
 func (s *Stubber) Reader() *StubReaderBuilder {
-	s.stubReaderBuilder.outputs = make(map[string]interface{})
+	s.stubReaderBuilder = newStubReaderBuilder(s)
 	return s.stubReaderBuilder
 }
 

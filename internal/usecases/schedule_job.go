@@ -1,6 +1,7 @@
 package usecases
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/taciomcosta/kronos/internal/entities"
@@ -35,6 +36,7 @@ func runOneJob(job entities.Job) {
 
 func handleExecutionsNotifications(execution entities.Execution, job entities.Job) {
 	for _, assignment := range reader.FindAssignmentsByJob(job.Name) {
+		fmt.Println(assignment)
 		if assignment.ShouldNotifyExecution(execution) {
 			notifier, _ := reader.FindOneNotifier(assignment.Notifier)
 			_ = notifierService.Send(execution.ErrorMessage(), notifier)
