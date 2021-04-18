@@ -14,6 +14,11 @@ func Stub() *Stubber {
 	return &Stubber{stubReaderBuilder}
 }
 
+// Data ...
+func Data() *DataMocker {
+	return &DataMocker{}
+}
+
 //func BuildDependencies() uc.Dependencies {
 //return uc.Dependencies{
 //Reader:          Stub().Reader().Build(),

@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
@@ -114,7 +113,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocker.
 		Stub().Reader().
-		Set("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
+		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).
 		Build()
 	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
 	uc.New(dependencies)
@@ -131,7 +130,7 @@ func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 	writer := mocks.StubSuccessWriter()
 	reader := mocker.
 		Stub().Reader().
-		Set("FindAssignmentsByJob").Return(entities.Assignment{OnErrorOnly: true}).
+		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).
 		Build()
 	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
 	uc.New(dependencies)

@@ -93,10 +93,6 @@ func (mr *defaultStubReader) DescribeNotifierResponse() []interface{} {
 
 // FindFindAssignmentsByJob finds assignments for a job
 func (mr *defaultStubReader) FindAssignmentsByJob() []interface{} {
-	assignment := entities.Assignment{
-		Job:         "name",
-		Notifier:    "myslack",
-		OnErrorOnly: false,
-	}
+	assignment := Data().Assignment().Build()
 	return []interface{}{assignment}
 }
