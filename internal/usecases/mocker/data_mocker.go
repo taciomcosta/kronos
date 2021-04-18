@@ -9,3 +9,8 @@ type DataMocker struct{}
 func (d *DataMocker) Assignment() *AssignmentBuilder {
 	return newAssignmentBuilder()
 }
+
+// Job represents root for creating mock Job
+func (d *DataMocker) Job() *JobBuilder {
+	return newJobBuilder()
+}
