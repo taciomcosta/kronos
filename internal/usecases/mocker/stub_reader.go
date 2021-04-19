@@ -61,7 +61,7 @@ func (s *StubReader) FindExecutionsResponse(request uc.FindExecutionsRequest) uc
 
 // DescribeJobResponse ...
 func (s *StubReader) DescribeJobResponse(name string) (uc.DescribeJobResponse, error) {
-	args, _ := s.outputs["FindOneJob"].([]interface{})
+	args, _ := s.outputs["DescribeJobResponse"].([]interface{})
 	return args[0].(uc.DescribeJobResponse), castError(args[1])
 
 }

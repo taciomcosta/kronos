@@ -5,13 +5,14 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 func TestDescribeJob(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReader(),
+		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -35,7 +36,11 @@ func TestDescribeJob(t *testing.T) {
 func TestDescribeJobFailure(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubFailingReader(),
+		mocker.
+			Stub().Reader().
+			Set("DescribeJobResponse").
+			Return(uc.DescribeJobResponse{}, errors.New("stub-failing-reader")).
+			Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
