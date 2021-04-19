@@ -62,7 +62,9 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReaderWithExpr(expr),
+		mocker.Stub().Reader().
+			Set("FindJobs").Return(mocker.Data().Job().WithExpression(expr).Build()).
+			Build(),
 		host,
 		mocks.SpyNotifierService(),
 	}
@@ -78,7 +80,9 @@ func TestScheduleDisabledJob(t *testing.T) {
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReaderWithDisabledJob("* * * * *"),
+		mocker.Stub().Reader().
+			Set("FindJobs").Return(mocker.Data().Job().WithDisabled().Build()).
+			Build(),
 		host,
 		mocks.SpyNotifierService(),
 	}

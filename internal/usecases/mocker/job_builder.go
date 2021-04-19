@@ -26,7 +26,7 @@ func (b *JobBuilder) WithExpression(expression string) *JobBuilder {
 }
 
 // WithDisabled sets job expression
-func (b *JobBuilder) WithDisabled(expression string) *JobBuilder {
+func (b *JobBuilder) WithDisabled() *JobBuilder {
 	b.job.Status = false
 	return b
 }
