@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -18,13 +19,17 @@ var testsDeleteNotifier = []struct {
 		request:  "myslack",
 		response: uc.DeleteNotifierResponse{Msg: "myslack deleted"},
 		err:      nil,
-		reader:   mocks.StubSuccessReader(),
+		reader:   mocker.Stub().Reader().Build(),
 	},
 	{
 		request:  "non-existing",
 		response: uc.DeleteNotifierResponse{},
 		err:      errors.New("resource not found"),
-		reader:   mocks.StubFailingReader(),
+		reader: mocker.
+			Stub().Reader().
+			Set("FindOneNotifier").
+			Return(mocker.Data().Notifier().Build(), errors.New("resource not found")).
+			Build(),
 	},
 }
 

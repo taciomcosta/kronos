@@ -14,3 +14,8 @@ func (d *DataMocker) Assignment() *AssignmentBuilder {
 func (d *DataMocker) Job() *JobBuilder {
 	return newJobBuilder()
 }
+
+// Notifier represents root for creating mock Job
+func (d *DataMocker) Notifier() *NotifierBuilder {
+	return newNotifierBuilder()
+}
