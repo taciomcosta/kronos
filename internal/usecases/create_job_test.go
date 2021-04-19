@@ -7,6 +7,7 @@ import (
 
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -152,7 +153,7 @@ var testsCreateJob = []struct {
 func TestCreateJob(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReader(),
+		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -188,7 +189,7 @@ func assertError(t *testing.T, got error, want error) {
 func TestCreateJobExpressionMap(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReader(),
+		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -205,7 +206,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 func TestCreateJobFailingWriter(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocks.StubFailingWriter(),
-		mocks.StubSuccessReader(),
+		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
