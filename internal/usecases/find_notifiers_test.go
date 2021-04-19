@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -22,7 +23,7 @@ func TestFindNotifiers(t *testing.T) {
 	for _, tt := range testsFindNotifiersResponse {
 		dependencies := uc.Dependencies{
 			mocks.StubSuccessWriter(),
-			mocks.StubSuccessReader(),
+			mocker.Stub().Reader().Build(),
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),
 		}

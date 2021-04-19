@@ -74,7 +74,7 @@ func (s *StubReader) FindOneNotifier(name string) (entities.Notifier, error) {
 
 // FindNotifiersResponse ...
 func (s *StubReader) FindNotifiersResponse() uc.FindNotifiersResponse {
-	args, _ := s.outputs["FindNotifierResponse"].([]interface{})
+	args, _ := s.outputs["FindNotifiersResponse"].([]interface{})
 	return args[0].(uc.FindNotifiersResponse)
 }
 
