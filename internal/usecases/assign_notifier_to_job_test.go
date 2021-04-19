@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -26,7 +27,7 @@ var testsAssignNotifierToJob = []struct {
 		},
 		err:    nil,
 		writer: mocks.StubSuccessWriter(),
-		reader: mocks.StubSuccessReader(),
+		reader: mocker.Stub().Reader().Build(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{
@@ -37,7 +38,7 @@ var testsAssignNotifierToJob = []struct {
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("StubFailingWriter"),
 		writer:   mocks.StubFailingWriter(),
-		reader:   mocks.StubSuccessReader(),
+		reader:   mocker.Stub().Reader().Build(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{
@@ -48,7 +49,10 @@ var testsAssignNotifierToJob = []struct {
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("error finding job/notifier"),
 		writer:   mocks.StubSuccessWriter(),
-		reader:   mocks.StubFailingReader(),
+		reader: mocker.
+			Stub().Reader().
+			Set("FindOneJob").Return(mocker.Data().Job().Build(), errors.New("error finding job/notifier")).
+			Build(),
 	},
 }
 
