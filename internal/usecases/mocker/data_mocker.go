@@ -19,3 +19,8 @@ func (d *DataMocker) Job() *JobBuilder {
 func (d *DataMocker) Notifier() *NotifierBuilder {
 	return newNotifierBuilder()
 }
+
+// FindJobsResponse represents root for creating mock FindJobsResponse
+func (d *DataMocker) FindJobsResponse() *FindJobsResponseBuilder {
+	return newFindJobsResponseBuilder()
+}
