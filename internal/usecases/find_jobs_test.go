@@ -3,7 +3,9 @@ package usecases_test
 import (
 	"testing"
 
+	//"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
@@ -45,7 +47,21 @@ func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
 		dependencies := uc.Dependencies{
 			mocks.StubSuccessWriter(),
-			mocks.StubSuccessReaderWithExpr(tt.given),
+			mocker.
+				Stub().Reader().
+				Set("FindJobsResponse").
+				Return(uc.FindJobsResponse{
+					Jobs: []uc.JobDTO{
+						{
+							Name:    "name",
+							Command: "cmd",
+							Tick:    tt.given,
+							Status:  true,
+						},
+					},
+					Count: 1,
+				}).
+				Build(),
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),
 		}

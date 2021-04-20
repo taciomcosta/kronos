@@ -99,7 +99,7 @@ func TestScheduleNotify(t *testing.T) {
 	spyNotifierService := mocks.SpyNotifierService()
 	dependencies := uc.Dependencies{
 		mocks.StubSuccessWriter(),
-		mocks.StubSuccessReaderWithExpr("* * * * *"),
+		mocker.Stub().Reader().Build(),
 		host,
 		spyNotifierService,
 	}

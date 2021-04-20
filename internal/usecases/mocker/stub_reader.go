@@ -49,8 +49,8 @@ func (s *StubReader) FindOneJob(name string) (entities.Job, error) {
 
 // FindJobsResponse ...
 func (s *StubReader) FindJobsResponse() uc.FindJobsResponse {
-	arg := s.outputs["FindJobsResponse"]
-	return arg.(uc.FindJobsResponse)
+	args, _ := s.outputs["FindJobsResponse"].([]interface{})
+	return args[0].(uc.FindJobsResponse)
 }
 
 // FindExecutionsResponse ...
