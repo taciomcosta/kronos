@@ -1,4 +1,4 @@
-package mocker
+package data
 
 import "github.com/taciomcosta/kronos/internal/entities"
 

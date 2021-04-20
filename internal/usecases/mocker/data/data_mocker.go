@@ -1,6 +1,4 @@
-package mocker
-
-// mocker.Data().Assignment().WithErrorOnly().Build()
+package data
 
 // DataMocker represents root mock.Data()
 type DataMocker struct{}

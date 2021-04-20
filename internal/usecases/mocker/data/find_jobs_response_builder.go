@@ -1,4 +1,4 @@
-package mocker
+package data
 
 import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"

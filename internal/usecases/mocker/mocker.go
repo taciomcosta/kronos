@@ -1,5 +1,7 @@
 package mocker
 
+import "github.com/taciomcosta/kronos/internal/usecases/mocker/data"
+
 //import uc "github.com/taciomcosta/kronos/internal/usecases"
 
 // TODO
@@ -15,8 +17,8 @@ func Stub() *Stubber {
 }
 
 // Data ...
-func Data() *DataMocker {
-	return &DataMocker{}
+func Data() *data.DataMocker {
+	return &data.DataMocker{}
 }
 
 //func BuildDependencies() uc.Dependencies {
