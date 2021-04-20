@@ -50,17 +50,7 @@ func TestFindJobs(t *testing.T) {
 			mocker.
 				Stub().Reader().
 				Set("FindJobsResponse").
-				Return(uc.FindJobsResponse{
-					Jobs: []uc.JobDTO{
-						{
-							Name:    "name",
-							Command: "cmd",
-							Tick:    tt.given,
-							Status:  true,
-						},
-					},
-					Count: 1,
-				}).
+				Return(mocker.Data().FindJobsResponse().WithExpression(tt.given).Build()).
 				Build(),
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),
