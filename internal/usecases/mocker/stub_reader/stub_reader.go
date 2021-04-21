@@ -11,21 +11,6 @@ func newStubReader() *StubReader {
 	return stub
 }
 
-func newDefaultOutputs() map[string]interface{} {
-	var outputs = make(map[string]interface{})
-	d := &defaultStubReader{}
-	outputs["FindJobs"] = d.FindJobs()
-	outputs["FindOneJob"] = d.FindOneJob()
-	outputs["FindJobsResponse"] = d.FindJobsResponse()
-	outputs["FindExecutionsResponse"] = d.FindExecutionsResponse()
-	outputs["DescribeJobResponse"] = d.DescribeJobResponse()
-	outputs["FindOneNotifier"] = d.FindOneNotifier()
-	outputs["FindNotifiersResponse"] = d.FindNotifiersResponse()
-	outputs["DescribeNotifierResponse"] = d.DescribeNotifierResponse()
-	outputs["FindAssignmentsByJob"] = d.FindAssignmentsByJob()
-	return outputs
-}
-
 // StubReader ...
 type StubReader struct {
 	outputs map[string]interface{}

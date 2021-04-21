@@ -9,39 +9,39 @@ type dependencyBuilder interface {
 	BuildDependencies() usecases.Dependencies
 }
 
-// NewStubReaderBuilder creates a new StubReaderBuilder
-func NewStubReaderBuilder(dependencyBuilder dependencyBuilder) *StubReaderBuilder {
-	return &StubReaderBuilder{
+// NewStubWriterBuilder creates a new StubReaderBuilder
+func NewStubWriterBuilder(dependencyBuilder dependencyBuilder) *Builder {
+	return &Builder{
 		dependencyBuilder: dependencyBuilder,
-		//stubReader:        newStubReader(),
+		stubWriter:        newStubWriter(),
 	}
 }
 
-// StubReaderBuilder ...
-type StubReaderBuilder struct {
+// StubWriterBuilder ...
+type Builder struct {
 	current           string
 	dependencyBuilder dependencyBuilder
-	//stubReader        *StubReader
+	stubWriter        *StubWriter
 }
 
 // Build ...
-//func (s *StubReaderBuilder) Build() *StubReader {
-//return s.stubReader
-//}
+func (s *Builder) Build() *StubWriter {
+	return s.stubWriter
+}
 
 // BuildDependencies ...
-func (s *StubReaderBuilder) BuildDependencies() uc.Dependencies {
+func (s *Builder) BuildDependencies() uc.Dependencies {
 	return s.dependencyBuilder.BuildDependencies()
 }
 
 // Return ...
-//func (s *StubReaderBuilder) Return(vs ...interface{}) *StubReaderBuilder {
-//s.stubReader.outputs[s.current] = vs
-//return s
-//}
+func (s *Builder) Return(vs ...interface{}) *Builder {
+	s.stubWriter.outputs[s.current] = vs
+	return s
+}
 
 // Set ...
-func (s *StubReaderBuilder) Set(method string) *StubReaderBuilder {
+func (s *Builder) Set(method string) *Builder {
 	s.current = method
 	return s
 }

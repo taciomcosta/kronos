@@ -3,6 +3,7 @@ package mocker
 import (
 	"github.com/taciomcosta/kronos/internal/usecases/mocker/data"
 	stubreader "github.com/taciomcosta/kronos/internal/usecases/mocker/stub_reader"
+	stubwriter "github.com/taciomcosta/kronos/internal/usecases/mocker/stub_writer"
 )
 
 //import uc "github.com/taciomcosta/kronos/internal/usecases"
@@ -16,7 +17,8 @@ import (
 // Stub ...
 func Stub() *Stubber {
 	stubReaderBuilder := &stubreader.Builder{}
-	return &Stubber{stubReaderBuilder}
+	stubWriterBuilder := &stubwriter.Builder{}
+	return &Stubber{stubReaderBuilder, stubWriterBuilder}
 }
 
 // Data ...
