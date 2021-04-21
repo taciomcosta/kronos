@@ -1,4 +1,4 @@
-package mocker
+package stubreader
 
 import (
 	"github.com/taciomcosta/kronos/internal/entities"

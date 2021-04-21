@@ -1,15 +1,18 @@
 package mocker
 
-import uc "github.com/taciomcosta/kronos/internal/usecases"
+import (
+	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker/stub_reader"
+)
 
 // Stubber ...
 type Stubber struct {
-	stubReaderBuilder *StubReaderBuilder
+	stubReaderBuilder *stubreader.StubReaderBuilder
 }
 
 // Reader ...
-func (s *Stubber) Reader() *StubReaderBuilder {
-	s.stubReaderBuilder = newStubReaderBuilder(s)
+func (s *Stubber) Reader() *stubreader.StubReaderBuilder {
+	s.stubReaderBuilder = stubreader.NewStubReaderBuilder(s)
 	return s.stubReaderBuilder
 }
 

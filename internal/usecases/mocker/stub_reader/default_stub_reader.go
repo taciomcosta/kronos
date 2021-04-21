@@ -1,8 +1,9 @@
-package mocker
+package stubreader
 
 import (
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker/data"
 )
 
 // defaultStubReader implements entities.Reader for tests purposes
@@ -93,6 +94,7 @@ func (mr *defaultStubReader) DescribeNotifierResponse() []interface{} {
 
 // FindFindAssignmentsByJob finds assignments for a job
 func (mr *defaultStubReader) FindAssignmentsByJob() []interface{} {
-	assignment := Data().Assignment().Build()
+	dataMocker := &data.DataMocker{}
+	assignment := dataMocker.Assignment().Build()
 	return []interface{}{assignment}
 }

@@ -1,6 +1,9 @@
 package mocker
 
-import "github.com/taciomcosta/kronos/internal/usecases/mocker/data"
+import (
+	"github.com/taciomcosta/kronos/internal/usecases/mocker/data"
+	stubreader "github.com/taciomcosta/kronos/internal/usecases/mocker/stub_reader"
+)
 
 //import uc "github.com/taciomcosta/kronos/internal/usecases"
 
@@ -12,7 +15,7 @@ import "github.com/taciomcosta/kronos/internal/usecases/mocker/data"
 
 // Stub ...
 func Stub() *Stubber {
-	stubReaderBuilder := &StubReaderBuilder{}
+	stubReaderBuilder := &stubreader.StubReaderBuilder{}
 	return &Stubber{stubReaderBuilder}
 }
 
