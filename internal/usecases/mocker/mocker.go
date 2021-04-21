@@ -15,7 +15,7 @@ import (
 
 // Stub ...
 func Stub() *Stubber {
-	stubReaderBuilder := &stubreader.StubReaderBuilder{}
+	stubReaderBuilder := &stubreader.Builder{}
 	return &Stubber{stubReaderBuilder}
 }
 

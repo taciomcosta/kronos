@@ -7,11 +7,11 @@ import (
 
 // Stubber ...
 type Stubber struct {
-	stubReaderBuilder *stubreader.StubReaderBuilder
+	stubReaderBuilder *stubreader.Builder
 }
 
 // Reader ...
-func (s *Stubber) Reader() *stubreader.StubReaderBuilder {
+func (s *Stubber) Reader() *stubreader.Builder {
 	s.stubReaderBuilder = stubreader.NewStubReaderBuilder(s)
 	return s.stubReaderBuilder
 }

@@ -5,43 +5,43 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 )
 
-type DependencyBuilder interface {
+type dependencyBuilder interface {
 	BuildDependencies() usecases.Dependencies
 }
 
 // NewStubReaderBuilder creates a new StubReaderBuilder
-func NewStubReaderBuilder(dependencyBuilder DependencyBuilder) *StubReaderBuilder {
-	return &StubReaderBuilder{
+func NewStubReaderBuilder(dependencyBuilder dependencyBuilder) *Builder {
+	return &Builder{
 		dependencyBuilder: dependencyBuilder,
 		stubReader:        newStubReader(),
 	}
 }
 
-// StubReaderBuilder ...
-type StubReaderBuilder struct {
+// Builder implements Builder Pattern for StubReader
+type Builder struct {
 	current           string
-	dependencyBuilder DependencyBuilder
+	dependencyBuilder dependencyBuilder
 	stubReader        *StubReader
 }
 
 // Build ...
-func (s *StubReaderBuilder) Build() *StubReader {
+func (s *Builder) Build() *StubReader {
 	return s.stubReader
 }
 
 // BuildDependencies ...
-func (s *StubReaderBuilder) BuildDependencies() uc.Dependencies {
+func (s *Builder) BuildDependencies() uc.Dependencies {
 	return s.dependencyBuilder.BuildDependencies()
 }
 
 // Return ...
-func (s *StubReaderBuilder) Return(vs ...interface{}) *StubReaderBuilder {
+func (s *Builder) Return(vs ...interface{}) *Builder {
 	s.stubReader.outputs[s.current] = vs
 	return s
 }
 
 // Set ...
-func (s *StubReaderBuilder) Set(method string) *StubReaderBuilder {
+func (s *Builder) Set(method string) *Builder {
 	s.current = method
 	return s
 }
