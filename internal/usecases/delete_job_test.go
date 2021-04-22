@@ -34,7 +34,7 @@ var testsDeleteJob = []struct {
 func TestDeleteJob(t *testing.T) {
 	for _, tt := range testsDeleteJob {
 		dependencies := uc.Dependencies{
-			mocks.StubSuccessWriter(),
+			mocker.Stub().Writer().Build(),
 			tt.reader,
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),

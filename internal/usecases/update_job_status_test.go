@@ -42,7 +42,7 @@ var testsUpdateJobStatus = []struct {
 func TestUpdateJobStatus(t *testing.T) {
 	for _, tt := range testsUpdateJobStatus {
 		dependencies := uc.Dependencies{
-			mocks.StubSuccessWriter(),
+			mocker.Stub().Writer().Build(),
 			tt.reader,
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),

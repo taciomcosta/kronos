@@ -11,7 +11,7 @@ import (
 
 func TestDescribeJob(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocks.StubSuccessWriter(),
+		mocker.Stub().Writer().Build(),
 		mocker.Stub().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
@@ -35,7 +35,7 @@ func TestDescribeJob(t *testing.T) {
 
 func TestDescribeJobFailure(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocks.StubSuccessWriter(),
+		mocker.Stub().Writer().Build(),
 		mocker.
 			Stub().Reader().
 			Set("DescribeJobResponse").

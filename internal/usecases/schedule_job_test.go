@@ -61,7 +61,7 @@ func TestScheduleExistingJobs(t *testing.T) {
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
-		mocks.StubSuccessWriter(),
+		mocker.Stub().Writer().Build(),
 		mocker.Stub().Reader().
 			Set("FindJobs").Return(mocker.Data().Job().WithExpression(expr).Build()).
 			Build(),
@@ -79,7 +79,7 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 func TestScheduleDisabledJob(t *testing.T) {
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
-		mocks.StubSuccessWriter(),
+		mocker.Stub().Writer().Build(),
 		mocker.Stub().Reader().
 			Set("FindJobs").Return(mocker.Data().Job().WithDisabled().Build()).
 			Build(),
@@ -98,7 +98,7 @@ func TestScheduleNotify(t *testing.T) {
 	host := mocks.StubFailingHost()
 	spyNotifierService := mocks.SpyNotifierService()
 	dependencies := uc.Dependencies{
-		mocks.StubSuccessWriter(),
+		mocker.Stub().Writer().Build(),
 		mocker.Stub().Reader().Build(),
 		host,
 		spyNotifierService,
@@ -114,7 +114,7 @@ func TestScheduleNotify(t *testing.T) {
 func TestScheduleNotifyOnError(t *testing.T) {
 	host := mocks.StubFailingHost()
 	spyNotifierService := mocks.SpyNotifierService()
-	writer := mocks.StubSuccessWriter()
+	writer := mocker.Stub().Writer().Build()
 	reader := mocker.
 		Stub().Reader().
 		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).
@@ -131,7 +131,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 	host := mocks.NewSpyHost()
 	spyNotifierService := mocks.SpyNotifierService()
-	writer := mocks.StubSuccessWriter()
+	writer := mocker.Stub().Writer().Build()
 	reader := mocker.
 		Stub().Reader().
 		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).

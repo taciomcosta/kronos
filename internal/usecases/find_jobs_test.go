@@ -45,7 +45,7 @@ var testsFindJobsResponse = []struct {
 func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
 		dependencies := uc.Dependencies{
-			mocks.StubSuccessWriter(),
+			mocker.Stub().Writer().Build(),
 			mocker.
 				Stub().Reader().
 				Set("FindJobsResponse").

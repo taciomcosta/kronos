@@ -27,7 +27,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{Msg: "mynotifier created"},
 		err:      nil,
-		writer:   mocks.StubSuccessWriter(),
+		writer:   mocker.Stub().Writer().Build(),
 	},
 	{
 		request: uc.CreateNotifierRequest{
@@ -39,8 +39,12 @@ var testsCreateNotifiers = []struct {
 			},
 		},
 		response: uc.CreateNotifierResponse{},
-		err:      errors.New("StubFailingWriter"),
-		writer:   mocks.StubFailingWriter(),
+		err:      errors.New("error"),
+		writer: mocker.
+			Stub().Writer().
+			Set("CreateNotifier").
+			Return(errors.New("error")).
+			Build(),
 	},
 	{
 		request: uc.CreateNotifierRequest{
@@ -50,7 +54,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{},
 		err:      errors.New("expected auth_token, channel_ids to be provided"),
-		writer:   mocks.StubSuccessWriter(),
+		writer:   mocker.Stub().Writer().Build(),
 	},
 }
 
