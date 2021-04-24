@@ -24,7 +24,6 @@
   - [Jobs](#Jobs)
   - [Notifier](#Notifiers)
     - [Slack](#Slack)
-    - [E-mail](#Email)
 
 
 ## Installation
@@ -76,11 +75,10 @@ Available Commands:
   list           Lists all jobs/notifiers
   describe       Shows detailed information about a job/notifier
   history        Shows execution history of a job
-  attach         Attaches local stdin, stdout, stderr to a job
-  logs           Prints logs for a specific job execution
   enable         Enables a job execution
   disable        Disables a job execution
   assign         Assigns a notifier to a job
+  unassign       Unassign a notifier from a job
 
 Flags:
   -h, --help   help for kronos
@@ -129,23 +127,6 @@ Resources:
  
 Assigned Notifiers:
   - my-slack
-  - my-email
-```
-
-Attaching to a job:
-```
-> kronos attach myjob
-Attached to myjob (Press CTRL+C to exit)
-
-$ Doing the thing...
-$ Job finished
-```
-
-Alternatively, we can just log the last execution instead of attaching to the job:
-```
-> kronos logs  myjob
-$ Doing the thing...
-$ Job finished
 ```
 
 Showing execution history of all jobs:
@@ -192,4 +173,10 @@ myslack assigned to myjob
 
 > kronos assign myslack myjob2 --errors-only
 myslack assigned to myjob2
+```
+
+Or unassign it:
+```
+> kronos unassign myslack myjob
+myslack unassigned from myjob
 ```
