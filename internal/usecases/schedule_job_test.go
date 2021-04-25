@@ -4,7 +4,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
@@ -98,7 +97,7 @@ func TestScheduleDisabledJob(t *testing.T) {
 func TestScheduleNotify(t *testing.T) {
 	host := mocker.
 		Dependencies().Host().
-		Set("RunJob").Return(entities.Execution{Status: entities.FailedStatus}).
+		Set("RunJob").Return(mocker.Data().Execution().WithFailure().Build()).
 		Build()
 	spyNotifierService := mocks.SpyNotifierService()
 	dependencies := uc.Dependencies{
@@ -118,7 +117,7 @@ func TestScheduleNotify(t *testing.T) {
 func TestScheduleNotifyOnError(t *testing.T) {
 	host := mocker.
 		Dependencies().Host().
-		Set("RunJob").Return(entities.Execution{Status: entities.FailedStatus}).
+		Set("RunJob").Return(mocker.Data().Execution().WithFailure().Build()).
 		Build()
 	spyNotifierService := mocks.SpyNotifierService()
 	writer := mocker.Dependencies().Writer().Build()

@@ -22,3 +22,8 @@ func (d *DataMocker) Notifier() *NotifierBuilder {
 func (d *DataMocker) FindJobsResponse() *FindJobsResponseBuilder {
 	return newFindJobsResponseBuilder()
 }
+
+// Execution represents root for creating mock Execution
+func (d *DataMocker) Execution() *ExecutionBuilder {
+	return newExecutionBuilder()
+}
