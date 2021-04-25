@@ -17,6 +17,6 @@ func Dependencies() *DependencyBuilder {
 }
 
 // Data ...
-func Data() *data.DataMocker {
-	return &data.DataMocker{}
+func Data() *data.Mocker {
+	return &data.Mocker{}
 }

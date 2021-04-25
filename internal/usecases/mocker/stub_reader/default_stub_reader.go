@@ -109,7 +109,7 @@ func (mr *defaultStubReader) DescribeNotifierResponse() []interface{} {
 
 // FindFindAssignmentsByJob finds assignments for a job
 func (mr *defaultStubReader) FindAssignmentsByJob() []interface{} {
-	dataMocker := &data.DataMocker{}
+	dataMocker := &data.Mocker{}
 	assignment := dataMocker.Assignment().Build()
 	return []interface{}{assignment}
 }
