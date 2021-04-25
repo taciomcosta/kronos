@@ -6,7 +6,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testsAssignNotifierToJob = []struct {
@@ -63,7 +62,7 @@ var testsAssignNotifierToJob = []struct {
 func TestAssignNotifierToJob(t *testing.T) {
 	for _, tt := range testsAssignNotifierToJob {
 		host := mocker.Dependencies().Host().Build()
-		notifierService := mocks.SpyNotifierService()
+		notifierService := mocker.Dependencies().NotifierService().Build()
 		dependencies := uc.Dependencies{tt.writer, tt.reader, host, notifierService}
 		uc.New(dependencies)
 		got, err := uc.AssignNotifierToJob(tt.request)

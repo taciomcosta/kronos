@@ -8,7 +8,6 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testsCreateJob = []struct {
@@ -155,7 +154,7 @@ func TestCreateJob(t *testing.T) {
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	for _, tt := range testsCreateJob {
@@ -191,7 +190,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	for expr := range entities.SugarExpressionMap {
@@ -208,7 +207,7 @@ func TestCreateJobFailingWriter(t *testing.T) {
 		mocker.Dependencies().Writer().Set("CreateJob").Return(errors.New("fail")).Build(),
 		mocker.Dependencies().Reader().Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	response, err := uc.CreateJob(uc.CreateJobRequest{Tick: "* * * * *"})

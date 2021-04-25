@@ -7,7 +7,6 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testsCreateNotifiers = []struct {
@@ -64,7 +63,7 @@ func TestCreateNotifier(t *testing.T) {
 			tt.writer,
 			mocker.Dependencies().Reader().Build(),
 			mocker.Dependencies().Host().Build(),
-			mocks.SpyNotifierService(),
+			mocker.Dependencies().NotifierService().Build(),
 		}
 		uc.New(dependencies)
 		response, err := uc.CreateNotifier(tt.request)

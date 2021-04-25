@@ -11,7 +11,6 @@ import (
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	spyhost "github.com/taciomcosta/kronos/internal/usecases/mocker/spy_host"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"github.com/taciomcosta/kronos/test"
 )
 
@@ -35,7 +34,7 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 			Writer:          writerReader,
 			Reader:          writerReader,
 			Host:            host,
-			NotifierService: mocks.SpyNotifierService(),
+			NotifierService: mocker.Dependencies().NotifierService().Build(),
 		}
 		uc.New(dependencies)
 	})

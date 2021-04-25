@@ -5,7 +5,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testsFindJobsResponse = []struct {
@@ -52,7 +51,7 @@ func TestFindJobs(t *testing.T) {
 				Return(mocker.Data().FindJobsResponse().WithExpression(tt.given).Build()).
 				Build(),
 			mocker.Dependencies().Host().Build(),
-			mocks.SpyNotifierService(),
+			mocker.Dependencies().NotifierService().Build(),
 		}
 		uc.New(dependencies)
 		got := uc.FindJobs()

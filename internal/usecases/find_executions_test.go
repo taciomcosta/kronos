@@ -5,7 +5,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 func TestFindExecutions(t *testing.T) {
@@ -13,7 +12,7 @@ func TestFindExecutions(t *testing.T) {
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	got := uc.FindExecutions(uc.FindExecutionsRequest{})

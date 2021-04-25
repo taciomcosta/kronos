@@ -6,7 +6,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 func TestDescribeNotifier(t *testing.T) {
@@ -14,7 +13,7 @@ func TestDescribeNotifier(t *testing.T) {
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	got, err := uc.DescribeNotifier("myslack")
@@ -39,7 +38,7 @@ func TestDescribeNotifierFailure(t *testing.T) {
 			Return(uc.DescribeNotifierResponse{}, errors.New("stub-failing-reader")).
 			Build(),
 		mocker.Dependencies().Host().Build(),
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	got, gotErr := uc.DescribeNotifier("list")

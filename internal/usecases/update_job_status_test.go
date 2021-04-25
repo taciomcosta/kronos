@@ -6,7 +6,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testsUpdateJobStatus = []struct {
@@ -45,7 +44,7 @@ func TestUpdateJobStatus(t *testing.T) {
 			mocker.Dependencies().Writer().Build(),
 			tt.reader,
 			mocker.Dependencies().Host().Build(),
-			mocks.SpyNotifierService(),
+			mocker.Dependencies().NotifierService().Build(),
 		}
 		uc.New(dependencies)
 		got, err := uc.UpdateJobStatus(tt.request)
