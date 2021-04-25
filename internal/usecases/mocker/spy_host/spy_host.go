@@ -1,4 +1,4 @@
-package stubhost
+package spyhost
 
 import (
 	"time"
@@ -6,26 +6,33 @@ import (
 	"github.com/taciomcosta/kronos/internal/entities"
 )
 
-func newStubHost() *StubHost {
-	stub := &StubHost{}
-	stub.outputs = newDefaultOutputs()
-	return stub
+func newSpyHost() *SpyHost {
+	spy := &SpyHost{}
+	spy.outputs = newDefaultOutputs()
+	return spy
 }
 
-// StubHost ...
-type StubHost struct {
+// SpyHost ...
+type SpyHost struct {
 	outputs map[string]interface{}
+	called  bool
 	channel chan time.Time
 }
 
 // RunJob ...
-func (s *StubHost) RunJob(job entities.Job) entities.Execution {
+func (s *SpyHost) RunJob(job entities.Job) entities.Execution {
+	s.called = true
 	args := s.outputs["RunJob"].([]interface{})
 	return args[0].(entities.Execution)
 }
 
-// TickEverySecond stubs channel so that we can emit desired time on tests
-func (s *StubHost) TickEverySecond() <-chan time.Time {
+// DidJobRun tells if RunJob was called
+func (s *SpyHost) DidJobRun() bool {
+	return s.called
+}
+
+// TickEverySecond spys channel so that we can emit desired time on tests
+func (s *SpyHost) TickEverySecond() <-chan time.Time {
 	// In production, we want tick channel to be open forever
 	// but we don't this bevahior when testing.
 	// Thus we set an expiration time.
@@ -33,7 +40,7 @@ func (s *StubHost) TickEverySecond() <-chan time.Time {
 	return s.channel
 }
 
-func (s *StubHost) expireChannelAfter(duration time.Duration) {
+func (s *SpyHost) expireChannelAfter(duration time.Duration) {
 	go func() {
 		<-time.After(duration)
 		close(s.channel)
@@ -41,6 +48,6 @@ func (s *StubHost) expireChannelAfter(duration time.Duration) {
 }
 
 // NotifyCurrentTimeIs trigger channel returned by TickEverySecond
-func (s *StubHost) NotifyCurrentTimeIs(now time.Time) {
+func (s *SpyHost) NotifyCurrentTimeIs(now time.Time) {
 	s.channel <- now
 }

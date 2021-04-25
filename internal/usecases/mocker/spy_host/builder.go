@@ -1,4 +1,4 @@
-package stubhost
+package spyhost
 
 import (
 	"github.com/taciomcosta/kronos/internal/usecases"
@@ -9,24 +9,24 @@ type dependencyBuilder interface {
 	BuildDependencies() usecases.Dependencies
 }
 
-// NewStubHostBuilder creates a new StubHostBuilder
-func NewStubHostBuilder(dependencyBuilder dependencyBuilder) *Builder {
+// NewSpyHostBuilder creates a new SpyHostBuilder
+func NewSpyHostBuilder(dependencyBuilder dependencyBuilder) *Builder {
 	return &Builder{
 		dependencyBuilder: dependencyBuilder,
-		stubHost:          newStubHost(),
+		spyHost:           newSpyHost(),
 	}
 }
 
-// Builder implements Builder Pattern for StubHost
+// Builder implements Builder Pattern for SpyHost
 type Builder struct {
 	current           string
 	dependencyBuilder dependencyBuilder
-	stubHost          *StubHost
+	spyHost           *SpyHost
 }
 
 // Build ...
-func (s *Builder) Build() *StubHost {
-	return s.stubHost
+func (s *Builder) Build() *SpyHost {
+	return s.spyHost
 }
 
 // BuildDependencies ...
@@ -36,7 +36,7 @@ func (s *Builder) BuildDependencies() uc.Dependencies {
 
 // Return ...
 func (s *Builder) Return(vs ...interface{}) *Builder {
-	s.stubHost.outputs[s.current] = vs
+	s.spyHost.outputs[s.current] = vs
 	return s
 }
 

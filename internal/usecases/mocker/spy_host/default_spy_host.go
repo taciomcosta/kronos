@@ -1,4 +1,4 @@
-package stubhost
+package spyhost
 
 import (
 	"github.com/taciomcosta/kronos/internal/entities"
@@ -6,20 +6,20 @@ import (
 
 func newDefaultOutputs() map[string]interface{} {
 	var outputs = make(map[string]interface{})
-	d := &defaultStubHost{}
+	d := &defaultSpyHost{}
 	outputs["RunJob"] = d.RunJob()
 	return outputs
 }
 
-// defaultStubHost implements usecases.Host
-type defaultStubHost struct{}
+// defaultSpyHost implements usecases.Host
+type defaultSpyHost struct{}
 
 // RunJob runs a job in host
-func (s *defaultStubHost) RunJob() entities.Execution {
+func (s *defaultSpyHost) RunJob() entities.Execution {
 	return entities.Execution{
-		JobName:  "failing-job",
+		JobName:  "spy-host",
 		Date:     "date",
-		Status:   entities.FailedStatus,
+		Status:   "Succeeded",
 		CPUTime:  1000,
 		MemUsage: 1000,
 	}
