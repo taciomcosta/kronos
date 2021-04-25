@@ -15,12 +15,12 @@ type DependencyBuilder struct {
 }
 
 // BuildDependencies ...
+// TODO: rename to BuildDefault()
 func (d *DependencyBuilder) BuildDependencies() uc.Dependencies {
-	reader := d.stubReaderBuilder.Build()
-	writer := d.stubWriterBuilder.Build()
 	return uc.Dependencies{
-		Reader: reader,
-		Writer: writer,
+		Reader: d.stubReaderBuilder.Build(),
+		Writer: d.stubWriterBuilder.Build(),
+		Host:   d.spyHostBuilder.Build(),
 	}
 }
 

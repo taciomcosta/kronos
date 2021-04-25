@@ -9,6 +9,7 @@ import (
 func newSpyHost() *SpyHost {
 	spy := &SpyHost{}
 	spy.outputs = newDefaultOutputs()
+	spy.channel = make(chan time.Time, 1)
 	return spy
 }
 

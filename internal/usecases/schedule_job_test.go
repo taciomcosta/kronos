@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/taciomcosta/kronos/internal/entities"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
@@ -59,7 +60,7 @@ func TestScheduleExistingJobs(t *testing.T) {
 }
 
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
-	host := mocks.NewSpyHost()
+	host := mocker.Dependencies().Host().Build()
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().
@@ -77,7 +78,7 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 }
 
 func TestScheduleDisabledJob(t *testing.T) {
-	host := mocks.NewSpyHost()
+	host := mocker.Dependencies().Host().Build()
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().
@@ -95,7 +96,10 @@ func TestScheduleDisabledJob(t *testing.T) {
 }
 
 func TestScheduleNotify(t *testing.T) {
-	host := mocks.StubFailingHost()
+	host := mocker.
+		Dependencies().Host().
+		Set("RunJob").Return(entities.Execution{Status: entities.FailedStatus}).
+		Build()
 	spyNotifierService := mocks.SpyNotifierService()
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
@@ -112,7 +116,10 @@ func TestScheduleNotify(t *testing.T) {
 }
 
 func TestScheduleNotifyOnError(t *testing.T) {
-	host := mocks.StubFailingHost()
+	host := mocker.
+		Dependencies().Host().
+		Set("RunJob").Return(entities.Execution{Status: entities.FailedStatus}).
+		Build()
 	spyNotifierService := mocks.SpyNotifierService()
 	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
@@ -129,7 +136,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 }
 
 func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
-	host := mocks.NewSpyHost()
+	host := mocker.Dependencies().Host().Build()
 	spyNotifierService := mocks.SpyNotifierService()
 	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
