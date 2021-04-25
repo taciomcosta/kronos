@@ -154,7 +154,7 @@ func TestCreateJob(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
-		mocks.NewSpyHost(),
+		mocker.Dependencies().Host().Build(),
 		mocks.SpyNotifierService(),
 	}
 	uc.New(dependencies)
@@ -190,7 +190,7 @@ func TestCreateJobExpressionMap(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
-		mocks.NewSpyHost(),
+		mocker.Dependencies().Host().Build(),
 		mocks.SpyNotifierService(),
 	}
 	uc.New(dependencies)
@@ -207,7 +207,7 @@ func TestCreateJobFailingWriter(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Set("CreateJob").Return(errors.New("fail")).Build(),
 		mocker.Dependencies().Reader().Build(),
-		mocks.NewSpyHost(),
+		mocker.Dependencies().Host().Build(),
 		mocks.SpyNotifierService(),
 	}
 	uc.New(dependencies)

@@ -13,7 +13,7 @@ func TestDescribeJob(t *testing.T) {
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
-		mocks.NewSpyHost(),
+		mocker.Dependencies().Host().Build(),
 		mocks.SpyNotifierService(),
 	}
 	uc.New(dependencies)
@@ -41,7 +41,7 @@ func TestDescribeJobFailure(t *testing.T) {
 			Set("DescribeJobResponse").
 			Return(uc.DescribeJobResponse{}, errors.New("stub-failing-reader")).
 			Build(),
-		mocks.NewSpyHost(),
+		mocker.Dependencies().Host().Build(),
 		mocks.SpyNotifierService(),
 	}
 	uc.New(dependencies)

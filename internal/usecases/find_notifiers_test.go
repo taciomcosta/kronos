@@ -24,7 +24,7 @@ func TestFindNotifiers(t *testing.T) {
 		dependencies := uc.Dependencies{
 			mocker.Dependencies().Writer().Build(),
 			mocker.Dependencies().Reader().Build(),
-			mocks.NewSpyHost(),
+			mocker.Dependencies().Host().Build(),
 			mocks.SpyNotifierService(),
 		}
 		uc.New(dependencies)

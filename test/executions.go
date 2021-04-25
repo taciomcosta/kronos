@@ -9,12 +9,12 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/taciomcosta/kronos/internal/interfaces/rest"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
+	spyhost "github.com/taciomcosta/kronos/internal/usecases/mocker/spy_host"
 )
 
 // ExecutionsFeature contains BDD steps related to executions feature
 type ExecutionsFeature struct {
-	Host     *mocks.SpyHost
+	Host     *spyhost.SpyHost
 	response *httptest.ResponseRecorder
 }
 

@@ -63,7 +63,7 @@ func TestCreateNotifier(t *testing.T) {
 		dependencies := uc.Dependencies{
 			tt.writer,
 			mocker.Dependencies().Reader().Build(),
-			mocks.NewSpyHost(),
+			mocker.Dependencies().Host().Build(),
 			mocks.SpyNotifierService(),
 		}
 		uc.New(dependencies)

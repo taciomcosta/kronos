@@ -62,7 +62,7 @@ var testsAssignNotifierToJob = []struct {
 
 func TestAssignNotifierToJob(t *testing.T) {
 	for _, tt := range testsAssignNotifierToJob {
-		host := mocks.NewSpyHost()
+		host := mocker.Dependencies().Host().Build()
 		notifierService := mocks.SpyNotifierService()
 		dependencies := uc.Dependencies{tt.writer, tt.reader, host, notifierService}
 		uc.New(dependencies)

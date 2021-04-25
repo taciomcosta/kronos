@@ -51,7 +51,7 @@ func TestFindJobs(t *testing.T) {
 				Set("FindJobsResponse").
 				Return(mocker.Data().FindJobsResponse().WithExpression(tt.given).Build()).
 				Build(),
-			mocks.NewSpyHost(),
+			mocker.Dependencies().Host().Build(),
 			mocks.SpyNotifierService(),
 		}
 		uc.New(dependencies)

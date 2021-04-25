@@ -38,7 +38,7 @@ func TestDeleteNotifier(t *testing.T) {
 		dependencies := uc.Dependencies{
 			mocker.Dependencies().Writer().Build(),
 			tt.reader,
-			mocks.NewSpyHost(),
+			mocker.Dependencies().Host().Build(),
 			mocks.SpyNotifierService(),
 		}
 		uc.New(dependencies)

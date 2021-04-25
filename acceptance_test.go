@@ -9,11 +9,13 @@ import (
 	"github.com/taciomcosta/kronos/internal/config"
 	"github.com/taciomcosta/kronos/internal/interfaces/sqlite"
 	uc "github.com/taciomcosta/kronos/internal/usecases"
+	"github.com/taciomcosta/kronos/internal/usecases/mocker"
+	spyhost "github.com/taciomcosta/kronos/internal/usecases/mocker/spy_host"
 	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 	"github.com/taciomcosta/kronos/test"
 )
 
-var host *mocks.SpyHost
+var host *spyhost.SpyHost
 
 func TestMain(m *testing.M) {
 	status := godog.TestSuite{
@@ -28,7 +30,7 @@ func InitializeTestSuite(ctx *godog.TestSuiteContext) {
 	ctx.BeforeSuite(func() {
 		config.EnableTestMode()
 		writerReader := sqlite.NewWriterReader(config.GetString("db"))
-		host = mocks.NewSpyHost()
+		host = mocker.Dependencies().Host().Build()
 		dependencies := uc.Dependencies{
 			Writer:          writerReader,
 			Reader:          writerReader,
