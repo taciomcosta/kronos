@@ -10,8 +10,8 @@ import (
 
 func TestFindExecutions(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}

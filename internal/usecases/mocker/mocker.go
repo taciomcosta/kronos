@@ -2,15 +2,18 @@ package mocker
 
 import (
 	"github.com/taciomcosta/kronos/internal/usecases/mocker/data"
+	spyhost "github.com/taciomcosta/kronos/internal/usecases/mocker/spy_host"
 	stubreader "github.com/taciomcosta/kronos/internal/usecases/mocker/stub_reader"
 	stubwriter "github.com/taciomcosta/kronos/internal/usecases/mocker/stub_writer"
 )
 
-// Stub ...
-func Stub() *Stubber {
-	stubReaderBuilder := &stubreader.Builder{}
-	stubWriterBuilder := &stubwriter.Builder{}
-	return &Stubber{stubReaderBuilder, stubWriterBuilder}
+// Dependencies ...
+func Dependencies() *DependencyBuilder {
+	return &DependencyBuilder{
+		stubReaderBuilder: &stubreader.Builder{},
+		stubWriterBuilder: &stubwriter.Builder{},
+		spyHostBuilder:    &spyhost.Builder{},
+	}
 }
 
 // Data ...

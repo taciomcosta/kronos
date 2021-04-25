@@ -19,13 +19,13 @@ var testsDeleteJob = []struct {
 		request:  "name",
 		response: uc.DeleteJobResponse{Msg: "name deleted"},
 		err:      nil,
-		reader:   mocker.Stub().Reader().Build(),
+		reader:   mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request:  "non-existing",
 		response: uc.DeleteJobResponse{},
 		err:      errors.New("resource not found"),
-		reader: mocker.Stub().Reader().
+		reader: mocker.Dependencies().Reader().
 			Set("FindOneJob").Return(mocker.Data().Job().Build(), errors.New("resource not found")).
 			Build(),
 	},
@@ -34,7 +34,7 @@ var testsDeleteJob = []struct {
 func TestDeleteJob(t *testing.T) {
 	for _, tt := range testsDeleteJob {
 		dependencies := uc.Dependencies{
-			mocker.Stub().Writer().Build(),
+			mocker.Dependencies().Writer().Build(),
 			tt.reader,
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),

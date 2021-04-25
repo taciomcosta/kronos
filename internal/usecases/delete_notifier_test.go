@@ -19,14 +19,14 @@ var testsDeleteNotifier = []struct {
 		request:  "myslack",
 		response: uc.DeleteNotifierResponse{Msg: "myslack deleted"},
 		err:      nil,
-		reader:   mocker.Stub().Reader().Build(),
+		reader:   mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request:  "non-existing",
 		response: uc.DeleteNotifierResponse{},
 		err:      errors.New("resource not found"),
 		reader: mocker.
-			Stub().Reader().
+			Dependencies().Reader().
 			Set("FindOneNotifier").
 			Return(mocker.Data().Notifier().Build(), errors.New("resource not found")).
 			Build(),
@@ -36,7 +36,7 @@ var testsDeleteNotifier = []struct {
 func TestDeleteNotifier(t *testing.T) {
 	for _, tt := range testsDeleteNotifier {
 		dependencies := uc.Dependencies{
-			mocker.Stub().Writer().Build(),
+			mocker.Dependencies().Writer().Build(),
 			tt.reader,
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),

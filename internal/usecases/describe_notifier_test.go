@@ -11,8 +11,8 @@ import (
 
 func TestDescribeNotifier(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -32,9 +32,9 @@ func TestDescribeNotifier(t *testing.T) {
 
 func TestDescribeNotifierFailure(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
+		mocker.Dependencies().Writer().Build(),
 		mocker.
-			Stub().Reader().
+			Dependencies().Reader().
 			Set("DescribeNotifierResponse").
 			Return(uc.DescribeNotifierResponse{}, errors.New("stub-failing-reader")).
 			Build(),

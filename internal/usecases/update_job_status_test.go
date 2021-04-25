@@ -19,20 +19,20 @@ var testsUpdateJobStatus = []struct {
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: true},
 		response: uc.UpdateJobStatusResponse{Msg: "name enabled"},
 		err:      nil,
-		reader:   mocker.Stub().Reader().Build(),
+		reader:   mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{Msg: "name disabled"},
 		err:      nil,
-		reader:   mocker.Stub().Reader().Build(),
+		reader:   mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request:  uc.UpdateJobStatusRequest{Name: "name", Status: false},
 		response: uc.UpdateJobStatusResponse{},
 		err:      errors.New("resource not found"),
 		reader: mocker.
-			Stub().Reader().
+			Dependencies().Reader().
 			Set("FindOneJob").
 			Return(mocker.Data().Job().Build(), errors.New("resource not found")).
 			Build(),
@@ -42,7 +42,7 @@ var testsUpdateJobStatus = []struct {
 func TestUpdateJobStatus(t *testing.T) {
 	for _, tt := range testsUpdateJobStatus {
 		dependencies := uc.Dependencies{
-			mocker.Stub().Writer().Build(),
+			mocker.Dependencies().Writer().Build(),
 			tt.reader,
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),

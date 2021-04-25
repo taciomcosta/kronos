@@ -26,8 +26,8 @@ var testsAssignNotifierToJob = []struct {
 			Msg: "myslack assigned to name",
 		},
 		err:    nil,
-		writer: mocker.Stub().Writer().Build(),
-		reader: mocker.Stub().Reader().Build(),
+		writer: mocker.Dependencies().Writer().Build(),
+		reader: mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{
@@ -38,10 +38,10 @@ var testsAssignNotifierToJob = []struct {
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("error"),
 		writer: mocker.
-			Stub().Writer().
+			Dependencies().Writer().
 			Set("CreateAssignment").
 			Return(errors.New("error")).Build(),
-		reader: mocker.Stub().Reader().Build(),
+		reader: mocker.Dependencies().Reader().Build(),
 	},
 	{
 		request: uc.AssignNotifierToJobRequest{
@@ -51,9 +51,9 @@ var testsAssignNotifierToJob = []struct {
 		},
 		response: uc.AssignNotifierToJobResponse{},
 		err:      errors.New("error finding job/notifier"),
-		writer:   mocker.Stub().Writer().Build(),
+		writer:   mocker.Dependencies().Writer().Build(),
 		reader: mocker.
-			Stub().Reader().
+			Dependencies().Reader().
 			Set("FindOneJob").
 			Return(mocker.Data().Job().Build(), errors.New("error finding job/notifier")).
 			Build(),

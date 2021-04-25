@@ -152,8 +152,8 @@ var testsCreateJob = []struct {
 
 func TestCreateJob(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -188,8 +188,8 @@ func assertError(t *testing.T, got error, want error) {
 
 func TestCreateJobExpressionMap(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}
@@ -205,8 +205,8 @@ func TestCreateJobExpressionMap(t *testing.T) {
 
 func TestCreateJobFailingWriter(t *testing.T) {
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Set("CreateJob").Return(errors.New("fail")).Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Set("CreateJob").Return(errors.New("fail")).Build(),
+		mocker.Dependencies().Reader().Build(),
 		mocks.NewSpyHost(),
 		mocks.SpyNotifierService(),
 	}

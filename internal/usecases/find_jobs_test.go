@@ -45,9 +45,9 @@ var testsFindJobsResponse = []struct {
 func TestFindJobs(t *testing.T) {
 	for _, tt := range testsFindJobsResponse {
 		dependencies := uc.Dependencies{
-			mocker.Stub().Writer().Build(),
+			mocker.Dependencies().Writer().Build(),
 			mocker.
-				Stub().Reader().
+				Dependencies().Reader().
 				Set("FindJobsResponse").
 				Return(mocker.Data().FindJobsResponse().WithExpression(tt.given).Build()).
 				Build(),

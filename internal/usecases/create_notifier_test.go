@@ -27,7 +27,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{Msg: "mynotifier created"},
 		err:      nil,
-		writer:   mocker.Stub().Writer().Build(),
+		writer:   mocker.Dependencies().Writer().Build(),
 	},
 	{
 		request: uc.CreateNotifierRequest{
@@ -41,7 +41,7 @@ var testsCreateNotifiers = []struct {
 		response: uc.CreateNotifierResponse{},
 		err:      errors.New("error"),
 		writer: mocker.
-			Stub().Writer().
+			Dependencies().Writer().
 			Set("CreateNotifier").
 			Return(errors.New("error")).
 			Build(),
@@ -54,7 +54,7 @@ var testsCreateNotifiers = []struct {
 		},
 		response: uc.CreateNotifierResponse{},
 		err:      errors.New("expected auth_token, channel_ids to be provided"),
-		writer:   mocker.Stub().Writer().Build(),
+		writer:   mocker.Dependencies().Writer().Build(),
 	},
 }
 
@@ -62,7 +62,7 @@ func TestCreateNotifier(t *testing.T) {
 	for _, tt := range testsCreateNotifiers {
 		dependencies := uc.Dependencies{
 			tt.writer,
-			mocker.Stub().Reader().Build(),
+			mocker.Dependencies().Reader().Build(),
 			mocks.NewSpyHost(),
 			mocks.SpyNotifierService(),
 		}

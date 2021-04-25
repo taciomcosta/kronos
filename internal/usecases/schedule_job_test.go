@@ -61,8 +61,8 @@ func TestScheduleExistingJobs(t *testing.T) {
 func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.Time) {
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().
 			Set("FindJobs").Return(mocker.Data().Job().WithExpression(expr).Build()).
 			Build(),
 		host,
@@ -79,8 +79,8 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 func TestScheduleDisabledJob(t *testing.T) {
 	host := mocks.NewSpyHost()
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().
 			Set("FindJobs").Return(mocker.Data().Job().WithDisabled().Build()).
 			Build(),
 		host,
@@ -98,8 +98,8 @@ func TestScheduleNotify(t *testing.T) {
 	host := mocks.StubFailingHost()
 	spyNotifierService := mocks.SpyNotifierService()
 	dependencies := uc.Dependencies{
-		mocker.Stub().Writer().Build(),
-		mocker.Stub().Reader().Build(),
+		mocker.Dependencies().Writer().Build(),
+		mocker.Dependencies().Reader().Build(),
 		host,
 		spyNotifierService,
 	}
@@ -114,9 +114,9 @@ func TestScheduleNotify(t *testing.T) {
 func TestScheduleNotifyOnError(t *testing.T) {
 	host := mocks.StubFailingHost()
 	spyNotifierService := mocks.SpyNotifierService()
-	writer := mocker.Stub().Writer().Build()
+	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
-		Stub().Reader().
+		Dependencies().Reader().
 		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).
 		Build()
 	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
@@ -131,9 +131,9 @@ func TestScheduleNotifyOnError(t *testing.T) {
 func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 	host := mocks.NewSpyHost()
 	spyNotifierService := mocks.SpyNotifierService()
-	writer := mocker.Stub().Writer().Build()
+	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
-		Stub().Reader().
+		Dependencies().Reader().
 		Set("FindAssignmentsByJob").Return(mocker.Data().Assignment().WithErrorOnly().Build()).
 		Build()
 	dependencies := uc.Dependencies{writer, reader, host, spyNotifierService}
