@@ -12,5 +12,5 @@ type defaultSpyNotifierService struct{}
 
 // Send sends message to an external notifier service
 func (s *defaultSpyNotifierService) Send() []interface{} {
-	return nil
+	return []interface{}{nil}
 }

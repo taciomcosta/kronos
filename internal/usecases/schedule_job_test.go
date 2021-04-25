@@ -6,7 +6,6 @@ import (
 
 	uc "github.com/taciomcosta/kronos/internal/usecases"
 	"github.com/taciomcosta/kronos/internal/usecases/mocker"
-	"github.com/taciomcosta/kronos/internal/usecases/mocks"
 )
 
 var testScheduleExistingJobs = []struct {
@@ -66,7 +65,7 @@ func givenExpressionAssertJobIsCalledOnTime(t *testing.T, expr string, now time.
 			Set("FindJobs").Return(mocker.Data().Job().WithExpression(expr).Build()).
 			Build(),
 		host,
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(now)
@@ -84,7 +83,7 @@ func TestScheduleDisabledJob(t *testing.T) {
 			Set("FindJobs").Return(mocker.Data().Job().WithDisabled().Build()).
 			Build(),
 		host,
-		mocks.SpyNotifierService(),
+		mocker.Dependencies().NotifierService().Build(),
 	}
 	uc.New(dependencies)
 	host.NotifyCurrentTimeIs(time.Date(2021, 2, 13, 0, 20, 0, 0, time.UTC))
@@ -99,7 +98,7 @@ func TestScheduleNotify(t *testing.T) {
 		Dependencies().Host().
 		Set("RunJob").Return(mocker.Data().Execution().WithFailure().Build()).
 		Build()
-	spyNotifierService := mocks.SpyNotifierService()
+	spyNotifierService := mocker.Dependencies().NotifierService().Build()
 	dependencies := uc.Dependencies{
 		mocker.Dependencies().Writer().Build(),
 		mocker.Dependencies().Reader().Build(),
@@ -119,7 +118,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 		Dependencies().Host().
 		Set("RunJob").Return(mocker.Data().Execution().WithFailure().Build()).
 		Build()
-	spyNotifierService := mocks.SpyNotifierService()
+	spyNotifierService := mocker.Dependencies().NotifierService().Build()
 	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
 		Dependencies().Reader().
@@ -136,7 +135,7 @@ func TestScheduleNotifyOnError(t *testing.T) {
 
 func TestScheduleDoesNotNotifyOnSucceed(t *testing.T) {
 	host := mocker.Dependencies().Host().Build()
-	spyNotifierService := mocks.SpyNotifierService()
+	spyNotifierService := mocker.Dependencies().NotifierService().Build()
 	writer := mocker.Dependencies().Writer().Build()
 	reader := mocker.
 		Dependencies().Reader().
