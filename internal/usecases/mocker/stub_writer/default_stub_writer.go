@@ -6,10 +6,10 @@ func newDefaultOutputs() map[string]interface{} {
 	outputs["CreateJob"] = d.CreateJob()
 	outputs["DeleteJob"] = d.DeleteJob()
 	outputs["CreateExecution"] = d.CreateExecution()
-	//outputs["UpdateJob"] = d.UpdateJob()
 	outputs["CreateNotifier"] = d.CreateNotifier()
 	outputs["DeleteNotifier"] = d.DeleteNotifier()
 	outputs["CreateAssignment"] = d.CreateAssignment()
+	outputs["DeleteAssignment"] = d.DeleteAssignment()
 	return outputs
 }
 
@@ -44,7 +44,12 @@ func (mr *defaultStubWriter) DeleteNotifier() []interface{} {
 	return []interface{}{nil}
 }
 
-// CreateAssignment creates a assignment
+// CreateAssignment creates an assignment
 func (mr *defaultStubWriter) CreateAssignment() []interface{} {
+	return []interface{}{nil}
+}
+
+// DeleteAssignment deletes an assignment
+func (mr *defaultStubWriter) DeleteAssignment() []interface{} {
 	return []interface{}{nil}
 }

@@ -79,6 +79,12 @@ func (s *StubReader) FindAssignmentsByJob(jobName string) []entities.Assignment 
 	return output
 }
 
+// FindOneAssignment ...
+func (s *StubReader) FindOneAssignment(jobName string, notifierName string) (entities.Assignment, error) {
+	args, _ := s.outputs["FindOneAssignment"].([]interface{})
+	return args[0].(entities.Assignment), castError(args[1])
+}
+
 func castError(v interface{}) error {
 	if v != nil {
 		return v.(error)

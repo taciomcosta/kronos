@@ -46,9 +46,15 @@ func (s *StubWriter) DeleteNotifier(name string) error {
 	return castError(args[0])
 }
 
-// CreateAssignment creates a assignment
+// CreateAssignment creates an assignment
 func (s *StubWriter) CreateAssignment(assignment *entities.Assignment) error {
 	args, _ := s.outputs["CreateAssignment"].([]interface{})
+	return castError(args[0])
+}
+
+// DeleteAssignment deletes an assignment
+func (s *StubWriter) DeleteAssignment(assignment *entities.Assignment) error {
+	args, _ := s.outputs["DeleteAssignment"].([]interface{})
 	return castError(args[0])
 }
 

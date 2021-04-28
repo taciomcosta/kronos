@@ -42,6 +42,7 @@ type Writer interface {
 	CreateNotifier(notifier *entities.Notifier) error
 	DeleteNotifier(name string) error
 	CreateAssignment(assignment *entities.Assignment) error
+	DeleteAssignment(assignment *entities.Assignment) error
 }
 
 // Reader represents a Layer Supertype similar to Repository pattern
@@ -55,6 +56,7 @@ type Reader interface {
 	FindNotifiersResponse() FindNotifiersResponse
 	DescribeNotifierResponse(name string) (DescribeNotifierResponse, error)
 	FindAssignmentsByJob(jobName string) []entities.Assignment
+	FindOneAssignment(jobName string, notifierName string) (entities.Assignment, error)
 }
 
 // NotifierService represents an external service: email, slack, discord,

@@ -18,6 +18,7 @@ func newDefaultOutputs() map[string]interface{} {
 	outputs["FindNotifiersResponse"] = d.FindNotifiersResponse()
 	outputs["DescribeNotifierResponse"] = d.DescribeNotifierResponse()
 	outputs["FindAssignmentsByJob"] = d.FindAssignmentsByJob()
+	outputs["FindOneAssignment"] = d.FindOneAssignment()
 	return outputs
 }
 
@@ -112,4 +113,11 @@ func (mr *defaultStubReader) FindAssignmentsByJob() []interface{} {
 	dataMocker := &data.Mocker{}
 	assignment := dataMocker.Assignment().Build()
 	return []interface{}{assignment}
+}
+
+// FindOneAssignment finds one assignment
+func (mr *defaultStubReader) FindOneAssignment() []interface{} {
+	dataMocker := &data.Mocker{}
+	assignment := dataMocker.Assignment().Build()
+	return []interface{}{assignment, nil}
 }
