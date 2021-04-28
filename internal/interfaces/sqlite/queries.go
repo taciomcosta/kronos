@@ -60,3 +60,7 @@ var findOneNotifierSQL = "SELECT * FROM notifier WHERE name=?"
 var findOneSlackSQL = "SELECT auth_token, channel_ids FROM slack WHERE notifier_name=?"
 
 var insertAssignmentSQL = "INSERT INTO assignment VALUES(?, ?, ?)"
+
+var deleteAssignmentSQL = "DELETE FROM assignment where job_name=? AND notifier_name=?"
+
+var findOneAssignmentSQL = "SELECT job_name, notifier_name, on_error_only FROM assignment WHERE name=?"

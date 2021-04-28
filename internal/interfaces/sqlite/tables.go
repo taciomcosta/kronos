@@ -17,6 +17,12 @@ type slackRow struct {
 	channelIds string
 }
 
+type assignmentRow struct {
+	jobName      string
+	notifierName string
+	onErrorOnly  bool
+}
+
 var tablesStmts []string = []string{
 	`CREATE TABLE IF NOT EXISTS job(
 		name TEXT PRIMARY KEY,

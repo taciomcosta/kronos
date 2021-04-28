@@ -13,3 +13,12 @@ func (wr *WriterReader) CreateAssignment(assignment *entities.Assignment) error 
 		assignment.OnErrorOnly,
 	)
 }
+
+// DeleteAssignment deletes a notifier
+func (wr *WriterReader) DeleteAssignment(assignment *entities.Assignment) error {
+	return wr.runWriteOperation(
+		deleteAssignmentSQL,
+		assignment.Job,
+		assignment.Notifier,
+	)
+}
