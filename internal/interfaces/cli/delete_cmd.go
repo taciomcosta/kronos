@@ -17,7 +17,7 @@ var deleteJobCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		name := args[0]
 		deleteJobResponse := uc.DeleteJobResponse{}
-		err := client.delete("/jobs/"+name, &deleteJobResponse)
+		err := client.delete("/jobs/"+name, struct{}{}, &deleteJobResponse)
 		out.error(err)
 		out.println(deleteJobResponse.Msg)
 	},

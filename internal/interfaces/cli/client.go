@@ -22,12 +22,16 @@ func (c kronosClient) get(urlPath string, response interface{}) error {
 	return err
 }
 
-func (c kronosClient) delete(urlPath string, response interface{}) error {
-	request, err := http.NewRequest("DELETE", kronosdURL+urlPath, nil)
+func (c kronosClient) delete(urlPath string, request interface{}, response interface{}) error {
+	body, err := newBody(request)
 	if err != nil {
 		return errKronosResponse
 	}
-	httpResponse, err := http.DefaultClient.Do(request)
+	httpRequest, err := http.NewRequest("DELETE", kronosdURL+urlPath, body)
+	if err != nil {
+		return errKronosResponse
+	}
+	httpResponse, err := http.DefaultClient.Do(httpRequest)
 	if err != nil {
 		return errKronosResponse
 	}
