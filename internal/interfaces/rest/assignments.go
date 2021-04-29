@@ -17,3 +17,14 @@ func CreateAssignment(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	response, err := uc.AssignNotifierToJob(assignmentRequest)
 	respond(w, response, err)
 }
+
+// DeleteAssignment handles assignements creation request
+func DeleteAssignment(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	var unassignRequest uc.UnassignNotifierFromJobRequest
+	err := ReadJSON(r.Body, &unassignRequest)
+	if err != nil {
+		respondError(w, err)
+	}
+	response, err := uc.UnassignNotifierFromJob(unassignRequest)
+	respond(w, response, err)
+}

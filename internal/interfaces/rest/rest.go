@@ -16,5 +16,6 @@ func NewRouter() *httprouter.Router {
 	router.GET("/notifiers/:name", DescribeNotifier)
 	router.DELETE("/notifiers/:name", DeleteNotifier)
 	router.POST("/assignments", CreateAssignment)
+	router.DELETE("/assignments", DeleteAssignment)
 	return router
 }
