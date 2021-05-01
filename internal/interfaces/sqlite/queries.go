@@ -63,4 +63,6 @@ var insertAssignmentSQL = "INSERT INTO assignment VALUES(?, ?, ?)"
 
 var deleteAssignmentSQL = "DELETE FROM assignment where job_name=? AND notifier_name=?"
 
-var findOneAssignmentSQL = "SELECT job_name, notifier_name, on_error_only FROM assignment WHERE name=?"
+var findAssignmentsByJobSQL = "SELECT job_name, notifier_name, on_error_only FROM assignment WHERE job_name=?"
+
+var findOneAssignmentSQL = "SELECT job_name, notifier_name, on_error_only FROM assignment WHERE job_name=? and notifier_name=?"
