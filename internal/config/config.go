@@ -8,6 +8,7 @@ import (
 
 var defaultConfigPath string
 var defaultDBPath string
+var defaultHost string
 
 // EnableTestMode sets test configuration as current
 func EnableTestMode() {
@@ -35,7 +36,7 @@ func enableDevelopmentMode() error {
 func enableProductionMode() error {
 	viper.SetConfigType("json")
 	viper.SetDefault("db", defaultDBPath)
-	viper.SetDefault("host", ":8080")
+	viper.SetDefault("host", defaultHost)
 	viper.AddConfigPath(defaultConfigPath)
 	err := viper.ReadInConfig()
 	return err
