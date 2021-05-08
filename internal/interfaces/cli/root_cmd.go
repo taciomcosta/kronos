@@ -18,4 +18,5 @@ func init() {
 	rootCmd.AddCommand(disableCmd)
 	rootCmd.AddCommand(assignCmd)
 	rootCmd.AddCommand(unassignCmd)
+	rootCmd.AddCommand(versionCmd)
 }

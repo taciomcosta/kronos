@@ -1,4 +1,4 @@
-KRONOS_VERSION=0.3.0
+KRONOS_VERSION=0.5.0
 
 dev:
 	@env ENVIRONMENT=development go run ./cmd/kronosd/main.go
@@ -25,4 +25,5 @@ release-linux:
 	@env GOOS=linux GOARCH=amd64 make build-any
 	@cp kronos.service build/kronos.service
 	@tar -czvf build/kronos-$(KRONOS_VERSION)-linux_amd64.tar.gz build/*
-
+bump:
+	@sed -i -E 's/var\sversion\s.+/var version = "$(version)"/' ./internal/interfaces/cli/version_cmd.go
